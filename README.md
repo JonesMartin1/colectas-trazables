@@ -47,6 +47,7 @@ Las claves de las cuentas de prueba quedan en `.cuentas.json`, que no se sube.
 | Colecta de la demo: "Colchones y agua para Itatí" (topic) | 0.0.11052743 | https://hashscan.io/testnet/topic/0.0.11052743 |
 | Donación de la demo: 17,86 USDCd al beneficiario | 0.0.10989169-1792179856-190341722 | https://hashscan.io/testnet/transaction/0.0.10989169-1792179856-190341722 |
 | Gasto de la demo (EXPENSE, mensaje #2) | 0.0.10989169-1792179862-930293709 | https://hashscan.io/testnet/transaction/0.0.10989169-1792179862-930293709 |
+| Entrega de la demo: 40 colchones (DELIVERY, mensaje #3) | 0.0.10989169-1792182178-728819037 | https://hashscan.io/testnet/transaction/0.0.10989169-1792182178-728819037 |
 | Colecta de prueba (topic) | 0.0.11051460 | https://hashscan.io/testnet/topic/0.0.11051460 |
 | Donación de prueba en USDC | 0.0.10989169-1792172437-238686943 | https://hashscan.io/testnet/transaction/0.0.10989169-1792172437-238686943 |
 | Registro de alias oficiales, clave 2 de 4 (topic) | 0.0.11052767 | https://hashscan.io/testnet/topic/0.0.11052767 |
