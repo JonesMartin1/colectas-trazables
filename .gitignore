@@ -3,4 +3,5 @@
 !.env.example
 .cuentas.json
 node_modules/
+backend/datos/
 .DS_Store

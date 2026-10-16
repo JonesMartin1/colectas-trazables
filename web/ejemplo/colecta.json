@@ -1,0 +1,18 @@
+{
+  "colecta": {
+    "id": "inundados-paso-de-los-libres",
+    "titulo": "Inundados Paso de los Libres",
+    "descripcion": "Colchones, agua y alimentos para las familias evacuadas. DATO SIMULADO.",
+    "meta": 5000000,
+    "beneficiarioCuenta": "0.0.11041201",
+    "topicId": "0.0.11041205"
+  },
+  "donaciones": [
+    { "secuencia": 1, "fecha": "2026-10-16T15:02:11Z", "monto": 15000, "metodo": "usdc", "hashscan": "https://hashscan.io/testnet/topic/0.0.11041205" },
+    { "secuencia": 2, "fecha": "2026-10-16T15:10:40Z", "monto": 50000, "metodo": "mercadopago", "hashscan": "https://hashscan.io/testnet/topic/0.0.11041205" }
+  ],
+  "gastos": [
+    { "secuencia": 3, "fecha": "2026-10-16T16:20:00Z", "monto": 42000, "proveedorCuit": "30-00000000-0", "cae": "00000000000000", "hashscan": "https://hashscan.io/testnet/topic/0.0.11041205" }
+  ],
+  "totales": { "recaudado": 65000, "gastado": 42000, "saldo": 23000 }
+}
