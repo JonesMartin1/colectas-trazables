@@ -1,13 +1,69 @@
 <!doctype html>
 <html lang="es-AR">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Colectas Trazables</title></head>
-<body>
-  <h1>Colectas Trazables</h1>
-  <p>En construcción (issue #3). Estado de la API: <span id="estado">consultando…</span></p>
-  <script>
-    fetch("/api/salud").then(r => r.json()).then(d => {
-      document.getElementById("estado").textContent = d.ok ? `conectada a Hedera ${d.red}, ${d.colectas} colectas en el registro` : `error: ${d.error}`;
-    }).catch(() => { document.getElementById("estado").textContent = "sin respuesta"; });
-  </script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171d1b">
+  <meta name="description" content="Colectas Trazables. Doná y mirá llegar tu ayuda.">
+  <title>Colectas Trazables — Mirá llegar tu ayuda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body data-page="home">
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Colectas Trazables, inicio"><span class="brand-mark"><i></i><i></i><i></i></span><span>colectas<span class="brand-light">trazables</span><small>LA SOLIDARIDAD SE VE</small></span></a>
+    <nav class="desktop-nav" aria-label="Navegación principal"><a href="#como-funciona">Cómo funciona</a><a href="#colectas">Colectas</a><a href="#crear">Para organizaciones</a></nav>
+    <a class="nav-action" href="#crear">Crear una colecta <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="signal"></span> UNA NUEVA FORMA DE AYUDAR</div>
+        <h1 id="hero-title">La ayuda se da.<br><em>La confianza</em><br>se construye.</h1>
+        <p>Doná con tranquilidad y seguí el camino de tu aporte. Cada donación y cada gasto, a la vista de todos.</p>
+        <div class="hero-actions"><a class="button button-lime" href="#colectas">Explorar colectas <span aria-hidden="true">↗</span></a><a class="text-link" href="#como-funciona">Descubrí cómo funciona <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-note"><span class="mini-seal" aria-hidden="true">✳</span><span>Hecho para personas que ayudan<br><strong>y quieren ver llegar su ayuda.</strong></span></div>
+      </div>
+      <div class="hero-object" aria-label="Vista previa de una colecta trazable">
+        <div class="object-halo"></div>
+        <div class="object-shell">
+          <div class="object-top"><span><span class="signal"></span> SEGUIMIENTO EN VIVO</span><span>CT / 001</span></div>
+          <div class="object-face">
+            <div class="object-label">COLECTA DE EJEMPLO · CORRIENTES</div>
+            <h2>Una mano<br>para el Litoral<span>.</span></h2>
+            <div class="object-rule"></div>
+            <div class="object-stat"><span>Recaudado en el ejemplo</span><strong>$ 65.000</strong></div>
+            <div class="meter"><span style="width: 1.3%"></span></div>
+            <div class="object-meta"><span>Meta: $ 5.000.000</span><span>1,3%</span></div>
+          </div>
+          <div class="object-bottom"><span><span class="check-icon">✓</span> Cada movimiento tiene su registro</span><span aria-hidden="true">↗</span></div>
+        </div>
+        <div class="floating-tag"><span class="tag-orbit">◉</span><span>Tu ayuda, con<br><strong>destino visible.</strong></span></div>
+      </div>
+      <div class="hero-index">01 / CONFIANZA QUE SE PUEDE VER</div>
+    </section>
+    <section class="trust-strip" aria-label="Nuestros principios"><span>Una plataforma para ayudar mejor</span><div><span class="trust-icon">◎</span> Donaciones visibles</div><div><span class="trust-icon">↗</span> Gastos documentados</div><div><span class="trust-icon">✳</span> Registro público</div></section>
+    <section class="intro section-wrap" id="como-funciona">
+      <div class="section-kicker"><span>01 / EL RECORRIDO</span><span class="section-line"></span></div>
+      <div class="intro-heading"><h2>Cada aporte<br>tiene una <em>historia.</em></h2><p>Desde el momento en que donás hasta que la ayuda se convierte en algo concreto. Seguimos cada paso para que vos también puedas verlo.</p></div>
+      <div class="steps">
+        <article class="step-card"><div class="step-number">01 <span>↗</span></div><div class="step-art step-art-one"><div class="alias-paper"><small>CUENTA DE DESTINO</small><strong>ayuda.litoral</strong><span><b>✓</b> Verificá quién la publicó</span></div></div><h3>Elegís una colecta</h3><p>Conocé quién organiza, para qué se junta y a qué cuenta llega tu donación.</p></article>
+        <article class="step-card"><div class="step-number">02 <span>↗</span></div><div class="step-art step-art-two"><div class="receipt-paper"><small>COMPROBANTE DE AYUDA</small><strong>$ 15.000</strong><span>Tu aporte quedó registrado <b>✓</b></span></div></div><h3>Donás a tu manera</h3><p>Recibís un comprobante para encontrar tu aporte cuando quieras.</p></article>
+        <article class="step-card"><div class="step-number">03 <span>↗</span></div><div class="step-art step-art-three"><div class="trail-line"><span>✓</span><span>✓</span><span>✓</span></div><div class="trail-labels"><small>DONACIÓN</small><small>COMPRA</small><small>AYUDA</small></div></div><h3>Ves a dónde llegó</h3><p>Consultá el balance y los gastos respaldados con sus comprobantes.</p></article>
+      </div>
+    </section>
+    <section class="campaign-section" id="colectas"><div class="section-wrap">
+      <div class="section-kicker"><span>02 / EN ACCIÓN</span><span class="section-line"></span></div>
+      <div class="campaign-heading"><div><h2>Ayudar empieza<br><em>por acá.</em></h2><p>Una vista de ejemplo para conocer cómo se sigue una colecta.</p></div><span class="demo-stamp">DATOS DE EJEMPLO</span></div>
+      <a class="campaign-card" href="/colecta.html?id=inundados-paso-de-los-libres"><div class="campaign-visual"><div class="topographic"></div><span class="location-chip">↗ CORRIENTES, ARGENTINA</span><div class="campaign-visual-title">Estamos<br>con el Litoral<span>.</span></div><span class="campaign-visual-foot">AYUDA PARA FAMILIAS AFECTADAS POR LAS INUNDACIONES</span></div><div class="campaign-info"><div class="campaign-status"><span class="signal"></span> VISTA DE EJEMPLO</div><h3>Una mano para las familias de Paso de los Libres</h3><p>Alimentos, agua y elementos esenciales para quienes tuvieron que dejar sus hogares.</p><div class="campaign-progress"><div><strong>$ 65.000</strong><span>de $ 5.000.000</span></div><div class="meter"><span style="width: 1.3%"></span></div></div><div class="campaign-footer"><span>Ver el recorrido de esta colecta</span><span class="round-arrow">↗</span></div></div></a>
+    </div></section>
+    <section class="manifesto section-wrap"><div class="manifesto-symbol" aria-hidden="true"><span>✳</span></div><div><div class="section-kicker">03 / NUESTRO COMPROMISO</div><h2>Ayudar debería sentirse bien.<br><em>Y también poder verse.</em></h2><p>La tecnología está detrás. Lo importante está adelante: personas que ayudan, organizaciones que cumplen y una comunidad que puede seguir cada peso.</p><a class="text-link dark-link" href="/colecta.html?id=inundados-paso-de-los-libres">Conocé una colecta <span aria-hidden="true">↗</span></a></div></section>
+    <section class="create-section" id="crear"><div class="section-wrap create-grid"><div class="create-copy"><div class="section-kicker">04 / PARA QUIENES ORGANIZAN</div><h2>Tu causa merece<br>confianza <em>visible.</em></h2><p>Creá una colecta y compartí una página donde cada persona pueda seguir lo recaudado y cómo se usó.</p><div class="create-perks"><span>✳ Gratis durante la emergencia</span><span>✳ Sin intermediación del dinero</span><span>✳ Un enlace para compartir</span></div></div><form class="create-form raised-panel" id="create-form"><div class="form-head"><span>CREAR COLECTA</span><span>01 — 04</span></div><h3>Empecemos por lo esencial.</h3><label for="titulo">Nombre de la colecta</label><input id="titulo" name="titulo" required maxlength="100" placeholder="Ej. Ayuda para familias de Itatí"><label for="descripcion">¿Para qué es la ayuda?</label><textarea id="descripcion" name="descripcion" required rows="3" maxlength="500" placeholder="Contá brevemente qué necesitan y quiénes recibirán la ayuda."></textarea><div class="form-row"><div><label for="meta">Meta en pesos</label><input id="meta" name="meta" type="number" required min="1" step="1" placeholder="500000"></div><div><label for="beneficiarioCuenta">Cuenta Hedera destinataria</label><input id="beneficiarioCuenta" name="beneficiarioCuenta" required pattern="0\.0\.[0-9]+" placeholder="0.0.123456"></div></div><button class="button button-dark" type="submit">Crear colecta <span aria-hidden="true">↗</span></button><p class="form-feedback" id="create-feedback" role="status" aria-live="polite"></p><small>El dinero va directo a la cuenta de la organización. Esta página registra el recorrido de la colecta.</small></form></div></section>
+  </main>
+  <footer class="site-footer"><div class="section-wrap footer-inner"><a class="brand" href="/"><span class="brand-mark"><i></i><i></i><i></i></span><span>colectas<span class="brand-light">trazables</span><small>LA SOLIDARIDAD SE VE</small></span></a><p>Una forma más clara de ayudar.<br>Hecho en Argentina para quienes siempre están.</p><div><a href="#como-funciona">Cómo funciona</a><a href="#colectas">Colectas</a><a href="#crear">Crear una colecta</a></div><span class="footer-end">© 2026 Colectas Trazables</span></div></footer>
 </body>
 </html>
