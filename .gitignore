@@ -6,3 +6,5 @@ node_modules/
 backend/datos/
 .DS_Store
 .vercel
+
+.vercel

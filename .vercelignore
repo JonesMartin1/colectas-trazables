@@ -1,0 +1,7 @@
+.env
+.env.*
+!.env.example
+hedera/.cuentas.json
+.cuentas.json
+node_modules
+.vercel
