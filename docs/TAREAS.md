@@ -7,7 +7,7 @@
 | Hora | Hito |
 | --- | --- |
 | 14:45 | Cada uno lee este archivo y toma su issue |
-| 16:00 | `hedera/colectas.js` mergeado. Backend y web andando contra datos de ejemplo. Entrevistas de Gilda listas. |
+| 16:00 | `hedera/colectas.js` mergeado. Backend y web andando contra datos de ejemplo. Primeras entrevistas hechas. |
 | 17:00 | Integración: el flujo entero anda en una máquina (crear colecta → donar → cargar gasto → ver página pública) |
 | 17:30 | Demo publicada en Vercel. **No se agregan más funciones**: solo arreglos. |
 | 17:30–18:10 | Transacciones finales de la demo, IDs en el README y grabación del video |
@@ -19,9 +19,9 @@
 | Quién | Carpeta | Qué entrega |
 | --- | --- | --- |
 | Martín | `hedera/` | El módulo `colectas.js` (**ya está hecho y probado en testnet**), la publicación en Vercel, los merges y el formulario |
-| Facu | `api/` | La API como funciones de Vercel: un archivo por ruta, ver `api/salud.js` de ejemplo (contrato abajo) |
+| Facundo | `api/` | La API como funciones de Vercel: un archivo por ruta, ver `api/salud.js` de ejemplo (contrato abajo) |
 | Nicolás | `web/` | Las tres pantallas, primero con datos de ejemplo (`web/ejemplo/colecta.json`) y después contra la API |
-| Gilda | (fuera del repo) | Entrevistas, deck PDF de 8 secciones y video de hasta 5 minutos |
+| Martín | (fuera del repo) | Como `hedera/` ya está, también: entrevistas, deck PDF de 8 secciones (pitch de 3 min) y video de hasta 5 min. Claude arma el borrador del deck y el guion. |
 
 Hasta que esté lo de al lado, cada uno trabaja contra el contrato con datos inventados. Nadie espera a nadie.
 

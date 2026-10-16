@@ -73,4 +73,4 @@ Para no pisarse, cada uno trabaja en su carpeta:
 
 ## Equipo
 
-Martín, Gilda, Nicolás y Facu.
+Martín, Nicolás y Facundo.
