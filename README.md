@@ -2,6 +2,8 @@
 
 Colectas para emergencias donde cada donación y cada gasto quedan registrados en Hedera. Cualquiera puede verificar adónde fue la plata, y nadie puede borrar ni editar el registro: ni el organizador ni nosotros.
 
+**Demo en vivo:** https://colectas-trazables.vercel.app · colecta de ejemplo: https://colectas-trazables.vercel.app/colecta.html?id=colchones-y-agua-para-itati-0bd057
+
 Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan completo está en [`docs/PLAN.md`](docs/PLAN.md), y quién hace qué, los contratos entre partes y el horario, en [`docs/TAREAS.md`](docs/TAREAS.md).
 
 ## Estado
@@ -13,7 +15,7 @@ Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan complet
 | Web (`web/`): inicio, página pública de la colecta y carga de gastos | Hecha (Facundo) |
 | Registro de alias oficiales ("¿este alias es real?") | Por hacer |
 | Mercado Pago sandbox (webhook y DONATION) | Por hacer |
-| Publicación en Vercel | Por hacer |
+| Publicación en Vercel | Hecha: https://colectas-trazables.vercel.app |
 
 ## Cómo correrlo
 
@@ -39,6 +41,9 @@ Las claves de las cuentas de prueba quedan en `.cuentas.json`, que no se sube.
 | Qué | ID | HashScan |
 | --- | --- | --- |
 | Topic de registro de colectas | 0.0.11051457 | https://hashscan.io/testnet/topic/0.0.11051457 |
+| Colecta de la demo: "Colchones y agua para Itatí" (topic) | 0.0.11052743 | https://hashscan.io/testnet/topic/0.0.11052743 |
+| Donación de la demo: 17,86 USDCd al beneficiario | 0.0.10989169-1792179856-190341722 | https://hashscan.io/testnet/transaction/0.0.10989169-1792179856-190341722 |
+| Gasto de la demo (EXPENSE, mensaje #2) | 0.0.10989169-1792179862-930293709 | https://hashscan.io/testnet/transaction/0.0.10989169-1792179862-930293709 |
 | Colecta de prueba (topic) | 0.0.11051460 | https://hashscan.io/testnet/topic/0.0.11051460 |
 | Donación de prueba en USDC | 0.0.10989169-1792172437-238686943 | https://hashscan.io/testnet/transaction/0.0.10989169-1792172437-238686943 |
 | Cuenta de la plataforma | 0.0.10989169 | https://hashscan.io/testnet/account/0.0.10989169 |
