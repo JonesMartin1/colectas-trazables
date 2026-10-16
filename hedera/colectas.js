@@ -52,11 +52,11 @@ export async function publicarEvento(topicId, evento) {
 }
 
 /** Alta de una colecta: crea su topic y la anota en el topic de registro. */
-export async function registrarColecta({ campaignId, titulo, descripcion, meta, beneficiarioCuenta, orgKeyHash }) {
+export async function registrarColecta({ campaignId, titulo, descripcion, meta, beneficiarioCuenta, organizador, orgKeyHash }) {
   const { registro } = config();
   if (!registro) throw new Error("Falta REGISTRO_TOPIC_ID (correr node hedera/crear-registro.js)");
   const topic = await crearTopicColecta({ campaignId });
-  const evento = { type: "CAMPAIGN", campaignId, titulo, descripcion, meta, beneficiarioCuenta, orgKeyHash, topicId: topic.topicId, timestamp: new Date().toISOString() };
+  const evento = { type: "CAMPAIGN", campaignId, titulo, descripcion, meta, beneficiarioCuenta, organizador, orgKeyHash, topicId: topic.topicId, timestamp: new Date().toISOString() };
   const alta = await publicarEvento(registro, evento);
   return { ...topic, registro: { ...alta, topicId: registro } };
 }

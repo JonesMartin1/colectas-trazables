@@ -138,6 +138,8 @@ Son tres capas. La primera se puede usar ya y no toca plata de nadie.
 
 ## 6. Avalado por la ley
 
+> El detalle actualizado (IGPJ, PSAV, UIF, ARCA, datos personales, firmas y checklist para producción) está en [`LEGAL.md`](LEGAL.md).
+
 **El diseño legal tiene una regla central: nunca tocamos la plata.** Somos un registro, no un intermediario de pagos.
 
 | Tema | Norma | Cómo lo cumplimos |
