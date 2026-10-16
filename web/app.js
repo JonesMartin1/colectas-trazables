@@ -149,7 +149,7 @@ function showOrganizerKey(status, result) {
   status.className = "form-feedback success";
   const organizerUrl = new URL(result.urlOrganizador, location.origin).href;
   const intro = document.createElement("span");
-  intro.textContent = "Colecta creada. Guardá esta clave: es la única forma de cargar gastos y no se puede recuperar.";
+  intro.textContent = "Colecta creada. Guardá esta clave: es la única forma de cargar gastos y entregas, y no se puede recuperar.";
   const key = document.createElement("code");
   key.className = "organizer-key";
   key.textContent = result.claveOrganizador;

@@ -1,8 +1,9 @@
-// POST /api/colectas/:id/entregas { item, cantidad, lugar, fotoHash } → evento DELIVERY en el topic de la colecta.
+// POST /api/colectas/:id/entregas { item, cantidad, lugar, fotoHash, clave } → evento DELIVERY en el topic de la colecta.
 // Qué se entregó, cuánto y dónde (un centro o un barrio, nunca el nombre de una persona) y la huella SHA-256
 // de una foto que queda en poder de la organización. Idea sugerida por Henry Tong (16/10).
+// Solo el organizador: misma clave que para los gastos.
 import { publicarEvento } from "../../../hedera/colectas.js";
-import { json, error, leerCuerpo, buscarColecta, esperarEnMirror } from "../../_comun.js";
+import { json, error, leerCuerpo, buscarColecta, esperarEnMirror, rechazoOrganizador } from "../../_comun.js";
 
 const limpio = (s, max) => String(s || "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, max);
 
@@ -12,6 +13,8 @@ export default async function handler(req, res) {
     const colecta = await buscarColecta(req.query.id);
     if (!colecta) return error(res, 404, "No existe una colecta con ese identificador.");
     const b = await leerCuerpo(req);
+    const rechazo = rechazoOrganizador(colecta, b.clave);
+    if (rechazo) return error(res, ...rechazo);
     const item = limpio(b.item, 80);
     const lugar = limpio(b.lugar, 80);
     const cantidad = Math.round(Number(b.cantidad));
