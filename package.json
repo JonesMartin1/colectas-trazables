@@ -1,0 +1,23 @@
+{
+  "name": "colectas-trazables",
+  "version": "1.0.0",
+  "description": "Colectas trazables en Hedera (NEA Tech 2026)",
+  "scripts": {
+    "setup": "node hedera/setup.js",
+    "registro": "node hedera/crear-registro.js",
+    "probar": "node hedera/probar.js",
+    "pagar": "node hedera/pagar.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@hashgraph/hedera-agent-kit": "^4.1.0",
+    "@hashgraph/sdk": "^2.81.0",
+    "dotenv": "^18.0.8"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

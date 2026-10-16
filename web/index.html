@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="es-AR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Colectas Trazables</title></head>
+<body>
+  <h1>Colectas Trazables</h1>
+  <p>En construcción (issue #3). Estado de la API: <span id="estado">consultando…</span></p>
+  <script>
+    fetch("/api/salud").then(r => r.json()).then(d => {
+      document.getElementById("estado").textContent = d.ok ? `conectada a Hedera ${d.red}, ${d.colectas} colectas en el registro` : `error: ${d.error}`;
+    }).catch(() => { document.getElementById("estado").textContent = "sin respuesta"; });
+  </script>
+</body>
+</html>

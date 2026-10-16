@@ -8,9 +8,8 @@ Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan complet
 
 | Parte | Estado |
 | --- | --- |
-| Base en Hedera: token, cuentas, topic, transferencia y verificación en el Mirror Node (`hedera/`) | Hecha |
-| Crear colecta (topic con `submitKey`, link y QR) | Por hacer |
-| Donación en USDC con su evento DONATION | Por adaptar desde `hedera/pagar.js` |
+| Módulo de Hedera: registro de colectas, topic por colecta con `submitKey`, donación en USDC, eventos y lectura desde el Mirror Node (`hedera/colectas.js`) | Hecho y probado en testnet |
+| API en Vercel (`api/`) | Por hacer (issue #2) |
 | Gasto con hash de factura, CUIT y CAE (EXPENSE) | Por hacer |
 | Página pública con balance y "verificá tu donación" | Por hacer |
 | Mercado Pago sandbox (webhook y DONATION) | Si sobra tiempo |
@@ -20,11 +19,12 @@ Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan complet
 Requisitos: Node 20 o más y una cuenta ECDSA de testnet de [portal.hedera.com](https://portal.hedera.com).
 
 ```bash
-cd hedera
 npm install
 cp .env.example .env          # completar HEDERA_ACCOUNT_ID y HEDERA_PRIVATE_KEY
-npm run setup                 # una sola vez: crea cuentas, token USDCd y topic; guarda los IDs en estado.json
-npm run pagar -- 123 25.50    # pago de prueba: el neto al destinatario y el 0,5 % a la plataforma, más el registro en el topic
+npm run setup                 # una sola vez: crea las cuentas de prueba, el token USDCd y un topic (hedera/estado.json)
+npm run registro              # una sola vez: crea el topic de registro de colectas
+npm run probar                # de punta a punta: colecta, donación en USDC, gasto y lectura desde el Mirror Node
+npx vercel dev                # web + API en http://localhost:3000 (GET /api/salud para probar)
 ```
 
 Cada paso imprime su link de HashScan.
@@ -37,6 +37,9 @@ Las claves de las cuentas de prueba quedan en `.cuentas.json`, que no se sube.
 
 | Qué | ID | HashScan |
 | --- | --- | --- |
+| Topic de registro de colectas | 0.0.11051457 | https://hashscan.io/testnet/topic/0.0.11051457 |
+| Colecta de prueba (topic) | 0.0.11051460 | https://hashscan.io/testnet/topic/0.0.11051460 |
+| Donación de prueba en USDC | 0.0.10989169-1792172437-238686943 | https://hashscan.io/testnet/transaction/0.0.10989169-1792172437-238686943 |
 | Cuenta de la plataforma | 0.0.10989169 | https://hashscan.io/testnet/account/0.0.10989169 |
 | Cuenta destinataria | 0.0.11041201 | https://hashscan.io/testnet/account/0.0.11041201 |
 | Cuenta donante | 0.0.11041202 | https://hashscan.io/testnet/account/0.0.11041202 |
@@ -59,7 +62,7 @@ Para no pisarse, cada uno trabaja en su carpeta:
 | Carpeta | Qué va |
 | --- | --- |
 | `hedera/` | Todo lo que habla con la red: topics, mensajes, transferencias y Mirror Node |
-| `backend/` | API: colectas, gastos y webhooks |
+| `api/` | API como funciones de Vercel: colectas, gastos y webhooks |
 | `web/` | Alta de colecta y página pública |
 
 ## Originalidad y uso de IA
