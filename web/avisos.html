@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171d1b">
+  <meta name="description" content="Avisos oficiales de la emergencia, firmados y con fecha. Nadie los puede cambiar después.">
+  <title>Avisos oficiales — Colectas Trazables</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .avisos-page{background:#26362c;color:#f1f5e9;padding:80px 0 100px;min-height:calc(100vh - 84px)}
+    .avisos-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:7%;align-items:start}
+    .avisos-copy h1{font:800 clamp(38px,4.4vw,62px)/1.08 var(--display);letter-spacing:-3px;margin:28px 0}
+    .avisos-copy h1 em{font-family:Georgia,serif;font-weight:400;color:var(--lime)}
+    .avisos-copy p{max-width:440px;color:#b8c9bb;line-height:1.7}
+    .avisos-copy .section-kicker{color:#d3e7b8}
+    .serie{margin-top:30px;background:#ffffff10;border:1px solid #ffffff22;border-radius:12px;padding:18px 20px}
+    .serie h3{font:800 16px var(--display);margin:0 0 12px}
+    .serie-row{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid #ffffff1c;padding:9px 0;font-size:14px}
+    .serie-row strong{font:800 26px var(--display);color:var(--lime)}
+    .lista{display:grid;gap:14px}
+    .aviso{background:linear-gradient(140deg,#fbfaf4,#e7e9dc);color:var(--ink);border-radius:12px;padding:20px 22px;box-shadow:inset 0 1px #fff,0 10px 0 #142218,0 18px 30px #06130c66}
+    .aviso .meta{display:flex;justify-content:space-between;gap:10px;font:700 10px/1.4 var(--body);letter-spacing:1.4px;color:#6f7f71;text-transform:uppercase}
+    .aviso h2{font:800 22px/1.2 var(--display);letter-spacing:-.6px;margin:10px 0 6px}
+    .aviso .cifras{display:flex;gap:22px;margin:10px 0}
+    .aviso .cifras div{font-size:12px;color:#5d6b60}
+    .aviso .cifras strong{display:block;font:800 30px var(--display);color:var(--ink)}
+    .aviso p{margin:6px 0;font-size:14px;line-height:1.55;color:#3d4a41}
+    .aviso .fuente{font-size:12px;color:#7a877c}
+    .aviso a{font-weight:800;text-decoration:underline;font-size:13px}
+    .badge{display:inline-block;font:800 10px/1 var(--body);letter-spacing:1.4px;padding:6px 9px;border-radius:4px;background:#2f7a45;color:#fff}
+    .badge.alerta{background:#b07600}
+    .demo-note{margin-top:22px;font-size:12px;color:#9fb2a2;line-height:1.6}
+    @media (max-width:860px){.avisos-grid{grid-template-columns:1fr}.section-wrap{width:calc(100% - 40px)}.desktop-nav{display:none}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Colectas Trazables, inicio"><span class="brand-mark"><i></i><i></i><i></i></span><span>colectas<span class="brand-light">trazables</span><small>LA SOLIDARIDAD SE VE</small></span></a>
+    <nav class="desktop-nav" aria-label="Navegación principal"><a href="/">Inicio</a><a href="/alias.html">¿Este alias es real?</a></nav>
+    <a class="nav-action" href="/">Volver al inicio <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="avisos-page">
+    <div class="section-wrap avisos-grid">
+      <div class="avisos-copy">
+        <div class="section-kicker">AVISOS OFICIALES DE LA EMERGENCIA</div>
+        <h1>Lo que dice el parte,<br><em>queda dicho.</em></h1>
+        <p>Cada aviso lo firma el organismo que lo emite y queda en Hedera con fecha. Nadie puede cambiarlo después: si una cifra se actualiza, se publica un aviso nuevo y el anterior sigue a la vista.</p>
+        <div class="serie" id="serie" hidden>
+          <h3>Cómo fue cambiando la cifra de evacuados</h3>
+          <div id="serie-rows"></div>
+        </div>
+        <p class="demo-note" id="canal">Consultando el canal en Hedera…</p>
+      </div>
+      <div class="lista" id="lista" aria-live="polite"></div>
+    </div>
+  </main>
+  <script src="/avisos-view.js" defer></script>
+</body>
+</html>

@@ -9,7 +9,8 @@
     "pagar": "node hedera/pagar.js",
     "dev": "node dev.js",
     "registro-alias": "node hedera/crear-registro-alias.js",
-    "alias": "node hedera/publicar-alias.js"
+    "alias": "node hedera/publicar-alias.js",
+    "avisos-demo": "node hedera/avisos-demo.js"
   },
   "keywords": [],
   "author": "",

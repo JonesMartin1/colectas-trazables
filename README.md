@@ -18,6 +18,7 @@ Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan complet
 | Registro de alias oficiales ("¿este alias es real?", firma 2 de 4) | Hecho: https://colectas-trazables.vercel.app/alias |
 | Entregas (qué, cuánto, dónde y la huella de una foto; sin datos personales) | Hecho |
 | Marco legal: organización obligatoria (persona jurídica, CUIT, IGPJ), regla de fotos, términos y privacidad. Detalle en [`docs/LEGAL.md`](docs/LEGAL.md) | Hecho |
+| Canal de avisos oficiales: partes firmados por Defensa Civil, con la historia de cada cifra (idea de Henry Tong) | Hecho: https://colectas-trazables.vercel.app/avisos |
 | Mercado Pago sandbox (webhook y DONATION) | Por hacer |
 | Publicación en Vercel | Hecha: https://colectas-trazables.vercel.app |
 
@@ -56,6 +57,7 @@ Las claves de las cuentas de prueba quedan en `.cuentas.json`, que no se sube.
 | Registro de alias oficiales, clave 2 de 4 (topic) | 0.0.11052767 | https://hashscan.io/testnet/topic/0.0.11052767 |
 | Alias con 1 sola firma: **rechazado por la red** (INVALID_SIGNATURE) | 0.0.10989169-1792180079-660526390 | https://hashscan.io/testnet/transaction/0.0.10989169-1792180079-660526390 |
 | Alias `colecta.itati` con 2 firmas (Defensa Civil + Cáritas): aceptado | 0.0.10989169-1792180094-808189618 | https://hashscan.io/testnet/transaction/0.0.10989169-1792180094-808189618 |
+| Canal de avisos oficiales (clave de envío: solo Defensa Civil, demo) | 0.0.11053502 | https://hashscan.io/testnet/topic/0.0.11053502 |
 | Cuenta de la plataforma | 0.0.10989169 | https://hashscan.io/testnet/account/0.0.10989169 |
 | Cuenta destinataria | 0.0.11041201 | https://hashscan.io/testnet/account/0.0.11041201 |
 | Cuenta donante | 0.0.11041202 | https://hashscan.io/testnet/account/0.0.11041202 |

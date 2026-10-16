@@ -79,7 +79,7 @@ Los datos y las fuentes están en [`NEGOCIO.md`](NEGOCIO.md), [`ANTECEDENTES.md`
 - **¿Cualquiera puede cargar gastos?** No: solo el organizador, con la clave que recibe al crear la colecta (en Hedera queda solo su hash). Próximo paso: que firme cada gasto con su propia clave, así ni la plataforma podría inventar uno.
 - **¿Qué impide que carguen un gasto falso?** La factura lleva **CAE**, que se verifica en ARCA. Además, cada donación de Mercado Pago se carga sola. Próximo paso: un agente con AI Studio que revisa cada gasto y deja su veredicto en el mismo topic.
 - **¿Y la ayuda en especie?** Ya registramos **entregas** (qué, cuánto, dónde y la huella de una foto), por sugerencia del propio Henry el 16/10. Nunca van nombres de personas: el lugar alcanza (Ley 25.326). Próximo paso: subir la foto a IPFS o al File Service de Hedera, y lotes con QR.
-- **Canal de avisos oficiales** (idea de Henry): un topic firmado por Defensa Civil con los partes de evacuados y zonas, para que las cifras no cambien sin dejar rastro. Va al roadmap.
+- **Canal de avisos oficiales** (idea de Henry, **ya hecho**): un topic que solo Defensa Civil puede firmar, con los partes de evacuados y alertas. Si una cifra cambia, se publica un aviso nuevo y el anterior queda a la vista (`/avisos`). La demo usa cifras de la prensa, con la fuente indicada.
 - **¿Hubo casos parecidos?** Sí, y por eso lo diseñamos así:
   - El Programa Mundial de Alimentos usó una blockchain privada, que en la práctica era una base de datos.
   - En Ucrania se veía la plata que entraba, pero no el gasto.
