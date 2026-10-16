@@ -66,6 +66,7 @@ Los datos y las fuentes están en [`NEGOCIO.md`](NEGOCIO.md), [`ANTECEDENTES.md`
 
 ## Para las preguntas: el minuto técnico (sobre todo para Henry Tong)
 
+- **Frases de la propia charla de Henry, para usarlas tal cual:** "Hedera es la **capa de confianza** de la economía digital". Sobre HCS: "marcas de tiempo y orden de eventos descentralizados, **registros de auditoría inmutables**… **no es una base de datos**". Y Web3 en dos palabras: "inmutabilidad y descentralización". Nunca decir "usamos Hedera como base de datos".
 - **¿Por qué no una base de datos?** Porque participan varias partes que no confían entre sí: donante, organizador y plataforma. Una base de datos la controla alguien que la puede editar. El topic se crea **sin clave de administrador**, así que ni nosotros lo podemos borrar.
 - **¿Quién puede escribir?** El registro de alias usa una **clave compartida con umbral** (por ejemplo, 2 de 4: Defensa Civil, Desarrollo Social, Cáritas y Cruz Roja). Ninguna institución sola puede colar un alias.
 - **¿Cuánto cuesta?**

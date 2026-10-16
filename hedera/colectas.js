@@ -1,5 +1,6 @@
 // Contrato 1 de docs/TAREAS.md: todo lo que el backend necesita de Hedera.
-// Hedera es la base de datos: un topic de registro con las colectas y un topic por colecta con sus eventos.
+// Sin base de datos propia: los hechos (colectas, donaciones, gastos) se registran en HCS, que no es una base de datos
+// sino un registro de auditoría con orden y fecha de consenso; se consultan desde el Mirror Node.
 import crypto from "node:crypto";
 import { PrivateKey, TopicCreateTransaction, TopicMessageSubmitTransaction, TransferTransaction } from "@hashgraph/sdk";
 import { clienteOperador, leerJson, ESTADO, CUENTAS, DECIMALES, hashscan, idTx } from "./lib.js";

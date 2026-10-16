@@ -65,7 +65,7 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 **Detalles:**
 - **Donaciones y gastos:** cada elemento trae `{ secuencia, fecha, monto, hashscan }`. Los gastos, además, `proveedorCuit` y `cae`.
 - **Comprobante del donante:** `comprobante = <referencia del pago>.<sal al azar>`. En el topic se publica solo `externalRefHash = sha256(comprobante)`. Para verificar, se recalcula el hash y se busca en los eventos.
-- **Guardado: no hay base de datos. Todo vive en Hedera.**
+- **Guardado: no usamos base de datos propia.** Los hechos se registran en HCS (que no es una base de datos: es un registro de auditoría con orden y fecha de consenso) y se consultan desde el Mirror Node.
   - Las colectas están en el topic de registro: `listarColectas()`.
   - Las donaciones y los gastos están en el topic de cada colecta: `leerEventos()`.
   - La API no guarda nada; siempre lee del Mirror Node.
