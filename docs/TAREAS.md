@@ -1,18 +1,21 @@
-# Tareas, contratos y horario (viernes 16/10)
+# Tareas, contratos y horario
 
-**La regla que manda: a las 18:20 todo está mergeado y subido. A las 19:00 cierra y no se commitea más.**
+**La entrega pasó al sábado 17/10 a las 9:30** (confirmado el 16/10). A las 8:30 todo está mergeado y subido. Después de las 9:30 no se commitea más.
+
+El pitch dura **3 minutos** y se hace cuando anuncian a los ganadores.
 
 ## Horario
 
-| Hora | Hito |
+| Cuándo | Hito |
 | --- | --- |
-| 14:45 | Cada uno lee este archivo y toma su issue |
-| 16:00 | `hedera/colectas.js` mergeado. Backend y web andando contra datos de ejemplo. Primeras entrevistas hechas. |
-| 17:00 | Integración: el flujo entero anda en una máquina (crear colecta → donar → cargar gasto → ver página pública) |
-| 17:30 | Demo publicada en Vercel. **No se agregan más funciones**: solo arreglos. |
-| 17:30–18:10 | Transacciones finales de la demo, IDs en el README y grabación del video |
-| 18:20 | Todo mergeado, deck en PDF y video subido |
-| 18:30 | Formulario enviado (forms.gle/YMJFPs919qHdH9w2A) |
+| Vie 18:00 | API y web andando contra datos de ejemplo. Primeras entrevistas hechas. |
+| Vie 20:00 | Integración: el flujo entero anda en una máquina (crear colecta → donar → cargar gasto → ver página pública) |
+| Vie 21:30 | Publicado en Vercel. Entra Mercado Pago sandbox (#6). |
+| Vie 23:00 | **No se agregan más funciones**: solo arreglos. Transacciones finales de la demo e IDs en el README. |
+| Sáb 7:30 | Video grabado y subido. Deck en PDF. |
+| Sáb 8:30 | Todo mergeado |
+| Sáb 9:00 | Formulario enviado (forms.gle/YMJFPs919qHdH9w2A) |
+| Sáb 9:30 | Cierre |
 
 ## Quién hace qué
 

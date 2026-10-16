@@ -55,7 +55,7 @@ Esta tabla se actualiza con las transacciones de la demo final.
 2. Commits chicos y descriptivos.
 3. Push de la rama y PR contra `main`. Martín revisa y mergea.
 4. **Nunca commitear `.env` ni `.cuentas.json`.** El `.gitignore` ya los excluye, pero revisá `git status` antes de cada commit.
-5. **Cierre: viernes 16/10 a las 19:00.** Después de esa hora no se commitea nada. Los PRs tienen que estar mergeados antes de las 18:20.
+5. **Cierre: sábado 17/10 a las 9:30.** Después de esa hora no se commitea nada. Los PR tienen que estar mergeados antes de las 8:30.
 
 Para no pisarse, cada uno trabaja en su carpeta:
 
