@@ -76,7 +76,8 @@ Los datos y las fuentes están en [`NEGOCIO.md`](NEGOCIO.md), [`ANTECEDENTES.md`
 - **¿Hedera es una blockchain?** Es un registro distribuido (DLT) con consenso **hashgraph** y finalidad en segundos (aBFT).
 - **¿Por qué no hay token?** Lo evaluamos y al donante no le suma nada. El reglamento pide evitar la tokenización innecesaria.
 - **¿Qué impide que carguen un gasto falso?** La factura lleva **CAE**, que se verifica en ARCA. Además, cada donación de Mercado Pago se carga sola. Próximo paso: un agente con AI Studio que revisa cada gasto y deja su veredicto en el mismo topic.
-- **¿Y la ayuda en especie?** Todavía no la cubrimos. Próxima versión: lotes con QR, donde cada entrega queda registrada.
+- **¿Y la ayuda en especie?** Ya registramos **entregas** (qué, cuánto, dónde y la huella de una foto), por sugerencia del propio Henry el 16/10. Nunca van nombres de personas: el lugar alcanza (Ley 25.326). Próximo paso: subir la foto a IPFS o al File Service de Hedera, y lotes con QR.
+- **Canal de avisos oficiales** (idea de Henry): un topic firmado por Defensa Civil con los partes de evacuados y zonas, para que las cifras no cambien sin dejar rastro. Va al roadmap.
 - **¿Hubo casos parecidos?** Sí, y por eso lo diseñamos así:
   - El Programa Mundial de Alimentos usó una blockchain privada, que en la práctica era una base de datos.
   - En Ucrania se veía la plata que entraba, pero no el gasto.
