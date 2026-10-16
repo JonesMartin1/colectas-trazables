@@ -8,7 +8,9 @@ En Argentina, las colectas por catástrofes juntan millones en horas, pero no ha
 
 ## Por qué blockchain (25 pts)
 
-La cadena no prueba que un gasto sea verdadero. Prueba que **nadie lo cambió ni lo borró después**, y con fecha cierta. Entre las partes, nadie confía en nadie:
+Hedera no es técnicamente una blockchain: es un registro distribuido (DLT) con consenso hashgraph, que funciona como una blockchain, con orden y fecha de consenso para cada mensaje. En el pitch se dice así, porque el jurado lo marcó en su charla. El título de la sección queda como lo pide el reglamento.
+
+El registro no prueba que un gasto sea verdadero. Prueba que **nadie lo cambió ni lo borró después**, y con fecha cierta. Entre las partes, nadie confía en nadie:
 
 1. **El donante no confía en la plataforma.**
    - Al donar, recibe un código de comprobante.
