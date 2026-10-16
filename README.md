@@ -13,7 +13,7 @@ Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan complet
 | Módulo de Hedera: registro de colectas, topic por colecta con `submitKey`, donación en USDC, eventos y lectura desde el Mirror Node (`hedera/colectas.js`) | Hecho y probado en testnet |
 | API en Vercel (`api/`): crear colecta, donar, registrar gasto, leer y verificar | Hecha y probada contra testnet |
 | Web (`web/`): inicio, página pública de la colecta y carga de gastos | Hecha (Facundo) |
-| Registro de alias oficiales ("¿este alias es real?") | Por hacer |
+| Registro de alias oficiales ("¿este alias es real?", firma 2 de 4) | Hecho: https://colectas-trazables.vercel.app/alias |
 | Mercado Pago sandbox (webhook y DONATION) | Por hacer |
 | Publicación en Vercel | Hecha: https://colectas-trazables.vercel.app |
 
@@ -27,6 +27,8 @@ cp .env.example .env          # completar HEDERA_ACCOUNT_ID y HEDERA_PRIVATE_KEY
 npm run setup                 # una sola vez: crea las cuentas de prueba, el token USDCd y un topic (hedera/estado.json)
 npm run registro              # una sola vez: crea el topic de registro de colectas
 npm run probar                # de punta a punta: colecta, donación en USDC, gasto y lectura desde el Mirror Node
+npm run registro-alias        # una sola vez: claves de prueba de los 4 firmantes y topic de alias con umbral 2 de 4
+npm run alias -- colecta.itati "Titular" 30-00000000-0 defensa-civil caritas   # publicar un alias con 2 firmas
 npm run dev                   # web + API en http://localhost:3000, sin Vercel (dev.js enruta /api/* a las mismas funciones)
 ```
 
@@ -46,6 +48,9 @@ Las claves de las cuentas de prueba quedan en `.cuentas.json`, que no se sube.
 | Gasto de la demo (EXPENSE, mensaje #2) | 0.0.10989169-1792179862-930293709 | https://hashscan.io/testnet/transaction/0.0.10989169-1792179862-930293709 |
 | Colecta de prueba (topic) | 0.0.11051460 | https://hashscan.io/testnet/topic/0.0.11051460 |
 | Donación de prueba en USDC | 0.0.10989169-1792172437-238686943 | https://hashscan.io/testnet/transaction/0.0.10989169-1792172437-238686943 |
+| Registro de alias oficiales, clave 2 de 4 (topic) | 0.0.11052767 | https://hashscan.io/testnet/topic/0.0.11052767 |
+| Alias con 1 sola firma: **rechazado por la red** (INVALID_SIGNATURE) | 0.0.10989169-1792180079-660526390 | https://hashscan.io/testnet/transaction/0.0.10989169-1792180079-660526390 |
+| Alias `colecta.itati` con 2 firmas (Defensa Civil + Cáritas): aceptado | 0.0.10989169-1792180094-808189618 | https://hashscan.io/testnet/transaction/0.0.10989169-1792180094-808189618 |
 | Cuenta de la plataforma | 0.0.10989169 | https://hashscan.io/testnet/account/0.0.10989169 |
 | Cuenta destinataria | 0.0.11041201 | https://hashscan.io/testnet/account/0.0.11041201 |
 | Cuenta donante | 0.0.11041202 | https://hashscan.io/testnet/account/0.0.11041202 |
