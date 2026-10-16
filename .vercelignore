@@ -7,3 +7,5 @@ node_modules
 .vercel
 .firmantes.json
 hedera/.firmantes.json
+entregables/
+video/

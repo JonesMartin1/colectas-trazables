@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<title>Colectas Trazables — para Henry Tong</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&family=Martian+Mono:wdth,wght@75..112.5,400..700&display=swap" rel="stylesheet">
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  :root {
+    --tinta:#10233a; --papel:#f5f7f6; --blanco:#ffffff; --linea:#d9e0e3; --gris:#6f7d89; --muted:#8a97a3;
+    --marca:#0b7f9e;   /* serie principal (validada) */
+    --acento:#d08a00;  /* segunda serie / referencia (validada, siempre con etiqueta) */
+    --senal:#f2c14e;   /* resaltado, no se usa como dato */
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--papel); color:var(--tinta); font:400 17px/1.45 "Atkinson Hyperlegible",sans-serif; }
+  .s { width:1280px; height:720px; padding:54px 64px 46px; position:relative; overflow:hidden; page-break-after:always; }
+  .s:last-child { page-break-after:auto; }
+  .eti { font:500 12px/1 "Martian Mono",monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--marca); margin:0 0 14px; }
+  h1,h2,h3 { font-family:"Archivo",sans-serif; margin:0; letter-spacing:-.02em; }
+  h1 { font-size:68px; font-weight:900; font-stretch:115%; line-height:1; }
+  h2 { font-size:38px; font-weight:850; font-stretch:112%; line-height:1.08; max-width:1050px; }
+  h3 { font-size:19px; font-weight:800; }
+  p { margin:0 0 10px; }
+  .pie { position:absolute; left:64px; right:64px; bottom:20px; display:flex; justify-content:space-between; font:400 11px "Martian Mono",monospace; color:var(--muted); }
+  .fuente { font-size:12.5px; color:var(--gris); }
+  mark { background:var(--senal); padding:0 3px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:44px; margin-top:28px; }
+  .carta { background:var(--blanco); border-radius:14px; padding:22px 24px; }
+  .num { font:900 64px/1 "Archivo",sans-serif; font-stretch:112%; letter-spacing:-.03em; }
+  .num-lab { font-size:15px; color:var(--gris); margin-top:8px; }
+  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:34px; }
+  .cita { border-left:4px solid var(--senal); padding:6px 0 6px 18px; font-size:22px; line-height:1.35; margin-top:34px; max-width:1020px; }
+  svg text { font-family:"Atkinson Hyperlegible",sans-serif; }
+  .mono { font-family:"Martian Mono",monospace; }
+  img.shot { width:100%; border-radius:10px; border:1px solid var(--linea); display:block; }
+  /* stack */
+  .stack { display:grid; grid-template-columns:150px 1fr; gap:10px 16px; margin-top:22px; }
+  .capa { font:700 11px/1.2 "Martian Mono",monospace; text-transform:uppercase; color:var(--muted); padding-top:12px; }
+  .fila { display:grid; gap:9px; }
+  .caja { border:1.5px solid var(--linea); border-radius:10px; padding:9px 12px; background:#fff; color:var(--muted); font-size:13px; line-height:1.3; }
+  .caja b { display:block; font:800 14.5px/1.2 "Archivo",sans-serif; color:var(--muted); }
+  .caja.si { background:var(--senal); border-color:var(--tinta); color:var(--tinta); }
+  .caja.si b { color:var(--tinta); }
+  .caja.luego { border:1.5px dashed var(--marca); color:var(--marca); }
+  .caja.luego b { color:var(--marca); }
+  .caja.red { background:var(--tinta); color:#dfe7ec; border-color:var(--tinta); text-align:center; }
+  .caja.red b { color:#fff; }
+  /* matriz */
+  table.m { border-collapse:collapse; width:100%; margin-top:24px; font-size:15px; }
+  table.m th { font:600 11.5px/1.25 "Martian Mono",monospace; text-transform:uppercase; color:var(--gris); text-align:center; padding:0 8px 10px; border-bottom:2px solid var(--tinta); }
+  table.m th:first-child { text-align:left; }
+  table.m td { padding:11px 8px; border-bottom:1px solid var(--linea); text-align:center; }
+  table.m td:first-child { text-align:left; font-weight:700; }
+  table.m tr.nos td { background:#fff6dc; border-bottom:2px solid var(--tinta); }
+  .ok,.no,.med { font:700 13px "Martian Mono",monospace; display:inline-block; min-width:92px; padding:3px 8px; border-radius:20px; }
+  .ok { background:#dff1f5; color:#0a5f76; } .no { background:#eef1f3; color:#7a8691; } .med { background:#fbefd6; color:#8a5a00; }
+  /* flujo */
+  .flujo { display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:44px; align-items:stretch; }
+  .nodo { background:#fff; border:1.5px solid var(--linea); border-radius:12px; padding:20px 20px; margin:0 26px 0 0; position:relative; font-size:17px; line-height:1.45; min-height:210px; }
+  .nodo h3 { font-size:20px; margin-bottom:10px; }
+  .nodo:not(:last-child)::after { content:"→"; position:absolute; right:-24px; top:42%; font:700 22px "Archivo"; color:var(--marca); }
+  .nodo.hed { border-color:var(--tinta); background:var(--senal); }
+  .banda { margin:26px 26px 0 0; padding:16px 20px; border-radius:10px; font-size:16.5px; }
+</style>
+</head>
+<body>
+
+<!-- 1 PORTADA -->
+<section class="s" style="display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;">
+  <div>
+    <p class="eti">NEA Tech 2026 · Track Hedera · Corrientes</p>
+    <h1>Colectas<br>Trazables</h1>
+    <p style="font:800 30px/1.15 'Archivo';font-stretch:110%;margin:22px 0 14px;">Mirá llegar tu ayuda.</p>
+    <p style="font-size:19px;max-width:520px;">La <b>capa de confianza</b> para las donaciones de emergencia: cada aporte y cada gasto quedan registrados en Hedera, y cualquiera lo puede ver gratis.</p>
+    <p class="fuente" style="margin-top:26px;">Martín, Nicolás y Facundo · github.com/JonesMartin1/colectas-trazables</p>
+  </div>
+  <div>
+    <img class="shot" src="hs-mensajes.png" alt="HashScan: mensajes del topic de una colecta de prueba">
+    <p class="fuente" style="margin-top:10px;">Registro real en testnet, hoy 14:40: una donación y un gasto en el topic <span class="mono">0.0.11051460</span>.</p>
+  </div>
+  <div class="pie"><span>Material para Henry Tong · 16/10/2026</span><span>1 / 12</span></div>
+</section>
+
+<!-- 2 EL MOMENTO -->
+<section class="s">
+  <p class="eti">El momento</p>
+  <h2>El Niño ya está en Corrientes, y la provincia pidió esto con sus palabras</h2>
+  <div class="tiles">
+    <div class="carta"><div class="num">222</div><div class="num-lab">evacuados y autoevacuados al 15/10; el Paraná entró a la capital</div></div>
+    <div class="carta"><div class="num">100 %</div><div class="num-lab">probabilidad de que siga El Niño (SMN), fuerte a muy fuerte</div></div>
+    <div class="carta"><div class="num">30</div><div class="num-lab">municipios de alta vulnerabilidad que monitorea Defensa Civil</div></div>
+    <div class="carta"><div class="num" style="font-size:52px;padding-top:6px;">20–21/10</div><div class="num-lab">cuando se espera superar los niveles de evacuación</div></div>
+  </div>
+  <p class="cita">Mesa de emergencia, Casa de Gobierno, 6/10/2026 (Secretaría General, Seguridad, Desarrollo Social, Defensa Civil, Cáritas, Cruz Roja, UNNE y otros):<br><b>"se establecerán mecanismos de transparencia y rendición de cuentas para las donaciones"</b></p>
+  <p class="fuente" style="margin-top:18px;">Fuentes: El Litoral, Infobae, Perfil, Confirmado (SMN), Corrientes Hoy. Detalle en docs/NEGOCIO.md y docs/ACTORES.md.</p>
+  <div class="pie"><span>Colectas Trazables</span><span>2 / 12</span></div>
+</section>
+
+<!-- 3 LA PLATA LLEGA RAPIDO -->
+<section class="s">
+  <p class="eti">El problema</p>
+  <h2>La solidaridad llega en horas. La prueba de adónde fue, nunca.</h2>
+  <div class="grid2" style="grid-template-columns:1.25fr .75fr;">
+    <div class="carta">
+      <h3 style="margin-bottom:4px;">Millones de pesos juntados, por campaña</h3>
+      <p class="fuente" style="margin:0 0 6px;">Una sola serie: monto recaudado y en cuánto tiempo.</p>
+      <svg id="g-plata" width="640" height="300"></svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="carta"><div class="num" style="font-size:52px;">0</div><div class="num-lab">rendiciones públicas consolidadas que encontramos de esas colectas</div></div>
+      <div class="carta"><div class="num" style="font-size:52px;">30 %</div><div class="num-lab">de los adultos donó a una organización en el último año; la desconfianza frena el resto (Cultura de Dar 2025)</div></div>
+      <div class="carta" style="font-size:15px;"><b>Bahía Blanca 2025:</b> circularon alias falsos casi iguales al oficial "bahiaxbahia".</div>
+    </div>
+  </div>
+  <p class="fuente" style="margin-top:14px;">Fuentes: Los Andes, La Capital MDP (Maratea, incendios de Corrientes 2022); Aire de Santa Fe (Gran Hermano, Bahía Blanca 2025); Chequeado; Economía Sustentable.</p>
+  <div class="pie"><span>Colectas Trazables</span><span>3 / 12</span></div>
+</section>
+
+<!-- 4 CIFRAS QUE CAMBIAN -->
+<section class="s">
+  <p class="eti">Lo que pasó este año · Venezuela, 24/6/2026</p>
+  <h2>Sin un registro con fecha, ni la cifra oficial de víctimas se puede auditar</h2>
+  <div class="grid2" style="grid-template-columns:1.3fr .7fr;">
+    <div class="carta">
+      <h3 style="margin-bottom:4px;">Muertos según el parte oficial, por fecha del parte</h3>
+      <svg id="g-vzla" width="660" height="330"></svg>
+    </div>
+    <div style="font-size:16px;">
+      <p><b>Doble terremoto de 7,2 y 7,5.</b> Lo que documentó la prensa:</p>
+      <ul style="padding-left:18px;margin:0;">
+        <li style="margin-bottom:8px;">Donaciones que solo se podían entregar en la sede de un partido; insumos retenidos y salvoconductos.</li>
+        <li style="margin-bottom:8px;">Ayuda para La Guaira que terminó en Maturín, a 400 km, según una denuncia pública.</li>
+        <li style="margin-bottom:8px;">Estafas "solidarias" con campañas armadas con IA; hasta los directorios de "ayuda verificada" eran anónimos.</li>
+        <li>Un fondo cripto que prometió trazabilidad en la red y nunca publicó un reporte.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="fuente" style="margin-top:12px;">Fuentes: Wikipedia (Terremotos de Venezuela de 2026), Infobae, La Patilla, La República (FTC), CriptoNoticias. Detalle en docs/ANTECEDENTES.md.</p>
+  <div class="pie"><span>Colectas Trazables</span><span>4 / 12</span></div>
+</section>
+
+<!-- 5 COMO FUNCIONA -->
+<section class="s">
+  <p class="eti">Cómo funciona</p>
+  <h2>La plata va directo a la organización. A Hedera va la prueba.</h2>
+  <div class="flujo">
+    <div class="nodo"><h3>1 · El vecino verifica</h3>Escribe el alias y lo ve <b>en verde</b>: oficial, firmado por Defensa Civil y Cáritas. Si es trucho, en rojo.</div>
+    <div class="nodo"><h3>2 · Dona como siempre</h3><b>Mercado Pago</b> o transferencia. Opcional: USDC desde <b>HashPack</b>. Recibe un código de comprobante.</div>
+    <div class="nodo hed"><h3>3 · Queda registrado</h3>Topic HCS por colecta: <span class="mono" style="font-size:12px;">DONATION</span> y <span class="mono" style="font-size:12px;">EXPENSE</span>, solo con hashes. Sin clave de admin.</div>
+    <div class="nodo"><h3>4 · Todos lo ven</h3>Página pública desde el <b>Mirror Node</b>: recaudado, gastado (factura con CAE de ARCA) y saldo. Leer es gratis.</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px;">
+    <div class="banda" style="background:#fff;border:1.5px solid var(--linea);"><b>Lo que no hacemos:</b> no custodiamos fondos (no somos procesador de pagos ni PSAV), no ponemos datos personales en la red, no emitimos token.</div>
+    <div class="banda" style="background:#fff;border:1.5px solid var(--linea);"><b>Lo que la red garantiza:</b> orden y fecha de consenso, y que nadie cambió ni borró un registro, ni siquiera nosotros. La factura con CAE aporta la veracidad del gasto.</div>
+  </div>
+  <div class="pie"><span>Colectas Trazables</span><span>5 / 12</span></div>
+</section>
+
+<!-- 6 STACK -->
+<section class="s">
+  <p class="eti">Uso de Hedera</p>
+  <h2>El stack de tu charla, marcado con lo que usamos</h2>
+  <div class="stack">
+    <div class="capa">Usuarios</div>
+    <div class="fila" style="grid-template-columns:repeat(3,1fr)">
+      <div class="caja si"><b>Individuals</b>Donantes y organizadores</div>
+      <div class="caja si"><b>Enterprises</b>ONG, fundaciones, RSE</div>
+      <div class="caja si"><b>Governments</b>Defensa Civil, municipios</div>
+    </div>
+    <div class="capa">Casos de uso</div>
+    <div class="fila" style="grid-template-columns:repeat(6,1fr)">
+      <div class="caja"><b>DeFi</b></div><div class="caja"><b>RWA</b></div><div class="caja"><b>ESG</b></div>
+      <div class="caja luego"><b>AI</b>roadmap</div><div class="caja"><b>Identity</b></div><div class="caja si"><b>Digital Payments</b>+ trazabilidad</div>
+    </div>
+    <div class="capa">Aceleradores</div>
+    <div class="fila" style="grid-template-columns:repeat(6,1fr)">
+      <div class="caja"><b>Stablecoin Studio</b></div><div class="caja"><b>Guardian</b></div><div class="caja"><b>Asset Tokenization</b></div>
+      <div class="caja"><b>NFT Studio</b></div><div class="caja si"><b>SDKs</b>@hashgraph/sdk (JS)</div><div class="caja luego"><b>AI Studio</b>agente auditor</div>
+    </div>
+    <div class="capa">Servicios</div>
+    <div class="fila" style="grid-template-columns:repeat(4,1fr)">
+      <div class="caja si"><b>HCS</b>Topic por colecta y registro de alias, con submitKey</div>
+      <div class="caja si"><b>HTS</b>Donación en USDC directa al beneficiario</div>
+      <div class="caja"><b>HSCS</b>No: un contrato que guarde fondos nos haría custodios</div>
+      <div class="caja si"><b>Mirrors</b>Página pública y verificación, sin costo</div>
+    </div>
+    <div class="capa">Red</div>
+    <div class="fila"><div class="caja red"><b>Hashgraph consensus</b>DLT, no blockchain: orden y fecha de consenso, finalidad en segundos (aBFT)</div></div>
+  </div>
+  <p class="fuente" style="margin-top:12px;">Amarillo: en la demo · punteado: próximo paso · blanco: no lo necesitamos, a propósito.</p>
+  <div class="pie"><span>Colectas Trazables</span><span>6 / 12</span></div>
+</section>
+
+<!-- 7 EVIDENCIA -->
+<section class="s">
+  <p class="eti">Evidencia en testnet</p>
+  <h2>Ya corre: colecta, donación, gasto y lectura desde el Mirror Node</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:22px;">
+    <div><img class="shot" src="hs-donacion.png" alt="HashScan: transferencia de 10 USDCd, SUCCESS"><p class="fuente" style="margin-top:8px;">Donación de 10 USDCd, del donante 0.0.11041202 al beneficiario 0.0.11041201: <b>SUCCESS</b>, fee cobrado <b>USD 0,0011</b>.</p></div>
+    <div><img class="shot" src="hs-mensajes.png" alt="HashScan: mensajes DONATION y EXPENSE del topic"><p class="fuente" style="margin-top:8px;">Topic de la colecta: DONATION (con externalRefHash) y EXPENSE (CUIT, CAE e invoiceHash). Solo hashes, ningún dato personal.</p></div>
+  </div>
+  <div class="carta mono" style="margin-top:18px;font-size:12.5px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px 28px;padding:14px 20px;">
+    <span>Registro de colectas · 0.0.11051457</span><span>Colecta de prueba · 0.0.11051460</span><span>Token USDCd (HTS) · 0.0.11041203</span>
+    <span>Plataforma · 0.0.10989169</span><span>Beneficiario · 0.0.11041201</span><span>Donante · 0.0.11041202</span>
+  </div>
+  <div class="pie"><span>npm run probar: alta, donación, gasto y verificación del comprobante de punta a punta</span><span>7 / 12</span></div>
+</section>
+
+<!-- 8 COSTO -->
+<section class="s">
+  <p class="eti">Costo</p>
+  <h2>Auditar es gratis. Registrar una colecta entera cuesta centavos de dólar.</h2>
+  <div class="grid2" style="grid-template-columns:1.2fr .8fr;">
+    <div class="carta">
+      <h3 style="margin-bottom:4px;">Costo de red por colecta, en USD, según la cantidad de donaciones</h3>
+      <p class="fuente" style="margin:0 0 6px;">Crear el topic (≈ 0,01) más un mensaje HCS por donación (≈ 0,0008). Tarifas fijas de docs.hedera.com.</p>
+      <svg id="g-costo" width="620" height="300"></svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="carta"><div class="num">USD 0</div><div class="num-lab">leer desde el Mirror Node: la página pública, el Tribunal de Cuentas o la prensa no pagan nada</div></div>
+      <div class="carta"><div class="num" style="font-size:52px;">USD 0,0011</div><div class="num-lab">fee real que cobró la red por la donación en USDC de la demo (HashScan)</div></div>
+    </div>
+  </div>
+  <div class="pie"><span>Colectas Trazables</span><span>8 / 12</span></div>
+</section>
+
+<!-- 9 MATRIZ -->
+<section class="s">
+  <p class="eti">Antecedentes</p>
+  <h2>Ya se intentó. Por eso lo diseñamos distinto.</h2>
+  <table class="m">
+    <thead><tr><th>Solución</th><th>Red pública</th><th>Muestra el gasto</th><th>Donante sin cripto</th><th>Reporte legible</th><th>Frena alias falsos</th></tr></thead>
+    <tbody>
+      <tr><td>WFP Building Blocks</td><td><span class="no">✗ privada</span></td><td><span class="med">◐ interno</span></td><td><span class="ok">✓</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+      <tr><td>Donaciones cripto a Ucrania, 2022</td><td><span class="ok">✓</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="med">◐ Dune</span></td><td><span class="no">✗</span></td></tr>
+      <tr><td>Binance Charity (Turquía 2023, Venezuela 2026)</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗ usuarios</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+      <tr><td>Fondo cripto UCAB, Venezuela 2026</td><td><span class="med">◐ prometido</span></td><td><span class="med">◐ prometido</span></td><td><span class="no">✗</span></td><td><span class="no">✗ sin reporte</span></td><td><span class="no">✗</span></td></tr>
+      <tr><td>GiveTrack · Pulenta</td><td><span class="ok">✓</span></td><td><span class="med">◐</span></td><td><span class="no">✗</span></td><td><span class="med">◐</span></td><td><span class="no">✗</span></td></tr>
+      <tr class="nos"><td>Colectas Trazables</td><td><span class="ok">✓ HCS</span></td><td><span class="ok">✓ CAE</span></td><td><span class="ok">✓ MP</span></td><td><span class="ok">✓ en pesos</span></td><td><span class="med">◐ en curso</span></td></tr>
+    </tbody>
+  </table>
+  <p class="fuente" style="margin-top:14px;">Evaluación nuestra, con fuentes en docs/ANTECEDENTES.md (UN Innovation Network, MIT Tech Review, estudio de Cheesman/Princeton, Bloomberg, Elliptic, CriptoNoticias). ✓ sí · ◐ parcial · ✗ no.</p>
+  <div class="pie"><span>Colectas Trazables</span><span>9 / 12</span></div>
+</section>
+
+<!-- 10 QUIEN FIRMA -->
+<section class="s">
+  <p class="eti">Participantes · sin token, con claves</p>
+  <h2>Ninguna institución sola puede colar un alias: hacen falta 2 de 4 firmas</h2>
+  <svg id="g-firmas" width="1150" height="380" style="margin-top:18px;"></svg>
+  <p class="fuente">submitKey del topic de registro = KeyList con umbral 2 de 4. Organismos según la mesa del 6/10 y el gabinete provincial (docs/ACTORES.md); la participación de cada uno es propuesta, no acordada.</p>
+  <div class="pie"><span>Colectas Trazables</span><span>10 / 12</span></div>
+</section>
+
+<!-- 11 MODELO -->
+<section class="s">
+  <p class="eti">Modelo</p>
+  <h2>En la emergencia es gratis. Se sostiene con la transparencia de todos los días.</h2>
+  <div class="grid2" style="grid-template-columns:1.15fr .85fr;">
+    <div class="carta">
+      <h3 style="margin-bottom:4px;">Ingresos por año, en USD (escenarios, supuestos a validar)</h3>
+      <p class="fuente" style="margin:0 0 6px;">ONG USD 40/mes · municipios USD 200/mes · provincia USD 1.500/mes · RSE 1,5 % · propina opcional. <span style="color:#10233a;font-weight:700;">Línea punteada: equilibrio ≈ USD 65.000/año.</span></p>
+      <svg id="g-revenue" width="600" height="300"></svg>
+    </div>
+    <div style="font-size:16px;">
+      <h3 style="margin-bottom:10px;">Primer paso concreto</h3>
+      <ol style="padding-left:20px;margin:0 0 16px;">
+        <li style="margin-bottom:6px;">17/10: pitch y demo en testnet.</li>
+        <li style="margin-bottom:6px;">18/10: mainnet y registro de alias oficiales ya publicados.</li>
+        <li style="margin-bottom:6px;">19/10: colectas piloto gratis con 2 o 3 organizaciones de Itatí, Empedrado y la capital.</li>
+        <li>Semana del 26/10: resultados a Defensa Civil y Desarrollo Social.</li>
+      </ol>
+      <p class="fuente">El año 1 no paga sueldos: el equilibrio está cerca de USD 65.000/año. El negocio son los clientes institucionales; la emergencia es la vidriera.</p>
+    </div>
+  </div>
+  <div class="pie"><span>Colectas Trazables</span><span>11 / 12</span></div>
+</section>
+
+<!-- 12 PREGUNTAS -->
+<section class="s">
+  <p class="eti">Lo que nos gustaría consultarte</p>
+  <h2>Cuatro preguntas para tu mentoría</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px;">
+    <div class="carta"><h3>1 · Firmas institucionales</h3><p style="margin-top:8px;">¿Una <b>KeyList con umbral</b> como submitKey del topic es la mejor forma de que varias instituciones firmen el registro de alias? ¿O conviene una transacción programada (Schedule Service)?</p></div>
+    <div class="carta"><h3>2 · Agente auditor</h3><p style="margin-top:8px;">Queremos un agente con <b>Agent Kit</b> que revise cada gasto (CAE en ARCA) y deje su veredicto en el mismo topic. ¿Lo ves como caso para AI Studio o lo sumamos después?</p></div>
+    <div class="carta"><h3>3 · Escala del Mirror Node</h3><p style="margin-top:8px;">En una emergencia la página puede recibir mucho tráfico. ¿Qué límites tiene el Mirror Node público y qué recomendás para producción?</p></div>
+    <div class="carta"><h3>4 · Donación con HashPack</h3><p style="margin-top:8px;">Para la vía cripto, ¿<b>hashconnect</b> en una web estática, como en tu proyecto de contrato inteligente, o la integración de WalletConnect de Hedera?</p></div>
+  </div>
+  <p style="font:800 26px/1.2 'Archivo';margin-top:34px;">Corrientes, la provincia donde la solidaridad se ve.</p>
+  <div class="pie"><span>Martín, Nicolás y Facundo · github.com/JonesMartin1/colectas-trazables</span><span>12 / 12</span></div>
+</section>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const C = { marca:"#0b7f9e", acento:"#d08a00", tinta:"#10233a", gris:"#6f7d89", linea:"#d9e0e3", blanco:"#ffffff" };
+function el(tag, attrs, parent, text) {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (text != null) n.textContent = text;
+  if (parent) parent.appendChild(n);
+  return n;
+}
+const fmt = (n, d=0) => n.toLocaleString("es-AR", { minimumFractionDigits:d, maximumFractionDigits:d });
+
+/* Barra horizontal, una sola serie, extremo de datos redondeado (4px) y anclado a la base */
+function hbar(id, datos, { max, unidad="", dec=0, labelW=210 }) {
+  const svg = document.getElementById(id), W = +svg.getAttribute("width"), H = +svg.getAttribute("height");
+  const x0 = labelW, x1 = W - 90, fila = (H - 30) / datos.length, alto = Math.min(34, fila * 0.55);
+  // grilla recesiva
+  for (let i = 0; i <= 4; i++) {
+    const x = x0 + (x1 - x0) * i / 4;
+    el("line", { x1:x, x2:x, y1:6, y2:H-24, stroke:C.linea, "stroke-width":1 }, svg);
+    el("text", { x, y:H-6, "text-anchor":"middle", "font-size":12, fill:C.gris }, svg, fmt(max*i/4));
+  }
+  datos.forEach((d, i) => {
+    const y = 10 + i * fila + (fila - alto) / 2, w = (x1 - x0) * d.v / max;
+    el("text", { x:x0-12, y:y+alto/2-3, "text-anchor":"end", "font-size":14.5, "font-weight":700, fill:C.tinta }, svg, d.k);
+    el("text", { x:x0-12, y:y+alto/2+14, "text-anchor":"end", "font-size":12.5, fill:C.gris }, svg, d.sub || "");
+    el("path", { d:`M${x0},${y} h${w-4} a4,4 0 0 1 4,4 v${alto-8} a4,4 0 0 1 -4,4 h${-(w-4)} z`, fill:C.marca }, svg);
+    el("text", { x:x0+w+8, y:y+alto/2+5, "font-size":15, "font-weight":700, fill:C.tinta }, svg, fmt(d.v, dec) + unidad);
+  });
+}
+
+/* Barra vertical con línea de referencia opcional (misma escala, un solo eje) */
+function vbar(id, datos, { max, ref, refLabel, pre="", post="", dec=0 }) {
+  const svg = document.getElementById(id), W = +svg.getAttribute("width"), H = +svg.getAttribute("height");
+  const x0 = 58, x1 = W - 10, y0 = H - 40, y1 = 16, col = (x1 - x0) / datos.length, ancho = Math.min(90, col * 0.5);
+  const Y = v => y0 - (y0 - y1) * v / max;
+  for (let i = 0; i <= 4; i++) {
+    const v = max * i / 4, y = Y(v);
+    el("line", { x1:x0, x2:x1, y1:y, y2:y, stroke:C.linea, "stroke-width":1 }, svg);
+    el("text", { x:x0-8, y:y+4, "text-anchor":"end", "font-size":12, fill:C.gris }, svg, pre + fmt(v, max <= 10 ? 1 : 0) + post);
+  }
+  datos.forEach((d, i) => {
+    const cx = x0 + col * i + col / 2, y = Y(d.v), h = y0 - y;
+    el("path", { d:`M${cx-ancho/2},${y0} v${-(h-4)} a4,4 0 0 1 4,-4 h${ancho-8} a4,4 0 0 1 4,4 v${h-4} z`, fill:C.marca }, svg);
+    el("text", { x:cx, y:y-8, "text-anchor":"middle", "font-size":15, "font-weight":700, fill:C.tinta }, svg, pre + fmt(d.v, dec) + post);
+    el("text", { x:cx, y:y0+18, "text-anchor":"middle", "font-size":13.5, "font-weight":700, fill:C.tinta }, svg, d.k);
+    if (d.sub) el("text", { x:cx, y:y0+34, "text-anchor":"middle", "font-size":12, fill:C.gris }, svg, d.sub);
+  });
+  if (ref != null) {
+    const y = Y(ref);
+    el("line", { x1:x0, x2:x1, y1:y, y2:y, stroke:C.acento, "stroke-width":2, "stroke-dasharray":"6 5" }, svg);
+  }
+}
+
+/* Línea temporal: eje x proporcional a la fecha, línea de 2px y marcadores de 8px con anillo de superficie */
+function linea(id, puntos, extra) {
+  const svg = document.getElementById(id), W = +svg.getAttribute("width"), H = +svg.getAttribute("height");
+  const x0 = 60, x1 = W - 40, y0 = H - 40, y1 = 20, max = 8000;
+  const t = s => new Date(s + "T12:00:00").getTime();
+  const tmin = t("2026-06-24"), tmax = t("2026-09-12");
+  const X = s => x0 + (x1 - x0) * (t(s) - tmin) / (tmax - tmin), Y = v => y0 - (y0 - y1) * v / max;
+  for (let v = 0; v <= max; v += 2000) {
+    el("line", { x1:x0, x2:x1, y1:Y(v), y2:Y(v), stroke:C.linea, "stroke-width":1 }, svg);
+    el("text", { x:x0-8, y:Y(v)+4, "text-anchor":"end", "font-size":12, fill:C.gris }, svg, fmt(v));
+  }
+  [["2026-06-24","24/6"],["2026-07-15","15/7"],["2026-08-05","5/8"],["2026-08-26","26/8"],["2026-09-10","10/9"]].forEach(([d,l]) =>
+    el("text", { x:X(d), y:y0+20, "text-anchor":"middle", "font-size":12, fill:C.gris }, svg, l));
+  el("path", { d: puntos.map((p,i) => (i?"L":"M") + X(p.d) + "," + Y(p.v)).join(" "), fill:"none", stroke:C.marca, "stroke-width":2.5 }, svg);
+  puntos.forEach((p, i) => {
+    el("circle", { cx:X(p.d), cy:Y(p.v), r:6, fill:C.marca, stroke:C.blanco, "stroke-width":2 }, svg);
+    el("text", { x:X(p.d) + (i===0?10:-10), y:Y(p.v) - 12, "text-anchor": i===0 ? "start" : "end", "font-size":14, "font-weight":700, fill:C.tinta }, svg, fmt(p.v));
+  });
+  // dato no oficial, marcado aparte
+  el("circle", { cx:X(extra.d), cy:Y(extra.v), r:6, fill:C.blanco, stroke:C.acento, "stroke-width":2.5 }, svg);
+  el("text", { x:X(extra.d) - 10, y:Y(extra.v) - 12, "text-anchor":"end", "font-size":13, "font-weight":700, fill:C.tinta }, svg, fmt(extra.v) + " · " + extra.l);
+}
+
+/* Diagrama de firmantes con umbral */
+function firmas(id) {
+  const svg = document.getElementById(id);
+  const caja = (x, y, w, h, titulo, sub, estilo) => {
+    el("rect", { x, y, width:w, height:h, rx:12, fill: estilo==="hed" ? "#f2c14e" : estilo==="osc" ? C.tinta : C.blanco, stroke: estilo==="osc" ? C.tinta : estilo==="hed" ? C.tinta : C.linea, "stroke-width":1.5 }, svg);
+    el("text", { x:x+w/2, y:y+h/2-4, "text-anchor":"middle", "font-size":15.5, "font-weight":700, fill: estilo==="osc" ? "#fff" : C.tinta }, svg, titulo);
+    if (sub) el("text", { x:x+w/2, y:y+h/2+15, "text-anchor":"middle", "font-size":12.5, fill: estilo==="osc" ? "#c9d4dc" : C.gris }, svg, sub);
+  };
+  const flecha = (xA, yA, xB, yB) => {
+    el("line", { x1:xA, y1:yA, x2:xB, y2:yB, stroke:C.marca, "stroke-width":2 }, svg);
+    const a = Math.atan2(yB-yA, xB-xA), s = 9;
+    el("path", { d:`M${xB},${yB} L${xB - s*Math.cos(a-0.45)},${yB - s*Math.sin(a-0.45)} L${xB - s*Math.cos(a+0.45)},${yB - s*Math.sin(a+0.45)} z`, fill:C.marca }, svg);
+  };
+  el("text", { x:0, y:16, "font-size":12, "font-weight":700, fill:C.gris, "letter-spacing":"1" }, svg, "FIRMANTES");
+  const f = [["Defensa Civil","alias y partes"],["Desarrollo Social","colectas oficiales"],["Cáritas","red de parroquias"],["Cruz Roja","filial Corrientes"]];
+  f.forEach((d, i) => caja(0, 30 + i*86, 230, 66, d[0], d[1]));
+  caja(330, 140, 190, 90, "Clave 2 de 4", "KeyList con umbral", "osc");
+  f.forEach((d, i) => flecha(232, 63 + i*86, 328, 185));
+  caja(610, 140, 220, 90, "Topic de registro (HCS)", "alias oficiales · sin adminKey", "hed");
+  flecha(522, 185, 608, 185);
+  el("text", { x:1150, y:16, "text-anchor":"end", "font-size":12, "font-weight":700, fill:C.gris, "letter-spacing":"1" }, svg, "VERIFICAN Y AUDITAN · LECTURA GRATIS");
+  const a = [["Banco de Corrientes","titularidad del alias"],["ARCA","CAE de cada factura"],["UNNE","observador independiente"],["Tribunal de Cuentas y prensa","vecinos · desde el Mirror Node"]];
+  a.forEach((d, i) => caja(900, 30 + i*86, 250, 66, d[0], d[1]));
+  a.forEach((d, i) => flecha(832, 185, 898, 63 + i*86));
+}
+
+hbar("g-plata", [
+  { k:"Maratea, incendios Ctes.", sub:"primera noche · 2022", v:111 },
+  { k:"Maratea, incendios Ctes.", sub:"≈ 48 horas · 2022", v:173 },
+  { k:"Gran Hermano, Bahía Blanca", sub:"una hora · 2025", v:500 },
+], { max:600, unidad:" M" });
+
+linea("g-vzla", [
+  { d:"2026-06-26", v:235 }, { d:"2026-07-08", v:3685 }, { d:"2026-07-18", v:5119 }, { d:"2026-08-11", v:6301 },
+], { d:"2026-09-10", v:7422, l:"conteo cívico" });
+
+vbar("g-costo", [
+  { k:"100", sub:"donaciones", v:0.09 }, { k:"1.000", sub:"donaciones", v:0.81 }, { k:"10.000", sub:"donaciones", v:8.01 },
+], { max:10, pre:"USD ", dec:2 });
+
+vbar("g-revenue", [
+  { k:"Año 1", sub:"Corrientes", v:34000 }, { k:"Año 2", sub:"Litoral", v:246000 }, { k:"Año 3", sub:"Argentina", v:966000 },
+], { max:1000000, ref:65000, refLabel:"equilibrio ≈ USD 65.000", pre:"" });
+
+firmas("g-firmas");
+</script>
+</body>
+</html>

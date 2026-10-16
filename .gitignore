@@ -9,3 +9,6 @@ backend/datos/
 
 .vercel
 .firmantes.json
+.frames/
+.tmp/
+exports/

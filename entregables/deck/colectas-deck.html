@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<title>Colectas Trazables — Pitch deck · NEA Tech 2026 · Track Hedera</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  :root {
+    --ink:#1a211e; --dark:#171d1b; --green:#26362c; --lime:#d8f16a; --cream:#f2f0e9; --paper:#faf9f4;
+    --line:#d9dbd2; --muted:#68726a; --sage:#789178;
+    --serie:#1f8a5c; --ref:#c27c00;   /* paleta de gráficos validada */
+    --display:"Manrope",sans-serif; --body:"DM Sans",sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font:400 17px/1.5 var(--body); color:var(--ink); background:var(--cream); }
+  .s { width:1280px; height:720px; padding:52px 64px 44px; position:relative; overflow:hidden; page-break-after:always; background:var(--cream); }
+  .s:last-child { page-break-after:auto; }
+  .s.dark { background:radial-gradient(circle at 78% 40%,#3b4b3c 0,#222b26 32%,#171d1b 70%); color:#f1f5e9; }
+  .s.green { background:var(--green); color:#f1f5e9; }
+  .k { font:700 11px/1 var(--body); letter-spacing:2.2px; text-transform:uppercase; color:var(--sage); margin:0 0 16px; display:flex; gap:14px; align-items:center; }
+  .dark .k, .green .k { color:#cfe3b6; }
+  .k .n { background:var(--lime); color:var(--ink); padding:5px 8px; border-radius:3px; letter-spacing:1px; }
+  h1,h2,h3 { font-family:var(--display); margin:0; }
+  h1 { font-weight:800; font-size:76px; line-height:1.02; letter-spacing:-4px; }
+  h2 { font-weight:800; font-size:44px; line-height:1.07; letter-spacing:-2.2px; max-width:1060px; }
+  h2 em, h1 em { font-family:Georgia,serif; font-weight:400; color:var(--sage); font-style:italic; letter-spacing:-1px; }
+  .dark h1 em, .dark h2 em, .green h2 em { color:var(--lime); }
+  h3 { font-weight:800; font-size:20px; letter-spacing:-.5px; }
+  p { margin:0 0 10px; }
+  .muted { color:var(--muted); } .dark .muted, .green .muted { color:#b8c9bb; }
+  .src { font-size:12px; color:var(--muted); } .dark .src, .green .src { color:#9fb2a2; }
+  .pie { position:absolute; left:64px; right:64px; bottom:18px; display:flex; justify-content:space-between; font-size:11px; color:var(--muted); letter-spacing:.5px; }
+  .dark .pie, .green .pie { color:#8d9d8d; }
+  .card { background:var(--paper); border:1px solid #fff; border-radius:12px; padding:20px 22px; box-shadow:inset 0 1px #fff, 0 10px 24px #2c3a2f14; }
+  .dark .card, .green .card { background:#ffffff10; border-color:#ffffff22; box-shadow:none; }
+  .num { font:800 54px/1 var(--display); letter-spacing:-2.5px; }
+  .numlab { font-size:14px; color:var(--muted); margin-top:8px; line-height:1.45; }
+  .dark .numlab { color:#b8c9bb; }
+  .grid { display:grid; gap:18px; }
+  .shot { border-radius:12px; box-shadow:0 14px 30px #0003; display:block; }
+  .phone { border-radius:26px; border:8px solid #111; box-shadow:0 20px 40px #0005; display:block; overflow:hidden; background:#111; }
+  .tag { display:inline-block; font:800 11px/1 var(--body); letter-spacing:1.4px; padding:7px 10px; border-radius:4px; background:var(--lime); color:var(--ink); }
+  .todo { background:#fff6d6; border:2px dashed #c27c00; border-radius:12px; padding:16px 18px; color:#6b4300; }
+  .todo b { color:#6b4300; }
+  table { border-collapse:collapse; width:100%; font-size:14.5px; }
+  th { text-align:left; font:700 11px/1.3 var(--body); letter-spacing:1.2px; text-transform:uppercase; color:var(--muted); border-bottom:2px solid var(--ink); padding:0 10px 8px 0; }
+  td { border-bottom:1px solid var(--line); padding:10px 10px 10px 0; vertical-align:top; }
+  .chk { color:var(--serie); font-weight:800; }
+  ul.clean { list-style:none; padding:0; margin:0; } ul.clean li { padding:7px 0 7px 26px; position:relative; } ul.clean li::before { content:"✳"; position:absolute; left:0; color:var(--sage); }
+  .dark ul.clean li::before, .green ul.clean li::before { color:var(--lime); }
+  svg text { font-family:var(--body); }
+  .step { display:flex; flex-direction:column; gap:10px; }
+  .step .sn { font:800 12px var(--body); letter-spacing:1.5px; color:var(--sage); }
+  .layer { display:grid; grid-template-columns:118px 1fr; gap:8px 12px; align-items:center; }
+  .lname { font:700 10px/1.2 var(--body); letter-spacing:1.3px; text-transform:uppercase; color:var(--muted); }
+  .boxes { display:grid; gap:7px; }
+  .bx { border:1.5px solid var(--line); border-radius:8px; padding:7px 9px; font-size:11.5px; line-height:1.25; background:#fff; color:#9aa39b; }
+  .bx b { display:block; font:800 12.5px/1.2 var(--display); color:#9aa39b; }
+  .bx.on { background:var(--lime); border-color:var(--ink); color:var(--ink); } .bx.on b { color:var(--ink); }
+  .bx.next { border-style:dashed; border-color:var(--serie); color:var(--serie); } .bx.next b { color:var(--serie); }
+  .bx.net { background:var(--dark); border-color:var(--dark); color:#cfd8cf; text-align:center; } .bx.net b { color:#fff; }
+</style>
+</head>
+<body>
+
+<!-- 1 · PORTADA -->
+<section class="s dark" style="display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center;">
+  <div>
+    <p class="k">NEA Tech 2026 · Track Hedera · Corrientes</p>
+    <h1>Colectas<br>Trazables</h1>
+    <p style="font:800 34px/1.15 var(--display);letter-spacing:-1.2px;margin:26px 0 14px;">Mirá llegar <em style="font-family:Georgia,serif;font-weight:400;color:var(--lime)">tu ayuda.</em></p>
+    <p class="muted" style="font-size:19px;max-width:560px;">La capa de confianza para las donaciones de emergencia: cada aporte, cada gasto y cada entrega quedan registrados en Hedera, y cualquiera lo puede ver gratis.</p>
+    <p style="margin-top:30px;font:700 20px var(--display);">colectas-trazables.vercel.app</p>
+    <p class="muted" style="font-size:14px;">Martín · Nicolás · Facundo · github.com/JonesMartin1/colectas-trazables</p>
+  </div>
+  <div style="display:flex;justify-content:center;"><img class="phone" src="app-colecta-hero-top.png" style="width:330px;" alt="Página de una colecta"></div>
+  <div class="pie"><span>Demo en Hedera testnet</span><span>1 / 12</span></div>
+</section>
+
+<!-- 2 · PROBLEMA -->
+<section class="s">
+  <p class="k"><span class="n">1</span> El problema</p>
+  <h2>Corrientes es solidaria. Lo que falta es <em>poder ver</em> que la ayuda llegó.</h2>
+  <div class="grid" style="grid-template-columns:1.15fr .85fr;margin-top:26px;">
+    <div class="card">
+      <h3>La plata aparece en horas, en millones de pesos</h3>
+      <svg id="g-plata" width="640" height="280"></svg>
+      <p class="src">Maratea, incendios de Corrientes 2022 (Los Andes, La Capital MDP) · Gran Hermano, Bahía Blanca 2025 (Aire de Santa Fe).</p>
+    </div>
+    <div class="grid" style="gap:14px;">
+      <div class="card"><div class="num">0</div><div class="numlab">rendiciones públicas consolidadas que encontramos de esas colectas</div></div>
+      <div class="card"><div class="num">Alias falsos</div><div class="numlab">casi iguales al oficial circularon en la inundación de Bahía Blanca 2025 (Chequeado)</div></div>
+      <div class="card"><div class="num">30 %</div><div class="numlab">de los adultos dona a organizaciones; la desconfianza frena al resto (Cultura de Dar 2025)</div></div>
+    </div>
+  </div>
+  <div class="pie"><span>Colectas Trazables</span><span>2 / 12</span></div>
+</section>
+
+<!-- 3 · VALIDACIÓN -->
+<section class="s">
+  <p class="k"><span class="n">2</span> Validación del problema</p>
+  <h2 style="font-size:36px;">No es una suposición: lo dicen los datos, la prensa y <em>el propio gobierno.</em></h2>
+  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:18px;">
+    <div class="grid" style="gap:10px;">
+      <div class="card" style="border-left:5px solid var(--lime);padding:14px 18px;">
+        <p class="src" style="margin-bottom:6px;">MESA DE EMERGENCIA · CASA DE GOBIERNO · 6/10/2026</p>
+        <p style="font:700 21px/1.35 var(--display);">"Se establecerán mecanismos de transparencia y rendición de cuentas para las donaciones."</p>
+        <p class="src">Secretaría General, Seguridad, Desarrollo Social, Defensa Civil, Cáritas, Cruz Roja, UNNE (Corrientes Hoy).</p>
+      </div>
+      <div class="card" style="padding:14px 18px;">
+        <h3 style="margin-bottom:6px;">El Niño, hoy</h3>
+        <p style="font-size:15px;">222 evacuados (15/10) · el Paraná entró a la capital · Itatí y Empedrado en emergencia hídrica · 30 municipios vulnerables · pico esperado 20–21/10.</p>
+        <p class="src">El Litoral, Infobae, Perfil, SMN.</p>
+      </div>
+      <div class="card" style="padding:14px 18px;">
+        <h3 style="margin-bottom:6px;">Este año, en la región</h3>
+        <p style="font-size:15px;">Venezuela (sismo 24/6): ayuda retenida y campañas falsas. Colombia (Chocó): una colecta cuestionada y la ANDI pidió auditores.</p>
+      </div>
+    </div>
+    <div class="todo">
+      <p style="font:800 13px var(--body);letter-spacing:1.3px;">PARA COMPLETAR · ENTREVISTAS</p>
+      <p style="font-size:15px;"><b>Organizadores y ONG:</b> [N] entrevistas. Cita: "[…]"</p>
+      <p style="font-size:15px;"><b>Donantes:</b> [N] entrevistas. Cita: "[…]"</p>
+      <p style="font-size:15px;"><b>Defensa Civil / municipio:</b> [N]. Cita: "[…]"</p>
+      <p style="font-size:13px;margin-top:14px;">Preguntas guía en docs/NEGOCIO.md §9. Reemplazar este recuadro por los datos reales antes de exportar.</p>
+    </div>
+  </div>
+  <div class="pie"><span>Colectas Trazables</span><span>3 / 12</span></div>
+</section>
+
+<!-- 4 · SOLUCIÓN -->
+<section class="s">
+  <p class="k"><span class="n">3</span> La solución</p>
+  <h2>Cuatro momentos, <em>una sola historia.</em></h2>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-top:24px;align-items:start;">
+    <div class="step"><span class="sn">01 · ANTES DE DONAR</span><img class="shot" src="app-alias-ok.png" style="width:100%;height:330px;object-fit:cover;object-position:0 78%;"><p style="font-size:14px;"><b>¿Este alias es real?</b> Oficial, firmado por 2 de 4 instituciones. Si es una imitación, avisa.</p></div>
+    <div class="step"><span class="sn">02 · DONAR</span><img class="shot" src="app-donar.png" style="width:100%;height:330px;object-fit:cover;object-position:top;"><p style="font-size:14px;"><b>Doná como siempre.</b> La plata va directo a la organización; recibís un código de comprobante.</p></div>
+    <div class="step"><span class="sn">03 · EN QUÉ SE USÓ</span><img class="shot" src="app-balance.png" style="width:100%;height:330px;object-fit:cover;object-position:top;"><p style="font-size:14px;"><b>Balance público.</b> Gastos con factura y CAE verificable en ARCA.</p></div>
+    <div class="step"><span class="sn">04 · LO QUE LLEGÓ</span><img class="shot" src="app-entregas.png" style="width:100%;"><p style="font-size:14px;"><b>Entregas</b> con la huella de una foto, sin datos personales.</p></div>
+  </div>
+  <div class="pie"><span>Colectas Trazables · demo en vivo: colectas-trazables.vercel.app</span><span>4 / 12</span></div>
+</section>
+
+<!-- 5 · EVIDENCIA -->
+<section class="s">
+  <p class="k">Funciona hoy, en Hedera testnet</p>
+  <h2>Cada paso tiene su registro <em>en HashScan.</em></h2>
+  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:20px;">
+    <div><img class="shot" src="hs-mensajes.png" style="width:100%;"><p class="src" style="margin-top:8px;">Topic de una colecta: DONATION y EXPENSE, solo con hashes.</p></div>
+    <div><img class="shot" src="hs-donacion.png" style="width:100%;"><p class="src" style="margin-top:8px;">Donación en USDC: SUCCESS, fee de la red USD 0,0011.</p></div>
+  </div>
+  <table style="margin-top:14px;font-size:12.5px;">
+    <tr><td><b>Colecta de demo</b> (topic)</td><td>0.0.11053326</td><td><b>Registro de colectas</b></td><td>0.0.11051457</td></tr>
+    <tr><td><b>Registro de alias 2 de 4</b></td><td>0.0.11052767</td><td><b>Alias con 1 firma: rechazado</b></td><td>INVALID_SIGNATURE · 0.0.10989169-1792180079-660526390</td></tr>
+  </table>
+  <div class="pie"><span>Todos los IDs y links en el README del repo</span><span>5 / 12</span></div>
+</section>
+
+<!-- 6 · POR QUÉ BLOCKCHAIN -->
+<section class="s dark">
+  <p class="k"><span class="n">4</span> Por qué blockchain</p>
+  <h2>Hay tres partes que no confían entre sí. Una base de datos <em>siempre es de alguien.</em></h2>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:28px;">
+    <div class="card"><h3>El donante no confía en la plataforma</h3><p class="muted" style="margin-top:8px;font-size:15px;">Con su código encuentra su aporte en el registro público. Sin exponer sus datos.</p></div>
+    <div class="card"><h3>El público no confía en el organizador</h3><p class="muted" style="margin-top:8px;font-size:15px;">Cada gasto queda atado a una factura con CAE y cada entrega a la huella de su foto.</p></div>
+    <div class="card"><h3>Nadie confía en nosotros</h3><p class="muted" style="margin-top:8px;font-size:15px;">El topic se crea <b style="color:var(--lime)">sin clave de administrador</b>: ni nosotros podemos borrarlo. Y un alias oficial necesita <b style="color:var(--lime)">2 de 4 firmas</b>.</p></div>
+  </div>
+  <p style="margin-top:30px;font:700 22px/1.35 var(--display);max-width:1000px;">Hedera es un registro distribuido (DLT) con consenso hashgraph: orden y fecha de consenso, finalidad en segundos. No prueba que un gasto sea verdadero: prueba que <span style="background:var(--lime);color:var(--ink);padding:0 6px;">nadie lo cambió después</span>.</p>
+  <div class="pie"><span>Colectas Trazables</span><span>6 / 12</span></div>
+</section>
+
+<!-- 7 · EQUIPO -->
+<section class="s">
+  <p class="k"><span class="n">5</span> Equipo</p>
+  <h2>Tres personas de Corrientes, <em>construyendo para Corrientes.</em></h2>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:34px;">
+    <div class="card"><div class="num" style="font-size:40px;">Martín</div><p class="numlab">Producto, integración con Hedera, API, negocio y marco legal.</p></div>
+    <div class="card"><div class="num" style="font-size:40px;">Facundo</div><p class="numlab">Diseño y desarrollo de la web: inicio, página pública de la colecta y carga de gastos.</p></div>
+    <div class="card todo" style="border-style:dashed;"><div class="num" style="font-size:40px;color:#6b4300;">Nicolás</div><p class="numlab" style="color:#6b4300;">[Completar su rol]</p></div>
+  </div>
+  <p class="muted" style="margin-top:28px;font-size:15px;">Uso de IA declarado: el equipo usó Claude (Anthropic) como asistente para programar, investigar y documentar. Todo el código se escribió durante el ideathon.</p>
+  <div class="pie"><span>Colectas Trazables</span><span>7 / 12</span></div>
+</section>
+
+<!-- 8 · STACK -->
+<section class="s">
+  <p class="k"><span class="n">6</span> Stack tecnológico</p>
+  <h2>El stack de Hedera, <em>marcado con lo que usamos.</em></h2>
+  <div class="grid" style="grid-template-columns:1.45fr .55fr;margin-top:20px;">
+    <div class="grid" style="gap:9px;">
+      <div class="layer"><span class="lname">Usuarios</span><div class="boxes" style="grid-template-columns:repeat(3,1fr)"><div class="bx on"><b>Personas</b>donantes</div><div class="bx on"><b>Organizaciones</b>ONG, RSE</div><div class="bx on"><b>Gobierno</b>Defensa Civil</div></div></div>
+      <div class="layer"><span class="lname">Caso de uso</span><div class="boxes" style="grid-template-columns:repeat(6,1fr)"><div class="bx"><b>DeFi</b></div><div class="bx"><b>RWA</b></div><div class="bx"><b>ESG</b></div><div class="bx next"><b>IA</b>roadmap</div><div class="bx"><b>Identity</b></div><div class="bx on"><b>Pagos</b>+ trazab.</div></div></div>
+      <div class="layer"><span class="lname">Aceleradores</span><div class="boxes" style="grid-template-columns:repeat(6,1fr)"><div class="bx"><b>Stablecoin</b></div><div class="bx"><b>Guardian</b></div><div class="bx"><b>Tokeniz.</b></div><div class="bx"><b>NFT</b></div><div class="bx on"><b>SDK JS</b></div><div class="bx next"><b>AI Studio</b></div></div></div>
+      <div class="layer"><span class="lname">Servicios</span><div class="boxes" style="grid-template-columns:repeat(4,1fr)"><div class="bx on"><b>HCS</b>colectas, alias 2 de 4</div><div class="bx on"><b>HTS</b>USDC</div><div class="bx"><b>HSCS</b>no custodiamos</div><div class="bx on"><b>Mirror Node</b>lectura gratis</div></div></div>
+      <div class="layer"><span class="lname">Red</span><div class="boxes"><div class="bx net"><b>Hashgraph consensus</b>DLT · aBFT · finalidad en segundos</div></div></div>
+      <p class="src" style="margin-top:6px;">App: HTML/JS sin build + funciones Node en Vercel · @hashgraph/sdk · KeyList con umbral · SHA-256 en el navegador.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:4px;">Costo de red por colecta</h3>
+      <p class="src">USD, según donaciones registradas</p>
+      <svg id="g-costo" width="290" height="250"></svg>
+      <p style="font:800 22px var(--display);margin-top:6px;">Leer: USD 0</p>
+    </div>
+  </div>
+  <div class="pie"><span>Colectas Trazables</span><span>8 / 12</span></div>
+</section>
+
+<!-- 9 · MODELO -->
+<section class="s">
+  <p class="k"><span class="n">7</span> Modelo de negocio</p>
+  <h2>En la emergencia es gratis. Se sostiene con <em>la transparencia de todos los días.</em></h2>
+  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:22px;">
+    <div>
+      <table>
+        <tr><th>Quién</th><th>Lo usa para</th><th>Paga</th></tr>
+        <tr><td><b>Donante</b></td><td>verificar alias y su aporte</td><td>No</td></tr>
+        <tr><td><b>ONG y fundaciones</b></td><td>rendición automática, cumplir con UIF</td><td>USD 40/mes</td></tr>
+        <tr><td><b>Municipios y provincia</b></td><td>portal de donaciones de emergencia</td><td>USD 200–1.500/mes</td></tr>
+        <tr><td><b>Empresas con RSE</b></td><td>mostrar adónde fue su aporte</td><td>1,5 % de lo donado</td></tr>
+      </table>
+      <p style="margin-top:16px;font-size:15px;"><b>Primer paso concreto:</b> colectas piloto gratis con 2 o 3 organizaciones de Itatí, Empedrado y la capital, la semana del 19/10.</p>
+      <p class="src">Legal: quien recibe es una persona jurídica (IGPJ); la plata va directo a ella (no somos PSAV); sin datos personales en la red. Detalle en docs/LEGAL.md.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:4px;">Ingresos por año (escenarios a validar)</h3>
+      <p class="src">USD · línea punteada: equilibrio ≈ USD 65.000/año</p>
+      <svg id="g-rev" width="520" height="290"></svg>
+    </div>
+  </div>
+  <div class="pie"><span>Colectas Trazables</span><span>9 / 12</span></div>
+</section>
+
+<!-- 10 · ROADMAP -->
+<section class="s green">
+  <p class="k"><span class="n">8</span> Roadmap y próximos pasos</p>
+  <h2>Lo que aprendimos y <em>lo que sigue.</em></h2>
+  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:24px;">
+    <div class="card">
+      <h3 style="margin-bottom:10px;">Aprendizajes</h3>
+      <ul class="clean" style="font-size:15px;">
+        <li>Las soluciones parecidas fallaron por mostrar solo la entrada de plata, usar redes privadas o exigir cripto al donante.</li>
+        <li>La mentoría de Henry Tong nos llevó a registrar <b>entregas</b> y a que reciban organizaciones, no personas.</li>
+        <li>La ley ordena el diseño: personas jurídicas (IGPJ), sin custodia, sin datos personales.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:10px;">Próximos pasos</h3>
+      <ul class="clean" style="font-size:15px;">
+        <li>El donante firma con su billetera (HashPack) y Mercado Pago en solo lectura.</li>
+        <li>Convenio de adhesión con los 4 firmantes del registro de alias.</li>
+        <li><b>Canal de avisos oficiales</b> de Defensa Civil en HCS (idea de Henry).</li>
+        <li>Agente auditor con <b>Hedera Agent Kit</b>: valida CAE y deja su veredicto.</li>
+        <li>Fotos en IPFS o Hedera File Service · mainnet con dictamen legal.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pie"><span>Colectas Trazables</span><span>10 / 12</span></div>
+</section>
+
+<!-- 11 · ESCALA -->
+<section class="s">
+  <p class="k">Impacto y alcance</p>
+  <h2>Piloto en Corrientes. Sirve para <em>cualquier emergencia.</em></h2>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-top:30px;">
+    <div class="card"><div class="num">30</div><div class="numlab">municipios vulnerables en Corrientes: el primer mercado</div></div>
+    <div class="card"><div class="num">5</div><div class="numlab">provincias del Litoral con El Niño: año 2</div></div>
+    <div class="card"><div class="num">&lt; 1 USD</div><div class="numlab">de red por colecta de 1.000 donaciones</div></div>
+    <div class="card"><div class="num">∞</div><div class="numlab">inundación, incendio, sismo: es el mismo protocolo, abierto</div></div>
+  </div>
+  <p style="margin-top:34px;font:700 22px/1.4 var(--display);max-width:1050px;">Pensá global, construí local: hoy son los colchones de Itatí; mañana, cualquier colecta de Latinoamérica que necesite demostrar adónde fue cada peso.</p>
+  <div class="pie"><span>Colectas Trazables</span><span>11 / 12</span></div>
+</section>
+
+<!-- 12 · CIERRE -->
+<section class="s dark" style="display:flex;flex-direction:column;justify-content:center;">
+  <p class="k">Colectas Trazables</p>
+  <h1 style="font-size:66px;">Corrientes, la provincia donde<br><em>la solidaridad se ve.</em></h1>
+  <p style="margin-top:34px;font:800 28px var(--display);">colectas-trazables.vercel.app</p>
+  <p class="muted">github.com/JonesMartin1/colectas-trazables · Martín · Nicolás · Facundo</p>
+  <div class="pie"><span>NEA Tech 2026 · Track Hedera</span><span>12 / 12</span></div>
+</section>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const C = { s:"#1f8a5c", r:"#c27c00", ink:"#1a211e", m:"#68726a", line:"#d9dbd2" };
+const el = (t, a, p, x) => { const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); if (x != null) n.textContent = x; p.appendChild(n); return n; };
+const fmt = (n, d = 0) => n.toLocaleString("es-AR", { minimumFractionDigits: d, maximumFractionDigits: d });
+function hbar(id, data, max, unit) {
+  const svg = document.getElementById(id), W = +svg.getAttribute("width"), H = +svg.getAttribute("height");
+  const x0 = 210, x1 = W - 70, row = (H - 26) / data.length, bh = 32;
+  for (let i = 0; i <= 4; i++) { const x = x0 + (x1 - x0) * i / 4; el("line", { x1:x, x2:x, y1:4, y2:H-22, stroke:C.line }, svg); el("text", { x, y:H-6, "text-anchor":"middle", "font-size":11, fill:C.m }, svg, fmt(max*i/4)); }
+  data.forEach((d, i) => { const y = 8 + i*row + (row-bh)/2, w = (x1-x0)*d.v/max;
+    el("text", { x:x0-12, y:y+bh/2-2, "text-anchor":"end", "font-size":14, "font-weight":700, fill:C.ink }, svg, d.k);
+    el("text", { x:x0-12, y:y+bh/2+14, "text-anchor":"end", "font-size":12, fill:C.m }, svg, d.s);
+    el("path", { d:`M${x0},${y} h${w-4} a4,4 0 0 1 4,4 v${bh-8} a4,4 0 0 1 -4,4 h${-(w-4)} z`, fill:C.s }, svg);
+    el("text", { x:x0+w+8, y:y+bh/2+5, "font-size":15, "font-weight":800, fill:C.ink }, svg, fmt(d.v) + unit); });
+}
+function vbar(id, data, max, o = {}) {
+  const svg = document.getElementById(id), W = +svg.getAttribute("width"), H = +svg.getAttribute("height");
+  const x0 = o.x0 || 54, x1 = W - 8, y0 = H - 40, y1 = 22, col = (x1-x0)/data.length, bw = Math.min(80, col*.5), Y = v => y0-(y0-y1)*v/max;
+  for (let i = 0; i <= 4; i++) { const v = max*i/4, y = Y(v); el("line", { x1:x0, x2:x1, y1:y, y2:y, stroke:C.line }, svg); el("text", { x:x0-6, y:y+4, "text-anchor":"end", "font-size":11, fill:C.m }, svg, fmt(v, o.dec || 0)); }
+  data.forEach((d, i) => { const cx = x0+col*i+col/2, y = Y(d.v), h = y0-y;
+    el("path", { d:`M${cx-bw/2},${y0} v${-(h-4)} a4,4 0 0 1 4,-4 h${bw-8} a4,4 0 0 1 4,4 v${h-4} z`, fill:C.s }, svg);
+    el("text", { x:cx, y:y-8, "text-anchor":"middle", "font-size":14, "font-weight":800, fill:C.ink }, svg, (o.pre||"") + fmt(d.v, o.vdec || 0));
+    el("text", { x:cx, y:y0+17, "text-anchor":"middle", "font-size":12.5, "font-weight":700, fill:C.ink }, svg, d.k);
+    el("text", { x:cx, y:y0+32, "text-anchor":"middle", "font-size":11, fill:C.m }, svg, d.s || ""); });
+  if (o.ref != null) { const y = Y(o.ref); el("line", { x1:x0, x2:x1, y1:y, y2:y, stroke:C.r, "stroke-width":2, "stroke-dasharray":"6 5" }, svg); }
+}
+hbar("g-plata", [{ k:"Maratea · Corrientes", s:"una noche · 2022", v:111 }, { k:"Maratea · Corrientes", s:"≈ 48 horas · 2022", v:173 }, { k:"Gran Hermano · Bahía Bl.", s:"una hora · 2025", v:500 }], 600, " M");
+vbar("g-costo", [{ k:"100", s:"don.", v:0.09 }, { k:"1.000", s:"don.", v:0.81 }, { k:"10.000", s:"don.", v:8.01 }], 10, { x0:40, dec:1, vdec:2 });
+vbar("g-rev", [{ k:"Año 1", s:"Corrientes", v:34000 }, { k:"Año 2", s:"Litoral", v:246000 }, { k:"Año 3", s:"Argentina", v:966000 }], 1000000, { x0:70, ref:65000 });
+</script>
+</body>
+</html>
