@@ -11,9 +11,9 @@ Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan complet
 | Módulo de Hedera: registro de colectas, topic por colecta con `submitKey`, donación en USDC, eventos y lectura desde el Mirror Node (`hedera/colectas.js`) | Hecho y probado en testnet |
 | API en Vercel (`api/`): crear colecta, donar, registrar gasto, leer y verificar | Hecha y probada contra testnet |
 | Web (`web/`): inicio, página pública de la colecta y carga de gastos | Hecha (Facundo) |
-| Gasto con hash de factura, CUIT y CAE (EXPENSE) | Por hacer |
-| Página pública con balance y "verificá tu donación" | Por hacer |
-| Mercado Pago sandbox (webhook y DONATION) | Si sobra tiempo |
+| Registro de alias oficiales ("¿este alias es real?") | Por hacer |
+| Mercado Pago sandbox (webhook y DONATION) | Por hacer |
+| Publicación en Vercel | Por hacer |
 
 ## Cómo correrlo
 
