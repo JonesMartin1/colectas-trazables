@@ -9,7 +9,7 @@ Colectas para emergencias donde cada donación, gasto, entrega y alias oficial q
 
 | Carpeta | Qué hay |
 | --- | --- |
-| `hedera/` | Todo lo que habla con la red. `colectas.js` maneja el registro de colectas, el topic por colecta, la donación USDC, los eventos y la lectura desde el Mirror Node. `alias.js` es el registro de alias con clave **2 de 4**. |
+| `hedera/` | Todo lo que habla con la red. `colectas.js` maneja el registro de colectas, el topic por colecta, la donación USDC, los eventos y la lectura desde el Mirror Node. `alias.js` es el registro de alias con clave **2 de 4**. `avisos.js` es el canal de avisos oficiales, que solo puede firmar Defensa Civil. |
 | `api/` | Funciones de Vercel, una por ruta. `_comun.js` tiene las piezas compartidas y arma la colecta a partir de los eventos. |
 | `web/` | HTML, CSS y JS sin build. La base es de **Facundo**: `app.js`, `index.html`, `colecta.html`, `gasto.html`. Lo agregado después va en archivos aparte: `alias.html` + `alias-check.js`, `entrega.html` + `entregas.js` y `terminos.html`. |
 | `dev.js` | Servidor local sin Vercel (`npm run dev`). Enruta `/api/*` a las mismas funciones. Si agregás una ruta en `api/`, sumala también a la lista `RUTAS`. |
