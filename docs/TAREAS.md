@@ -55,10 +55,11 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 | Método y ruta | Recibe | Devuelve |
 | --- | --- | --- |
 | `GET /api/colectas` | — | `[{ campaignId, titulo, meta, topicId, beneficiarioCuenta }]` |
-| `POST /api/colectas` | `{ titulo, descripcion, meta, beneficiarioCuenta }` | `{ id, topicId, url, hashscan }` |
+| `POST /api/colectas` | `{ titulo, descripcion, meta, beneficiarioCuenta }` | `{ id, topicId, url, hashscan, claveOrganizador, urlOrganizador }` |
 | `GET /api/colectas/:id` | — | `{ colecta, donaciones[], gastos[], totales: { recaudado, gastado, saldo } }` |
-| `POST /api/colectas/:id/donaciones` | `{ monto }` | `{ hashscan, comprobante }` |
-| `POST /api/colectas/:id/gastos` | `{ monto, proveedorCuit, cae, invoiceHash }` | `{ secuencia, hashscan }` |
+| `POST /api/demo/donar` | `{ campaignId, monto }` | `{ txId, hashscan, usdc }` (solo demo: la billetera de prueba paga, no registra) |
+| `POST /api/colectas/:id/donaciones` | `{ txId }` | `{ hashscan, comprobante }` (`400` si la transferencia no se verifica, `409` si ya está) |
+| `POST /api/colectas/:id/gastos` | `{ monto, proveedorCuit, cae, invoiceHash, clave }` | `{ secuencia, hashscan }` (`401` sin la clave del organizador) |
 | `GET /api/colectas/:id/verificar?comprobante=...` | — | `{ encontrada, secuencia, hashscan }` |
 | `POST /api/webhooks/mercadopago` | notificación de Mercado Pago | `200` (solo si sobra tiempo) |
 
@@ -69,6 +70,8 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
   - Las colectas están en el topic de registro: `listarColectas()`.
   - Las donaciones y los gastos están en el topic de cada colecta: `leerEventos()`.
   - La API no guarda nada; siempre lee del Mirror Node.
+- **Donación verificable:** pagar y registrar van separados. `donaciones` no acepta un monto: recibe el `txId` y lo busca en el Mirror Node. Tiene que haber salido bien, acreditado USDCd al beneficiario, llevar el memo `colecta:<id>` y no estar ya registrado. El monto sale de la red. Sin pago real, no hay donación en el registro.
+- **Gastos, solo el organizador:** al crear la colecta se genera `claveOrganizador` (se muestra una sola vez). En el evento `CAMPAIGN` va solo `orgKeyHash = sha256(clave)`. El link de organizador la lleva en el `#`. Las colectas creadas antes de este cambio no admiten gastos nuevos.
 - **Factura:** el PDF no se sube. El navegador calcula `sha256` con `crypto.subtle` y manda solo el hash (`invoiceHash`).
   - La página pública tiene un "verificá la factura": se arrastra el PDF y se compara el hash.
   - Por eso `POST /api/colectas/:id/gastos` recibe JSON (`monto`, `proveedorCuit`, `cae`, `invoiceHash`), no multipart.

@@ -103,7 +103,7 @@ function renderCampaign(data, isExample) {
   byId("colecta-mode").textContent = isExample ? "· EJEMPLO" : "· REGISTRO PÚBLICO";
   byId("sample-banner").hidden = !isExample;
   byId("donate-button").disabled = isExample;
-  byId("donate-button").innerHTML = isExample ? "Donación no disponible en el ejemplo" : 'Donar (demo USDC) <span aria-hidden="true">↗</span>';
+  byId("donate-button").innerHTML = isExample ? "Donación no disponible en el ejemplo" : 'Donar con billetera de prueba (USDC) <span aria-hidden="true">↗</span>';
   byId("topic-id").textContent = `Registro: ${campaign.topicId || "no disponible"}`;
   const totals = data.totales || {};
   byId("total-recaudado").textContent = money(totals.recaudado);
@@ -143,6 +143,31 @@ async function loadCampaign() {
   }
 }
 
+// La clave del organizador se muestra una sola vez: sin ella no se pueden cargar gastos.
+function showOrganizerKey(status, result) {
+  status.replaceChildren();
+  status.className = "form-feedback success";
+  const organizerUrl = new URL(result.urlOrganizador, location.origin).href;
+  const intro = document.createElement("span");
+  intro.textContent = "Colecta creada. Guardá esta clave: es la única forma de cargar gastos y no se puede recuperar.";
+  const key = document.createElement("code");
+  key.className = "organizer-key";
+  key.textContent = result.claveOrganizador;
+  const copy = document.createElement("button");
+  copy.type = "button";
+  copy.className = "button button-dark";
+  copy.textContent = "Copiar link de organizador";
+  copy.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(organizerUrl); copy.textContent = "Link copiado ✓"; }
+    catch { copy.textContent = "Copiá la clave a mano"; }
+  });
+  const go = document.createElement("a");
+  go.className = "button button-lime";
+  go.href = result.url;
+  go.textContent = "Ir a la colecta ↗";
+  status.append(intro, key, copy, go);
+}
+
 function setupCreate() {
   const form = byId("create-form");
   form.addEventListener("submit", async (event) => {
@@ -159,8 +184,9 @@ function setupCreate() {
     setBusy(button, true, "Creando colecta...");
     try {
       const result = await requestJSON("/api/colectas", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-      feedback(status, "Colecta creada. Abriendo su página...", "success");
-      location.href = `/colecta.html?id=${encodeURIComponent(result.id)}`;
+      form.querySelectorAll("input, textarea").forEach((el) => { el.disabled = true; });
+      button.style.display = "none"; // .button pisa el atributo hidden
+      showOrganizerKey(status, result);
     } catch (error) {
       feedback(status, `No se pudo crear la colecta: ${error.message}`, "error");
     } finally { setBusy(button, false); }
@@ -174,9 +200,14 @@ function setupDonation() {
     const status = byId("donate-feedback");
     if (!liveCampaign) return feedback(status, "Esta es una vista de ejemplo. Las donaciones se habilitan al conectar la API.", "error");
     const button = form.querySelector("button[type=submit]");
-    setBusy(button, true, "Registrando...");
+    const post = (url, body) => requestJSON(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     try {
-      const result = await requestJSON(`/api/colectas/${encodeURIComponent(campaignId)}/donaciones`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ monto: Number(new FormData(form).get("monto")) }) });
+      // 1) pagar: la billetera de prueba transfiere USDC al beneficiario (en la vida real, la billetera del donante)
+      setBusy(button, true, "Transfiriendo...");
+      const pago = await post("/api/demo/donar", { campaignId, monto: Number(new FormData(form).get("monto")) });
+      // 2) registrar: la API verifica esa transferencia en Hedera antes de anotarla
+      button.textContent = "Verificando en Hedera...";
+      const result = await post(`/api/colectas/${encodeURIComponent(campaignId)}/donaciones`, { txId: pago.txId });
       feedback(status, `Donación registrada. Guardá este comprobante: ${result.comprobante}`, "success");
       await loadCampaign();
     } catch (error) { feedback(status, error.message, "error"); }
@@ -215,6 +246,9 @@ function setupExpense() {
   byId("back-to-collection").href = url;
   byId("back-link").href = url;
   const form = byId("expense-form");
+  // el link de organizador trae la clave en el # (no viaja al servidor al abrir la página)
+  const keyFromLink = new URLSearchParams(location.hash.slice(1)).get("clave");
+  if (keyFromLink) byId("organizer-key").value = keyFromLink;
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const status = byId("expense-feedback");
@@ -225,7 +259,7 @@ function setupExpense() {
     setBusy(button, true, "Calculando y publicando...");
     try {
       const invoiceHash = await sha256File(file);
-      const payload = { monto: Number(fields.get("monto")), proveedorCuit: String(fields.get("proveedorCuit")).trim(), cae: String(fields.get("cae")).trim(), invoiceHash };
+      const payload = { monto: Number(fields.get("monto")), proveedorCuit: String(fields.get("proveedorCuit")).trim(), cae: String(fields.get("cae")).trim(), invoiceHash, clave: String(fields.get("clave")).trim() };
       const result = await requestJSON(`/api/colectas/${encodeURIComponent(campaignId)}/gastos`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       feedback(status, `Gasto publicado en el registro #${result.secuencia}. Volviendo a la colecta... `, "success");
       setTimeout(() => { location.href = url; }, 1700);

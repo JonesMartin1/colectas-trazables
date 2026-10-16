@@ -13,6 +13,7 @@ const TIPOS = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", "
 const RUTAS = [
   [/^\/api\/salud$/, "api/salud.js", []],
   [/^\/api\/alias$/, "api/alias.js", []],
+  [/^\/api\/demo\/donar$/, "api/demo/donar.js", []],
   [/^\/api\/colectas$/, "api/colectas/index.js", []],
   [/^\/api\/colectas\/([^/]+)$/, "api/colectas/[id]/index.js", ["id"]],
   [/^\/api\/colectas\/([^/]+)\/donaciones$/, "api/colectas/[id]/donaciones.js", ["id"]],

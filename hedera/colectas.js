@@ -52,17 +52,20 @@ export async function publicarEvento(topicId, evento) {
 }
 
 /** Alta de una colecta: crea su topic y la anota en el topic de registro. */
-export async function registrarColecta({ campaignId, titulo, descripcion, meta, beneficiarioCuenta }) {
+export async function registrarColecta({ campaignId, titulo, descripcion, meta, beneficiarioCuenta, orgKeyHash }) {
   const { registro } = config();
   if (!registro) throw new Error("Falta REGISTRO_TOPIC_ID (correr node hedera/crear-registro.js)");
   const topic = await crearTopicColecta({ campaignId });
-  const evento = { type: "CAMPAIGN", campaignId, titulo, descripcion, meta, beneficiarioCuenta, topicId: topic.topicId, timestamp: new Date().toISOString() };
+  const evento = { type: "CAMPAIGN", campaignId, titulo, descripcion, meta, beneficiarioCuenta, orgKeyHash, topicId: topic.topicId, timestamp: new Date().toISOString() };
   const alta = await publicarEvento(registro, evento);
   return { ...topic, registro: { ...alta, topicId: registro } };
 }
 
+/** Memo que ata una transferencia a una colecta: sin él, la misma transferencia se podría anotar en varias. */
+export const memoColecta = (campaignId) => `colecta:${campaignId}`;
+
 /** Donación en USDC de prueba: la firma la cuenta "donante" de la demo y va directo al beneficiario. */
-export async function donarUSDC({ beneficiario, monto }) {
+export async function donarUSDC({ beneficiario, monto, memo }) {
   const { token, donanteId, donanteClave } = config();
   if (!token || !donanteId || !donanteClave) throw new Error("Faltan USDC_TOKEN_ID / DEMO_DONANTE_ID / DEMO_DONANTE_KEY");
   const unidades = Math.round(Number(monto) * 10 ** DECIMALES);
@@ -71,11 +74,42 @@ export async function donarUSDC({ beneficiario, monto }) {
   const tx = new TransferTransaction()
     .addTokenTransfer(token, donanteId, -unidades)
     .addTokenTransfer(token, beneficiario, unidades)
+    .setTransactionMemo(memo ?? "")
     .freezeWith(client);
   const respuesta = await (await tx.sign(PrivateKey.fromStringDer(donanteClave))).execute(client);
   await respuesta.getReceipt(client);
   const txId = idTx(respuesta.transactionId);
   return { txId, hashscan: hashscan("transaction", txId) };
+}
+
+/** Una transacción leída del Mirror Node; espera unos segundos si todavía no llegó. null si no existe. */
+export async function leerTransaccion(txId, maxSeg = 10) {
+  for (let i = 0; i <= maxSeg; i++) {
+    const r = await fetch(`${MIRROR}/transactions/${encodeURIComponent(txId)}`);
+    if (r.ok) return (await r.json()).transactions?.[0] ?? null;
+    if (r.status !== 404) throw new Error(`Mirror Node respondió ${r.status} para ${txId}`);
+    if (i < maxSeg) await new Promise((res) => setTimeout(res, 1000));
+  }
+  return null;
+}
+
+/**
+ * Comprueba en el Mirror Node (no en nuestra palabra) que la transferencia existe, salió bien, acreditó USDCd
+ * al beneficiario y lleva el memo de la colecta. Devuelve { usdc, hashscan } o { error }.
+ */
+export async function verificarTransferencia({ txId, beneficiario, campaignId }) {
+  const { token } = config();
+  if (!token) throw new Error("Falta USDC_TOKEN_ID");
+  const tx = await leerTransaccion(txId);
+  if (!tx) return { error: "No existe esa transacción en Hedera." };
+  if (tx.result !== "SUCCESS") return { error: `La transacción no salió bien (${tx.result}).` };
+  const memo = Buffer.from(tx.memo_base64 ?? "", "base64").toString("utf8");
+  if (memo !== memoColecta(campaignId)) return { error: "La transferencia no está destinada a esta colecta (memo)." };
+  const unidades = (tx.token_transfers ?? [])
+    .filter((t) => t.token_id === token && t.account === beneficiario && t.amount > 0)
+    .reduce((s, t) => s + t.amount, 0);
+  if (!(unidades > 0)) return { error: "La transacción no le acreditó USDC al beneficiario de la colecta." };
+  return { usdc: unidades / 10 ** DECIMALES, hashscan: hashscan("transaction", tx.transaction_id) };
 }
 
 /** Eventos de un topic, en orden, leídos del Mirror Node (no de nuestra base: no tenemos). */

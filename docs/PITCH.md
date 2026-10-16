@@ -75,6 +75,8 @@ Los datos y las fuentes están en [`NEGOCIO.md`](NEGOCIO.md), [`ANTECEDENTES.md`
   - Con mucho tráfico se usa un Mirror Node pago y caché, porque el registro no cambia hacia atrás.
 - **¿Hedera es una blockchain?** Es un registro distribuido (DLT) con consenso **hashgraph** y finalidad en segundos (aBFT).
 - **¿Por qué no hay token?** Lo evaluamos y al donante no le suma nada. El reglamento pide evitar la tokenización innecesaria.
+- **¿Pueden inflar las donaciones?** No. Una donación entra al registro solo si apunta a una transferencia real en Hedera (la verificamos en el Mirror Node: que salió bien, que le llegó al beneficiario y que es para esta colecta) o a un pago real de Mercado Pago. El monto sale de la red, no de nosotros. Sin pago real, no hay donación.
+- **¿Cualquiera puede cargar gastos?** No: solo el organizador, con la clave que recibe al crear la colecta (en Hedera queda solo su hash). Próximo paso: que firme cada gasto con su propia clave, así ni la plataforma podría inventar uno.
 - **¿Qué impide que carguen un gasto falso?** La factura lleva **CAE**, que se verifica en ARCA. Además, cada donación de Mercado Pago se carga sola. Próximo paso: un agente con AI Studio que revisa cada gasto y deja su veredicto en el mismo topic.
 - **¿Y la ayuda en especie?** Todavía no la cubrimos. Próxima versión: lotes con QR, donde cada entrega queda registrada.
 - **¿Hubo casos parecidos?** Sí, y por eso lo diseñamos así:
