@@ -81,4 +81,14 @@ export async function esperarEnMirror(topicId, secuencia, maxSeg = 12) {
   return false;
 }
 
+/**
+ * Solo el organizador escribe gastos y entregas: la clave que recibió al crear la colecta tiene que coincidir
+ * con el orgKeyHash del registro (comparación en tiempo constante). Devuelve null si está bien, o [status, mensaje].
+ */
+export function rechazoOrganizador(colecta, clave) {
+  if (!/^[a-f0-9]{64}$/.test(String(colecta.orgKeyHash || ""))) return [403, "Esta colecta se creó sin clave de organizador y no admite registros nuevos."];
+  const ok = clave && crypto.timingSafeEqual(Buffer.from(sha256(String(clave)), "hex"), Buffer.from(colecta.orgKeyHash, "hex"));
+  return ok ? null : [401, "La clave del organizador no es correcta."];
+}
+
 export const esCuenta = (s) => /^0\.0\.\d+$/.test(String(s || ""));

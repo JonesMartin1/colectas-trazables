@@ -1,7 +1,8 @@
-// POST /api/colectas/:id/gastos { monto, proveedorCuit, cae, invoiceHash } → evento EXPENSE.
+// POST /api/colectas/:id/gastos { monto, proveedorCuit, cae, invoiceHash, clave } → evento EXPENSE.
+// Solo el organizador: la clave que recibió al crear la colecta tiene que coincidir con el orgKeyHash del registro.
 // El PDF nunca llega acá: el navegador calcula su SHA-256 y manda solo el hash.
 import { publicarEvento } from "../../../hedera/colectas.js";
-import { json, error, leerCuerpo, buscarColecta, esperarEnMirror } from "../../_comun.js";
+import { json, error, leerCuerpo, buscarColecta, esperarEnMirror, rechazoOrganizador } from "../../_comun.js";
 
 export default async function handler(req, res) {
   try {
@@ -9,6 +10,8 @@ export default async function handler(req, res) {
     const colecta = await buscarColecta(req.query.id);
     if (!colecta) return error(res, 404, "No existe una colecta con ese identificador.");
     const b = await leerCuerpo(req);
+    const rechazo = rechazoOrganizador(colecta, b.clave);
+    if (rechazo) return error(res, ...rechazo);
     const monto = Math.round(Number(b.monto));
     const cuit = String(b.proveedorCuit || "").replace(/\D/g, "");
     const cae = String(b.cae || "").replace(/\D/g, "");

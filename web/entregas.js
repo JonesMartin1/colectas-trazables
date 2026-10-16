@@ -24,6 +24,9 @@
     byId("back-link").href = back;
     byId("back-to-collection").href = back;
     const form = byId("delivery-form"), fb = byId("delivery-feedback");
+    // el link de organizador trae la clave en el # (no viaja al servidor al abrir la página)
+    const clave = new URLSearchParams(location.hash.slice(1)).get("clave");
+    if (clave) byId("d-clave").value = clave;
     form.addEventListener("submit", async (ev) => {
       ev.preventDefault();
       const f = new FormData(form);
@@ -33,7 +36,7 @@
       btn.disabled = true;
       fb.className = "form-feedback"; fb.textContent = "Calculando la huella y registrando…";
       try {
-        const payload = { item: f.get("item"), cantidad: Number(f.get("cantidad")), lugar: f.get("lugar"), foto: f.get("fotoRegla"), fotoHash: await sha256File(foto) };
+        const payload = { item: f.get("item"), cantidad: Number(f.get("cantidad")), lugar: f.get("lugar"), foto: f.get("fotoRegla"), fotoHash: await sha256File(foto), clave: String(f.get("clave") || "").trim() };
         const r = await fetch(`/api/colectas/${encodeURIComponent(id)}/entregas`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
         const d = await r.json();
         if (!r.ok) throw new Error(d.error || `Error ${r.status}`);

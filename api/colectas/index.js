@@ -1,7 +1,8 @@
 // GET  /api/colectas  → todas las colectas del topic de registro
 // POST /api/colectas  → crea una colecta: topic propio en HCS y alta en el registro
+import crypto from "node:crypto";
 import { listarColectas, registrarColecta } from "../../hedera/colectas.js";
-import { json, error, leerCuerpo, crearId, esCuenta, esperarEnMirror } from "../_comun.js";
+import { json, error, leerCuerpo, crearId, esCuenta, esperarEnMirror, sha256 } from "../_comun.js";
 
 export const TIPOS = ["Asociación civil", "Fundación", "Simple asociación", "Cooperadora", "Bomberos voluntarios", "Comisión vecinal", "Municipio u organismo público"];
 
@@ -31,10 +32,20 @@ export default async function handler(req, res) {
     if (cuit.length !== 11) return error(res, 400, "El CUIT de la organización tiene que tener 11 dígitos.");
     const organizador = { nombre, tipo, cuit: `${cuit.slice(0, 2)}-${cuit.slice(2, 10)}-${cuit.slice(10)}`, igpj };
     const id = crearId(titulo);
-    const alta = await registrarColecta({ campaignId: id, titulo, descripcion, meta, beneficiarioCuenta, organizador });
+    // clave del organizador: se devuelve una sola vez; en el registro queda solo su hash
+    const claveOrganizador = crypto.randomBytes(16).toString("hex");
+    const alta = await registrarColecta({ campaignId: id, titulo, descripcion, meta, beneficiarioCuenta, organizador, orgKeyHash: sha256(claveOrganizador) });
     // la colecta se busca en el registro vía Mirror Node: esperar a que aparezca antes de responder
     await esperarEnMirror(alta.registro.topicId, alta.registro.secuencia);
-    return json(res, 201, { id, topicId: alta.topicId, url: `/colecta.html?id=${encodeURIComponent(id)}`, hashscan: alta.hashscan });
+    const idUrl = encodeURIComponent(id);
+    return json(res, 201, {
+      id,
+      topicId: alta.topicId,
+      url: `/colecta.html?id=${idUrl}`,
+      hashscan: alta.hashscan,
+      claveOrganizador,
+      urlOrganizador: `/gasto.html?id=${idUrl}#clave=${claveOrganizador}`, // en el # para que no viaje al servidor
+    });
   } catch (e) {
     return error(res, 500, e.message);
   }

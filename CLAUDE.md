@@ -27,7 +27,9 @@ Colectas para emergencias donde cada donación, gasto, entrega y alias oficial q
 4. **Hedera es un registro distribuido (DLT), no una "base de datos"** ni "la blockchain de Hedera". Así lo marcó el jurado.
 5. **Nunca se commitean ni se imprimen claves:** `.env`, `hedera/.cuentas.json`, `hedera/.firmantes.json`. Están en `.gitignore` y `.vercelignore`. Antes de cada push, revisar con `git grep` que no haya claves.
 
-⚠ **La donación en USDC de la demo la firma el servidor** con una cuenta de prueba. Sirve para mostrar el registro en testnet. En producción la tiene que firmar el donante con su billetera (HashPack).
+**Pagar y registrar van separados.** `POST /api/demo/donar` es solo de la demo: una cuenta de prueba hace de billetera del donante y transfiere USDC con el memo `colecta:<id>` (en producción firma el donante con HashPack, o paga con Mercado Pago). `POST /api/colectas/:id/donaciones { txId }` registra la donación solo si el Mirror Node confirma la transferencia: tiene que haber salido bien, ir al beneficiario, llevar el memo de la colecta y no estar ya registrada. **Sin pago real, no hay donación en el registro.**
+
+**Gastos y entregas, solo el organizador:** al crear la colecta se entrega una `claveOrganizador` (una sola vez) y en `CAMPAIGN` queda solo `orgKeyHash`. Las colectas sin `orgKeyHash` no admiten registros nuevos.
 
 ## Comandos
 
