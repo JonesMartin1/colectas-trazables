@@ -2,7 +2,7 @@
 
 El guion completo se arma después. Acá se juntan los puntos que tienen que estar.
 
-El negocio completo (revenue, ley, pros y contras y plan para El Niño) está en [`NEGOCIO.md`](NEGOCIO.md).
+El negocio completo (revenue, ley, pros y contras y plan para El Niño) está en [`NEGOCIO.md`](NEGOCIO.md). Los antecedentes (Venezuela 2026 y por qué fallaron las soluciones parecidas) están en [`ANTECEDENTES.md`](ANTECEDENTES.md).
 
 **Frase de cierre:** "En la emergencia es gratis. Cobramos por la transparencia de todos los días."
 
