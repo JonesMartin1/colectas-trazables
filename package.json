@@ -6,7 +6,8 @@
     "setup": "node hedera/setup.js",
     "registro": "node hedera/crear-registro.js",
     "probar": "node hedera/probar.js",
-    "pagar": "node hedera/pagar.js"
+    "pagar": "node hedera/pagar.js",
+    "dev": "node dev.js"
   },
   "keywords": [],
   "author": "",

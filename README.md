@@ -9,7 +9,8 @@ Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan complet
 | Parte | Estado |
 | --- | --- |
 | Módulo de Hedera: registro de colectas, topic por colecta con `submitKey`, donación en USDC, eventos y lectura desde el Mirror Node (`hedera/colectas.js`) | Hecho y probado en testnet |
-| API en Vercel (`api/`) | Por hacer (issue #2) |
+| API en Vercel (`api/`): crear colecta, donar, registrar gasto, leer y verificar | Hecha y probada contra testnet |
+| Web (`web/`): inicio, página pública de la colecta y carga de gastos | Hecha (Facundo) |
 | Gasto con hash de factura, CUIT y CAE (EXPENSE) | Por hacer |
 | Página pública con balance y "verificá tu donación" | Por hacer |
 | Mercado Pago sandbox (webhook y DONATION) | Si sobra tiempo |
@@ -24,7 +25,7 @@ cp .env.example .env          # completar HEDERA_ACCOUNT_ID y HEDERA_PRIVATE_KEY
 npm run setup                 # una sola vez: crea las cuentas de prueba, el token USDCd y un topic (hedera/estado.json)
 npm run registro              # una sola vez: crea el topic de registro de colectas
 npm run probar                # de punta a punta: colecta, donación en USDC, gasto y lectura desde el Mirror Node
-npx vercel dev                # web + API en http://localhost:3000 (GET /api/salud para probar)
+npm run dev                   # web + API en http://localhost:3000, sin Vercel (dev.js enruta /api/* a las mismas funciones)
 ```
 
 Cada paso imprime su link de HashScan.

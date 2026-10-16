@@ -1,0 +1,80 @@
+// Piezas compartidas por las funciones de la API (el guion bajo evita que Vercel la publique como ruta).
+import crypto from "node:crypto";
+import { listarColectas, leerEventos, sha256 } from "../hedera/colectas.js";
+
+export { sha256 };
+
+/** Pesos por dólar para la donación de demo en USDC. Es un valor de demo, no una cotización real. */
+export const COTIZACION = Number(process.env.COTIZACION_ARS_USD) || 1400;
+
+export function json(res, status, data) {
+  res.status(status).setHeader("Content-Type", "application/json; charset=utf-8");
+  res.end(JSON.stringify(data));
+}
+
+export function error(res, status, mensaje) {
+  json(res, status, { error: mensaje });
+}
+
+export async function leerCuerpo(req) {
+  if (req.body && typeof req.body === "object") return req.body;
+  if (typeof req.body === "string") return JSON.parse(req.body || "{}");
+  const partes = [];
+  for await (const p of req) partes.push(p);
+  const texto = Buffer.concat(partes).toString("utf8");
+  return texto ? JSON.parse(texto) : {};
+}
+
+/** Identificador legible y único: "ayuda-para-itati-mg2k9x". */
+export function crearId(titulo) {
+  const base = String(titulo)
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "colecta";
+  return `${base}-${crypto.randomBytes(3).toString("hex")}`;
+}
+
+export async function buscarColecta(id) {
+  const colectas = await listarColectas();
+  return colectas.filter((c) => c.campaignId === id).pop() ?? null;
+}
+
+/** La colecta con sus donaciones, gastos y totales, todo leído del Mirror Node. */
+export async function armarColecta(colecta) {
+  const eventos = await leerEventos(colecta.topicId);
+  const donaciones = [];
+  const gastos = [];
+  for (const e of eventos) {
+    const ev = e.evento;
+    const base = { secuencia: e.secuencia, fecha: e.fecha, monto: Number(ev.amount) || 0, hashscan: ev.txHashscan || e.hashscan };
+    if (ev.type === "DONATION") donaciones.push({ ...base, metodo: ev.method, externalRefHash: ev.externalRefHash });
+    if (ev.type === "EXPENSE") gastos.push({ ...base, proveedorCuit: ev.supplierCuit, cae: ev.cae, invoiceHash: ev.invoiceHash });
+  }
+  const recaudado = donaciones.reduce((s, d) => s + d.monto, 0);
+  const gastado = gastos.reduce((s, g) => s + g.monto, 0);
+  return {
+    colecta: {
+      id: colecta.campaignId,
+      titulo: colecta.titulo,
+      descripcion: colecta.descripcion,
+      meta: colecta.meta,
+      beneficiarioCuenta: colecta.beneficiarioCuenta,
+      topicId: colecta.topicId,
+      hashscan: `https://hashscan.io/testnet/topic/${colecta.topicId}`,
+    },
+    donaciones,
+    gastos,
+    totales: { recaudado, gastado, saldo: recaudado - gastado },
+  };
+}
+
+/** Espera a que el Mirror Node muestre el mensaje recién publicado (tarda unos segundos). */
+export async function esperarEnMirror(topicId, secuencia, maxSeg = 12) {
+  for (let i = 0; i < maxSeg; i++) {
+    const eventos = await leerEventos(topicId).catch(() => []);
+    if (eventos.some((e) => e.secuencia >= secuencia)) return true;
+    await new Promise((r) => setTimeout(r, 1000));
+  }
+  return false;
+}
+
+export const esCuenta = (s) => /^0\.0\.\d+$/.test(String(s || ""));

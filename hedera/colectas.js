@@ -58,7 +58,7 @@ export async function registrarColecta({ campaignId, titulo, descripcion, meta, 
   const topic = await crearTopicColecta({ campaignId });
   const evento = { type: "CAMPAIGN", campaignId, titulo, descripcion, meta, beneficiarioCuenta, topicId: topic.topicId, timestamp: new Date().toISOString() };
   const alta = await publicarEvento(registro, evento);
-  return { ...topic, registro: alta };
+  return { ...topic, registro: { ...alta, topicId: registro } };
 }
 
 /** Donación en USDC de prueba: la firma la cuenta "donante" de la demo y va directo al beneficiario. */
