@@ -7,7 +7,9 @@
     "registro": "node hedera/crear-registro.js",
     "probar": "node hedera/probar.js",
     "pagar": "node hedera/pagar.js",
-    "dev": "node dev.js"
+    "dev": "node dev.js",
+    "registro-alias": "node hedera/crear-registro-alias.js",
+    "alias": "node hedera/publicar-alias.js"
   },
   "keywords": [],
   "author": "",

@@ -5,3 +5,5 @@ hedera/.cuentas.json
 .cuentas.json
 node_modules
 .vercel
+.firmantes.json
+hedera/.firmantes.json
