@@ -3,7 +3,7 @@
 Colectas para emergencias donde cada donación, gasto, entrega y alias oficial queda registrado en **Hedera** y cualquiera lo verifica gratis. Lema: **"Mirá llegar tu ayuda"**. Proyecto de NEA Tech 2026 (Corrientes), track Hedera. Equipo: Martín, Nicolás y Facundo.
 
 - **Demo en vivo:** https://colectas-trazables.vercel.app. Cada push a `main` despliega solo (Vercel personal de Martín).
-- **Cierre de la entrega:** sábado 17/10/2026 a las 9:30. Después no se commitea nada.
+- **Cierre de la entrega:** se anunció el cambio al sábado 17/10 a las 9:30, pero el formulario de Hedera (forms.gle/CXr9GdkbeXb6VuDV9) todavía dice viernes 16/10 a las 19:00. Después del cierre no se commitea nada.
 
 ## Cómo está armado
 
@@ -11,11 +11,11 @@ Colectas para emergencias donde cada donación, gasto, entrega y alias oficial q
 | --- | --- |
 | `hedera/` | Todo lo que habla con la red. `colectas.js` maneja el registro de colectas, el topic por colecta, la donación USDC, los eventos y la lectura desde el Mirror Node. `alias.js` es el registro de alias con clave **2 de 4**. `avisos.js` es el canal de avisos oficiales, que solo puede firmar Defensa Civil. |
 | `api/` | Funciones de Vercel, una por ruta. `_comun.js` tiene las piezas compartidas y arma la colecta a partir de los eventos. |
-| `web/` | HTML, CSS y JS sin build. La base es de **Facundo**: `app.js`, `index.html`, `colecta.html`, `gasto.html`. Lo agregado después va en archivos aparte: `alias.html` + `alias-check.js`, `entrega.html` + `entregas.js` y `terminos.html`. |
+| `web/` | HTML, CSS y JS sin build. La base es de **Facundo**: `app.js`, `index.html`, `colecta.html`, `gasto.html`. Lo agregado después va en archivos aparte: `alias.html` + `alias-check.js`, `entrega.html` + `entregas.js`, `avisos.html` + `avisos-view.js` y `terminos.html`. |
 | `dev.js` | Servidor local sin Vercel (`npm run dev`). Enruta `/api/*` a las mismas funciones. Si agregás una ruta en `api/`, sumala también a la lista `RUTAS`. |
 | `docs/` | `PLAN` (idea), `TAREAS` (contratos), `NEGOCIO`, `LEGAL`, `ACTORES` (gobierno de Corrientes), `ANTECEDENTES`, `PITCH` (guion de 3 minutos). |
 
-**Eventos de un topic de colecta:** `DONATION`, `EXPENSE`, `DELIVERY`. En el registro de colectas, `CAMPAIGN`; en el registro de alias, `ALIAS`. Cada mensaje de HCS admite hasta 1024 bytes.
+**Eventos de un topic de colecta:** `DONATION`, `EXPENSE`, `DELIVERY`. En el registro de colectas, `CAMPAIGN`; en el registro de alias, `ALIAS`; en el canal de avisos, `AVISO`. Cada mensaje de HCS admite hasta 1024 bytes.
 
 **Lectura:** siempre desde el Mirror Node, que tarda unos segundos. Después de escribir, la API espera con `esperarEnMirror` antes de responder.
 
