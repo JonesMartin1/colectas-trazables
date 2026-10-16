@@ -154,7 +154,13 @@ function setupCreate() {
       titulo: String(fields.get("titulo")).trim(),
       descripcion: String(fields.get("descripcion")).trim(),
       meta: Number(fields.get("meta")),
-      beneficiarioCuenta: String(fields.get("beneficiarioCuenta")).trim()
+      beneficiarioCuenta: String(fields.get("beneficiarioCuenta")).trim(),
+      organizador: {
+        nombre: String(fields.get("orgNombre") || "").trim(),
+        tipo: String(fields.get("orgTipo") || ""),
+        cuit: String(fields.get("orgCuit") || "").trim(),
+        igpj: String(fields.get("orgIgpj") || "").trim()
+      }
     };
     setBusy(button, true, "Creando colecta...");
     try {

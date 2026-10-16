@@ -15,6 +15,7 @@ Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan complet
 | Web (`web/`): inicio, página pública de la colecta y carga de gastos | Hecha (Facundo) |
 | Registro de alias oficiales ("¿este alias es real?", firma 2 de 4) | Hecho: https://colectas-trazables.vercel.app/alias |
 | Entregas (qué, cuánto, dónde y la huella de una foto; sin datos personales) | Hecho |
+| Marco legal: organización obligatoria (persona jurídica, CUIT, IGPJ), regla de fotos, términos y privacidad. Detalle en [`docs/LEGAL.md`](docs/LEGAL.md) | Hecho |
 | Mercado Pago sandbox (webhook y DONATION) | Por hacer |
 | Publicación en Vercel | Hecha: https://colectas-trazables.vercel.app |
 

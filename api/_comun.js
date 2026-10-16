@@ -60,6 +60,7 @@ export async function armarColecta(colecta) {
       descripcion: colecta.descripcion,
       meta: colecta.meta,
       beneficiarioCuenta: colecta.beneficiarioCuenta,
+      organizador: colecta.organizador || null,
       topicId: colecta.topicId,
       hashscan: `https://hashscan.io/testnet/topic/${colecta.topicId}`,
     },

@@ -20,6 +20,9 @@ export default async function handler(req, res) {
     if (!(cantidad > 0)) return error(res, 400, "La cantidad tiene que ser mayor que cero.");
     if (lugar.length < 2) return error(res, 400, "Indicá dónde se entregó (centro, barrio o localidad, sin nombres de personas).");
     if (!/^[a-f0-9]{64}$/.test(fotoHash)) return error(res, 400, "Falta la huella de la foto de la entrega.");
+    // Una imagen que identifica a alguien es un dato personal (Ley 25.326, Disp. 10/2015): sin caras o con consentimiento.
+    const foto = ["sin-caras", "con-consentimiento"].includes(b.foto) ? b.foto : null;
+    if (!foto) return error(res, 400, "Confirmá que la foto no muestra caras o que tenés el consentimiento de quienes aparecen.");
     const evento = {
       type: "DELIVERY",
       campaignId: colecta.campaignId,
@@ -27,6 +30,7 @@ export default async function handler(req, res) {
       quantity: cantidad,
       place: lugar,
       photoHash: fotoHash,
+      photo: foto,
       timestamp: new Date().toISOString(),
     };
     const reg = await publicarEvento(colecta.topicId, evento);

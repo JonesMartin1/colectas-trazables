@@ -33,7 +33,7 @@
       btn.disabled = true;
       fb.className = "form-feedback"; fb.textContent = "Calculando la huella y registrando…";
       try {
-        const payload = { item: f.get("item"), cantidad: Number(f.get("cantidad")), lugar: f.get("lugar"), fotoHash: await sha256File(foto) };
+        const payload = { item: f.get("item"), cantidad: Number(f.get("cantidad")), lugar: f.get("lugar"), foto: f.get("fotoRegla"), fotoHash: await sha256File(foto) };
         const r = await fetch(`/api/colectas/${encodeURIComponent(id)}/entregas`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
         const d = await r.json();
         if (!r.ok) throw new Error(d.error || `Error ${r.status}`);
@@ -60,6 +60,15 @@
     panel.append(head, list, add);
     grid.after(panel);
     fetch(`/api/colectas/${encodeURIComponent(id)}`).then((r) => r.json()).then((d) => {
+      const o = d.colecta && d.colecta.organizador;
+      const desc = byId("colecta-description");
+      if (o && desc) {
+        const org = el("p", null, "");
+        org.style.cssText = "margin-top:14px;font-size:14px;opacity:.9";
+        const b = el("strong", `Organiza: ${o.nombre}`);
+        org.append(b, ` · ${o.tipo} · CUIT ${o.cuit} · IGPJ: ${o.igpj}`);
+        desc.after(org);
+      }
       const entregas = Array.isArray(d.entregas) ? d.entregas : [];
       head.querySelector("small").textContent = `${entregas.length} ${entregas.length === 1 ? "ENTREGA" : "ENTREGAS"}`;
       if (!entregas.length) { list.append(el("p", "Todavía no hay entregas registradas.", "empty-state")); return; }
