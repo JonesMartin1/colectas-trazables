@@ -63,7 +63,8 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 | `POST /api/colectas/:id/gastos` | `{ monto, proveedorCuit, cae, invoiceHash, clave }` | `{ secuencia, hashscan }` (`401` sin la clave del organizador) |
 | `GET /api/colectas/:id/verificar?comprobante=...` | — | `{ encontrada, secuencia, hashscan }` |
 | `POST /api/colectas/:id/entregas` | `{ item, cantidad, lugar, foto, fotoHash, clave }` | `{ secuencia, hashscan }` (`401` sin la clave del organizador) |
-| `POST /api/webhooks/mercadopago` | notificación de Mercado Pago | `200` (solo si sobra tiempo) |
+| `POST /api/colectas/:id/mercadopago` | `{ monto }` | `{ url, urlPrueba }` (link de Checkout Pro; no registra nada) |
+| `POST /api/webhooks/mercadopago` | aviso de Mercado Pago (`type=payment`, `data.id`) | `200` siempre. Busca el pago en la API de MP y, si está aprobado y no se registró, publica `DONATION` con `method: "mercadopago"` y `externalRefHash = sha256("mp-<paymentId>")`. El comprobante del donante es `mp-<paymentId>`. |
 
 **Detalles:**
 - **Donaciones y gastos:** cada elemento trae `{ secuencia, fecha, monto, hashscan }`. Los gastos, además, `proveedorCuit` y `cae`.
