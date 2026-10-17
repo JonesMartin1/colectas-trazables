@@ -87,16 +87,40 @@
       const fb = document.getElementById("login-feedback");
       const boton = form.querySelector("button[type=submit]");
       let modo = "registro";
+      let heightAnimation;
       const poner = (m) => {
+        if (m === modo && form.dataset.ready) return;
+        const before = form.getBoundingClientRect().height;
+        heightAnimation?.cancel();
         modo = m;
-        tabs.forEach((t) => t.setAttribute("aria-selected", String(t.dataset.modo === m)));
+        tabs.forEach((t) => {
+          const selected = t.dataset.modo === m;
+          t.setAttribute("aria-selected", String(selected));
+          t.tabIndex = selected ? 0 : -1;
+        });
         form.querySelector(".solo-registro").hidden = m !== "registro";
         form.querySelector("#l-nombre").required = m === "registro";
         boton.firstChild.textContent = m === "registro" ? "Crear mi cuenta " : "Iniciar sesión ";
         form.querySelector("#l-clave").autocomplete = m === "registro" ? "new-password" : "current-password";
         fb.textContent = ""; fb.className = "form-feedback";
+        if (form.dataset.ready && !document.documentElement.classList.contains("a11y-reduced-motion") && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          const after = form.getBoundingClientRect().height;
+          form.style.overflow = "hidden";
+          heightAnimation = form.animate([{ height: `${before}px` }, { height: `${after}px` }], {
+            duration: 340, easing: "cubic-bezier(.22,1,.36,1)"
+          });
+          heightAnimation.onfinish = heightAnimation.oncancel = () => { form.style.overflow = ""; };
+        }
+        form.dataset.ready = "true";
       };
       tabs.forEach((t) => t.addEventListener("click", () => poner(t.dataset.modo)));
+      tabs.forEach((t) => t.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const target = event.key === "Home" ? tabs[0] : event.key === "End" ? tabs[tabs.length - 1] : tabs[t.dataset.modo === "registro" ? 1 : 0];
+        poner(target.dataset.modo);
+        target.focus();
+      }));
       form.addEventListener("submit", async (ev) => {
         ev.preventDefault();
         const f = new FormData(form);

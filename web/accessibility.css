@@ -1,0 +1,18 @@
+.accessibility-dock{position:fixed;right:20px;bottom:20px;z-index:1000;font-family:var(--display,system-ui,sans-serif)}
+.accessibility-trigger{display:grid;place-items:center;width:52px;height:52px;border:1px solid #d8f16a;border-radius:50%;background:#20372a;color:#e9ffad;box-shadow:0 8px 28px #10221966;cursor:pointer;transition:transform .22s ease,background .22s ease,box-shadow .22s ease}
+.accessibility-trigger svg{width:27px;height:27px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.accessibility-trigger:hover,.accessibility-trigger:focus-visible{transform:translateY(-4px) scale(1.06);background:#34563b;box-shadow:0 12px 32px #10221988,0 0 0 5px #d8f16a33}
+.accessibility-trigger:focus-visible,.accessibility-panel button:focus-visible{outline:3px solid #d8f16a;outline-offset:3px}
+.accessibility-panel{position:absolute;right:0;bottom:64px;width:min(300px,calc(100vw - 32px));padding:18px;border:1px solid #9bb591;border-radius:14px;background:#f7f9f1;color:#203329;box-shadow:0 18px 48px #10221970}
+.accessibility-panel[hidden]{display:none}
+.accessibility-panel h2{font:800 17px/1.2 var(--display,system-ui,sans-serif);margin:0 0 14px}
+.accessibility-panel .a11y-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0;font-size:13px;font-weight:700}
+.accessibility-panel button{border:1px solid #aebdaa;border-radius:8px;background:white;color:#203329;padding:8px 12px;font:800 12px var(--display,system-ui,sans-serif);cursor:pointer;transition:background .18s,color .18s,transform .18s,border-color .18s}
+.accessibility-panel button:hover{background:#dbeeb8;border-color:#54754e;transform:translateY(-2px)}
+.accessibility-panel button[aria-pressed="true"]{background:#264936;color:white;border-color:#264936}
+.a11y-language{display:flex;gap:5px}
+html.a11y-large :is(p,li,label,small,a,button,input,textarea,select){font-size:1.12em!important;line-height:1.55}
+html.a11y-contrast{filter:contrast(1.25) saturate(1.08)}
+html.a11y-reduced-motion *,html.a11y-reduced-motion *::before,html.a11y-reduced-motion *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+@media(prefers-reduced-motion:reduce){.accessibility-trigger,.accessibility-panel button{transition:none}}
+@media(max-width:600px){.accessibility-dock{right:14px;bottom:14px}}

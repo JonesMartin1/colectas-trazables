@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Colectas trazables en Hedera (NEA Tech 2026)",
   "scripts": {
+    "prepare": "node scripts/install-hooks.js",
+    "secrets:check": "node scripts/check-secrets.js --staged",
+    "secrets:check-all": "node scripts/check-secrets.js --tracked",
+    "test:secrets": "node --test scripts/check-secrets.test.js",
     "setup": "node hedera/setup.js",
     "registro": "node hedera/crear-registro.js",
     "probar": "node hedera/probar.js",

@@ -89,6 +89,16 @@ Esta tabla se actualiza con las transacciones de la demo final.
 4. **Nunca commitear `.env` ni `.cuentas.json`.** El `.gitignore` ya los excluye, pero revisá `git status` antes de cada commit.
 5. **Cierre: sábado 17/10 a las 9:30.** Después de esa hora no se commitea nada. Los PR tienen que estar mergeados antes de las 8:30.
 
+### Protección de secretos
+
+`npm install` activa hooks locales de Git. Antes de cada commit se revisan los archivos preparados; antes de cada push se revisan los commits salientes. GitHub Actions vuelve a revisar los commits del push y de cada PR. Los errores muestran el archivo y el tipo de hallazgo, sin imprimir el valor secreto.
+
+Si ya tenés un `core.hooksPath` propio, la instalación lo conserva. En ese caso ejecutá `npm run secrets:check` antes del commit y `npm run secrets:check-all` antes de subir cambios. También podés activar estos hooks con `npm run prepare`.
+
+Los hooks y el detector reducen errores accidentales, pero se pueden omitir y no reconocen todos los formatos. Protegé `main` exigiendo que pase el check **Revisar secretos** antes de mergear. Si una clave llegó a un commit o push, revocala o rotala: borrarla del archivo no la quita del historial de Git.
+
+`hedera/estado.json` contiene IDs públicos de testnet y sigue versionado. Si ejecutás `setup` en otro entorno, revisá el cambio antes de commitearlo.
+
 Para no pisarse, cada uno trabaja en su carpeta:
 
 | Carpeta | Qué va |

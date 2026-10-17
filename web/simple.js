@@ -212,7 +212,7 @@
     grid.addEventListener("pointerenter", () => (encima = true));
     grid.addEventListener("pointerleave", () => (encima = false));
     setInterval(() => {
-      if (encima || arrastrando || grid.contains(document.activeElement) || Date.now() - tocado < 8000 || document.hidden) return;
+      if (document.documentElement.classList.contains("a11y-reduced-motion") || encima || arrastrando || grid.contains(document.activeElement) || Date.now() - tocado < 8000 || document.hidden) return;
       const r = grid.getBoundingClientRect();
       if (r.bottom < 0 || r.top > innerHeight) return; // solo si está a la vista
       const max = grid.scrollWidth - grid.clientWidth;
