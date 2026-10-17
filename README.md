@@ -2,7 +2,7 @@
 
 Colectas para emergencias donde cada donación y cada gasto quedan registrados en Hedera. Cualquiera puede verificar adónde fue la plata, y nadie puede borrar ni editar el registro: ni el organizador ni nosotros.
 
-**Demo en vivo:** https://colectas-trazables.vercel.app · colecta de ejemplo: https://colectas-trazables.vercel.app/colecta.html?id=colchones-y-agua-para-itati-532f2d
+**Demo en vivo:** https://colectas-trazables.vercel.app · colecta de ejemplo: https://colectas-trazables.vercel.app/colecta.html?id=colchones-y-agua-para-itati-532f2d · **colecta en smart contract (podés actuar como cada rol):** https://colectas-trazables.vercel.app/nucleo
 
 **Entregables:** deck en [`entregables/colectas-deck.pdf`](entregables/colectas-deck.pdf) · video animado de 32 s en [`entregables/video/`](entregables/video/) · negocio, antecedentes, pitch y material para Hedera en [`entregables/`](entregables/).
 
@@ -19,7 +19,8 @@ Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan complet
 | Entregas (qué, cuánto, dónde y la huella de una foto; sin datos personales) | Hecho |
 | Marco legal: organización obligatoria (persona jurídica, CUIT, IGPJ), regla de fotos, términos y privacidad. Detalle en [`docs/LEGAL.md`](docs/LEGAL.md) | Hecho |
 | Canal de avisos oficiales: partes firmados por Defensa Civil, con la historia de cada cifra (idea de Henry Tong) | Hecho: https://colectas-trazables.vercel.app/avisos |
-| Mercado Pago sandbox (webhook y DONATION) | Por hacer |
+| Mercado Pago sandbox (Checkout Pro, webhook y DONATION) | Hecho, con token de prueba |
+| **Núcleo en smart contract** (`contratos/Plataforma.sol` + `Colecta.sol`): la plata vive en el contrato, sale por tramos aprobados por una entidad, cada gasto llena la barra de su ítem con su comprobante, denuncias y pausa, y si se congela vuelve a los donantes como créditos. Ver [`contratos/README.md`](contratos/README.md) | Hecho: `npm run nucleo` (49 pasos en testnet) y https://colectas-trazables.vercel.app/nucleo |
 | Publicación en Vercel | Hecha: https://colectas-trazables.vercel.app |
 
 ## Cómo correrlo
@@ -34,6 +35,7 @@ npm run registro              # una sola vez: crea el topic de registro de colec
 npm run probar                # de punta a punta: colecta, donación en USDC, gasto y lectura desde el Mirror Node
 npm run registro-alias        # una sola vez: claves de prueba de los 4 firmantes y topic de alias con umbral 2 de 4
 npm run alias -- colecta.itati "Titular" 30-00000000-0 defensa-civil caritas   # publicar un alias con 2 firmas
+npm run nucleo                # el núcleo en contrato de punta a punta: entidades, colecta, donaciones, tramos, comprobantes, fraude y créditos
 npm run dev                   # web + API en http://localhost:3000, sin Vercel (dev.js enruta /api/* a las mismas funciones)
 ```
 
@@ -71,6 +73,11 @@ Todo esto se ve en vivo en la página **Hedera en vivo** (`/hedera.html`): últi
 | Token USDCd (HTS, 6 decimales) | 0.0.11041203 | https://hashscan.io/testnet/token/0.0.11041203 |
 | Topic (HCS) | 0.0.11041205 | https://hashscan.io/testnet/topic/0.0.11041205 |
 | Transferencia de prueba | 0.0.10989169-1792102885-902378674 | https://hashscan.io/testnet/transaction/0.0.10989169-1792102885-902378674 |
+| **Núcleo:** contrato Plataforma (entidades, colectas, fondo de créditos) | 0.0.11058602 | https://hashscan.io/testnet/contract/0.0.11058602 |
+| **Núcleo:** colecta viva de la demo (contrato Colecta, titular Cáritas Itatí, aval Greenpeace) | 0.0.11058739 | https://hashscan.io/testnet/contract/0.0.11058739 |
+| **Núcleo:** colecta del recorrido completo (fraude confirmado y liquidada a créditos) | 0.0.11058607 | https://hashscan.io/testnet/contract/0.0.11058607 |
+| **Núcleo:** colecta que recibió créditos de otra (sin cobrar comisión de nuevo) | 0.0.11058623 | https://hashscan.io/testnet/contract/0.0.11058623 |
+| **Núcleo:** donación firmada desde la web en producción (5 USDCd) | 0.0.11058572-1792225050-732114206 | https://hashscan.io/testnet/transaction/0.0.11058572-1792225050-732114206 |
 
 Esta tabla se actualiza con las transacciones de la demo final.
 
