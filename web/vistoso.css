@@ -1,6 +1,7 @@
 /* Capa visual: botón de Mercado Pago, gráficos, marketplace del NEA, animaciones, hover y brillo.
    Va aparte de styles.css y pages.css (base de Facundo). Todo el movimiento respeta prefers-reduced-motion. */
-:root{--mp:#009ee3;--mp-dark:#0079b8;--glow:#d8f16a;--coral:#f08a5d;--sky:#7cc4e8}
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+:root{--display:"Space Grotesk","Manrope",sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--mp:#009ee3;--mp-dark:#0079b8;--glow:#d8f16a;--coral:#f08a5d;--sky:#7cc4e8}
 
 /* ---------- aparición al hacer scroll ---------- */
 .js-fx .reveal{opacity:0;transform:translateY(28px) scale(.98);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
@@ -226,6 +227,39 @@ body.simple .create-section{padding:70px 0}
 .aviso-cuenta{display:block;margin:0 0 14px;padding:12px 14px;border-radius:10px;background:#fff6d6;border:1px solid #f0d77a;color:#5c4a0c;font-size:13px;line-height:1.4;transition:transform .2s,box-shadow .2s}
 .aviso-cuenta:hover{transform:translateY(-2px);box-shadow:0 8px 18px #c9a52a33}
 @media(max-width:760px){.cuenta-nombre{display:none}}
+
+/* ---------- tipografía: títulos más tech, etiquetas e IDs en monoespaciada ---------- */
+h1,h2,h3,.brand{font-family:var(--display)}
+.hero h1{letter-spacing:-3px}
+.section-kicker,.eyebrow,.object-label,.object-top,.form-head,.nea-chip,.nea-body small,.chart-sub,.nea-subtitulo,.kpis span,.donut-centro span,.brand small,.step-number,.stat-card>span,.sello-hedera,.hero-note strong{font-family:var(--mono);letter-spacing:.6px}
+
+/* ---------- menú corto ---------- */
+.desktop-nav.menu-corto{gap:30px}
+.desktop-nav.menu-corto a{position:relative;padding:6px 0}
+.desktop-nav.menu-corto a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--glow);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.desktop-nav.menu-corto a:hover::after,.desktop-nav.menu-corto a[aria-current]::after{transform:scaleX(1)}
+
+/* ---------- franja "por qué Hedera" ---------- */
+.por-que{background:#141a17;border-top:1px solid #2c3530;border-bottom:1px solid #2c3530;padding:28px 0;color:#cfdacd}
+.por-que-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.por-que-grid div{border-left:2px solid var(--glow);padding:2px 0 2px 14px;font-size:13px;line-height:1.5;transition:transform .3s,border-color .3s}
+.por-que-grid div:hover{transform:translateY(-3px);border-color:#fff}
+.por-que-grid b{display:block;color:#fff;font:700 17px var(--display);margin-bottom:4px}
+@media(max-width:900px){.por-que-grid{grid-template-columns:1fr 1fr}}
+
+/* ---------- cómo funciona compacto ---------- */
+#como-funciona.compacto{padding-top:56px;padding-bottom:56px}
+#como-funciona.compacto .step-art{display:none}
+#como-funciona.compacto .intro-heading{margin:14px 0 24px}
+#como-funciona.compacto .step-card h3{margin:14px 0 6px}
+#como-funciona.compacto .step-card p{margin:0}
+
+/* ---------- sello de Hedera en la colecta ---------- */
+.sello-hedera{display:inline-flex;align-items:center;gap:6px;background:#d8f16a1c;border:1px solid #d8f16a66;color:var(--glow);border-radius:999px;padding:7px 13px;font-size:11px;transition:all .25s}
+.sello-hedera:hover{background:var(--glow);color:var(--ink);box-shadow:0 0 22px #d8f16a77}
+
+/* crear colecta en su propia página */
+body[data-page="crear"] .create-section{padding:60px 0 80px}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}

@@ -62,9 +62,8 @@
     const grid = seccion.querySelector("#nea-causas");
     const lista = CAUSAS.filter((c) => (filtro === "Todas" || c.cat === filtro) && coincide(c.titulo, c.texto, c.prov, c.cat, c.tags));
     grid.innerHTML = lista.length
-      ? lista.map((c) => tarjeta({ chip: "CAUSA DE EJEMPLO", icono: c.icono, fondo: c.fondo, sobre: `${c.cat.toUpperCase()} · ${c.prov.toUpperCase()}`, titulo: c.titulo, cuerpo: c.texto, tags: c.tags, recaudado: Math.round(c.meta * c.avance), meta: c.meta, accion: "Crear una colecta para esta causa", href: `#crear` })).join("")
+      ? lista.map((c) => tarjeta({ chip: "CAUSA DE EJEMPLO", icono: c.icono, fondo: c.fondo, sobre: `${c.cat.toUpperCase()} · ${c.prov.toUpperCase()}`, titulo: c.titulo, cuerpo: c.texto, tags: c.tags, recaudado: Math.round(c.meta * c.avance), meta: c.meta, accion: "Crear una colecta para esta causa", href: `/crear.html?${new URLSearchParams({ titulo: c.titulo, desc: c.texto, meta: c.meta })}` })).join("")
       : '<p class="nea-vacio">No hay causas con ese filtro.</p>';
-    grid.querySelectorAll(".nea-accion").forEach((a, i) => a.addEventListener("click", () => prellenar(lista[i])));
     activar(grid);
   }
 
@@ -85,13 +84,6 @@
     return sesion ? { accion: "Doná ahora", href: url } : { accion: "Registrate y doná", href: window.Cuenta ? Cuenta.urlLogin(url) : url };
   }
 
-  function prellenar(c) {
-    const t = document.getElementById("titulo"), d = document.getElementById("descripcion"), m = document.getElementById("meta");
-    if (t && !t.value) t.value = c.titulo;
-    if (d && !d.value) d.value = c.texto;
-    if (m && !m.value) m.value = c.meta;
-  }
-
   // barras que se llenan al aparecer + avisar a efectos.js que hay cards nuevas
   function activar(grid) {
     document.dispatchEvent(new Event("fx:nuevo"));
@@ -110,6 +102,6 @@
         recaudado: d.totales?.recaudado || 0, donaciones: (d.donaciones || []).length,
       })).catch(() => ({ ...c, recaudado: 0, donaciones: 0 }))
     )))
-    .then((l) => { activas = l; pintarActivas(); })
+    .then((l) => { activas = l; pintarActivas(); document.dispatchEvent(new CustomEvent("colectas:listas", { detail: l })); })
     .catch(() => { seccion.querySelector("#nea-activas").innerHTML = '<p class="nea-vacio">No se pudo leer el registro de colectas.</p>'; });
 })();

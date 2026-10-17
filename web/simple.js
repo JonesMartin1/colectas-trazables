@@ -27,7 +27,7 @@
   }
 
   if (pagina === "home") {
-    [".trust-strip", ".manifesto", ".campaign-section"].forEach((s) => document.querySelector(s)?.classList.add("oculto"));
+    [".trust-strip", ".manifesto", ".campaign-section", ".create-section"].forEach((s) => document.querySelector(s)?.classList.add("oculto"));
     const ejemplo = document.querySelector(".campaign-section");
     const nea = document.getElementById("nea");
     const hero = document.querySelector(".hero");
@@ -38,6 +38,73 @@
     }
     document.querySelectorAll("#nea-activas,#nea-causas").forEach(carrusel);
     pasoCuenta();
+    porQueHedera(hero);
+    pruebaEnVivo();
+    document.querySelector("#como-funciona")?.classList.add("compacto");
+  }
+
+  if (pagina === "crear" && typeof setupCreate === "function") {
+    setupCreate(); // de app.js: el mismo formulario que antes estaba en el inicio
+    const q = new URLSearchParams(location.search);
+    [["titulo", "titulo"], ["descripcion", "desc"], ["meta", "meta"]].forEach(([id, k]) => {
+      const n = document.getElementById(id);
+      if (n && q.get(k)) n.value = q.get(k).slice(0, 300);
+    });
+  }
+
+  if (pagina === "colecta") registroEnHedera();
+
+  // Franja corta debajo de la portada: por qué esto necesita Hedera y no una base de datos.
+  function porQueHedera(hero) {
+    if (!hero || document.querySelector(".por-que")) return;
+    hero.insertAdjacentHTML("afterend", `<section class="por-que" aria-label="Por qué Hedera"><div class="section-wrap por-que-grid">
+      <div><b>Inmutable</b><span>Cada movimiento es un mensaje de Hedera Consensus Service, con fecha de consenso. Nadie lo borra.</span></div>
+      <div><b>Verificable gratis</b><span>Cualquiera lo comprueba en HashScan o en el Mirror Node, sin crear cuenta.</span></div>
+      <div><b>Sin intermediarios</b><span>La plata va directo a la organización. Nosotros no la tocamos.</span></div>
+      <div><b>Firmas que protegen</b><span>Los alias oficiales necesitan 2 de 4 firmas institucionales.</span></div>
+    </div></section>`);
+  }
+
+  // Prueba en vivo: cuántas colectas hay en el registro y la última, en la card de la portada.
+  function pruebaEnVivo() {
+    fetch("/api/salud").then((r) => r.json()).then((d) => {
+      const n = document.getElementById("prueba-vivo");
+      if (n && d.colectas) n.textContent = `En vivo en Hedera ${d.red || "testnet"} · ${d.colectas} colectas registradas`;
+    }).catch(() => {});
+    document.addEventListener("colectas:listas", (e) => {
+      const c = e.detail?.[0];
+      const card = document.querySelector(".object-shell");
+      if (!c || !card) return;
+      const pesos = (v) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(Number(v) || 0);
+      const pct = c.meta > 0 ? Math.min(100, (c.recaudado / c.meta) * 100) : 0;
+      const poner = (sel, txt) => { const n = card.querySelector(sel); if (n) n.textContent = txt; };
+      poner(".object-top span:last-child", c.topicId);
+      poner(".object-label", "EN VIVO · REGISTRADA EN HEDERA");
+      poner(".object-face h2", c.titulo);
+      poner(".object-stat span", "Recaudado, leído de la red");
+      poner(".object-stat strong", pesos(c.recaudado));
+      poner(".object-meta span:first-child", `Meta: ${pesos(c.meta)}`);
+      poner(".object-meta span:last-child", `${pct.toLocaleString("es-AR", { maximumFractionDigits: 1 })}%`);
+      const barra = card.querySelector(".meter span");
+      if (barra) barra.style.width = `${Math.max(1, pct)}%`;
+      const pie = card.querySelector(".object-bottom");
+      if (pie) { pie.style.cursor = "pointer"; pie.onclick = () => (location.href = `/colecta.html?id=${encodeURIComponent(c.campaignId)}`); }
+    });
+  }
+
+  // Colecta: "Registro: 0.0.x" pasa a ser un sello con link a HashScan.
+  function registroEnHedera() {
+    const n = document.getElementById("topic-id");
+    if (!n) return;
+    const sello = () => {
+      const id = n.textContent.match(/0\.0\.\d+/)?.[0];
+      if (!id) return false;
+      obs.disconnect();
+      n.innerHTML = `<a class="sello-hedera" href="https://hashscan.io/testnet/topic/${id}" target="_blank" rel="noopener noreferrer">✓ Registrada en Hedera · ${id} · Verificala en HashScan ↗</a>`;
+      return true;
+    };
+    const obs = new MutationObserver(sello);
+    if (!sello()) obs.observe(n, { childList: true, characterData: true, subtree: true });
   }
 
   // "Cómo funciona": el primer paso es crear la cuenta (o ingresar); los demás se corren un número.
