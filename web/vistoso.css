@@ -299,6 +299,52 @@ body[data-page="crear"] .create-section{padding:60px 0 80px}
 .id-ok{display:inline-block;margin-bottom:16px;background:var(--glow);color:var(--ink);border-radius:999px;padding:8px 14px;font:700 12px var(--mono);box-shadow:0 0 20px #d8f16a77}
 @media(max-width:900px){.identidad{grid-template-columns:1fr}}
 
+/* ---------- libro de la colecta ---------- */
+.libro{padding:50px 0 70px}
+.libro-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.libro-head h2{font:700 clamp(28px,3.2vw,44px)/1.05 var(--display);letter-spacing:-1.5px;margin:14px 0 0}
+.libro-head h2 em{font-family:Georgia,serif;font-weight:400;color:#5b8d3a}
+.libro-acciones{display:flex;flex-wrap:wrap;gap:8px}
+.libro-acciones .quiet-button{background:#f9faf4;cursor:pointer}
+.libro-sub{font:700 12px var(--mono);letter-spacing:2px;color:#7d8b7d;margin:30px 0 12px}
+.ultimos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gasto-card{background:#f9faf4;border:1px solid #d4dcd1;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.gasto-card header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.gasto-card header small{font-size:11px;color:#7d8b7d}
+.gasto-card>strong{font:700 30px var(--display);letter-spacing:-1px;color:#b4532a}
+.gasto-card dl,.libro-detalle dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:0;font-size:12px}
+.gasto-card dt,.libro-detalle dt{color:#7d8b7d}
+.gasto-card dd,.libro-detalle dd{margin:0;font-family:var(--mono);word-break:break-all}
+.gasto-card .sello-hedera{align-self:flex-start;background:#eef6dc;color:#3e653b;border-color:#c9e08f}
+.gasto-card .invoice-check{padding:0}
+.libro-grafico{margin-top:18px}
+.libro-svg{width:100%;height:auto;overflow:visible}
+.libro-svg .trazo{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.libro-svg .eje{font:10px var(--mono);fill:#8a978a}
+.leyenda.tres{grid-template-columns:repeat(3,1fr);margin-top:10px}
+.libro-filtros{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 12px}
+.libro-filtros button{border:1px solid #c9d3c6;background:#f3f6ee;border-radius:999px;padding:9px 15px;font-size:12px;font-weight:800;color:#3c5243;transition:all .25s}
+.libro-filtros button b{margin-left:4px;font-family:var(--mono);opacity:.7}
+.libro-filtros button:hover{transform:translateY(-2px);border-color:#8fb02e}
+.libro-filtros button[aria-pressed="true"]{background:var(--ink);color:var(--glow);border-color:var(--ink)}
+.libro-tabla{background:#f9faf4;border:1px solid #d4dcd1;border-radius:14px;overflow:hidden}
+.libro-fila{display:grid;grid-template-columns:56px 150px 120px 1fr 130px 130px 90px;gap:12px;align-items:center;padding:14px 18px;font-size:13px;border-bottom:1px solid #e2e7de;cursor:pointer;list-style:none}
+.libro-fila::-webkit-details-marker{display:none}
+.libro-fila.cab{cursor:default;background:#eef3e8;font:700 10px var(--mono);letter-spacing:1px;color:#7d8b7d;text-transform:uppercase}
+.libro-item[open] .libro-fila,.libro-item .libro-fila:hover{background:#f1f7e4}
+.libro-fila .det{color:#4c5c50;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.libro-fila .der{text-align:right}
+.libro-fila .pos{color:#3e7d22;font-weight:800}
+.libro-fila .neg{color:#b4532a;font-weight:800}
+.libro-fila a{font-size:11px;font-weight:800;color:#3e653b;text-decoration:underline}
+.mono{font-family:var(--mono)}
+.libro-detalle{padding:14px 18px 18px 86px;background:#f4f8ec;border-bottom:1px solid #e2e7de;display:grid;gap:12px;animation:entra .3s ease}
+.libro-detalle .invoice-check{padding:0}
+.t-chip{display:inline-block;border-radius:999px;padding:4px 9px;font:700 10px var(--mono);letter-spacing:.5px}
+.t-don{background:#e3f4cf;color:#2f6a1d}.t-gas{background:#fde3d6;color:#9a3f17}.t-ent{background:#dfeefa;color:#1f5f8f}.t-con{background:#ece4fb;color:#5b3c99}
+.nea-esqueleto.claro{height:180px;background:linear-gradient(100deg,#eef2e9 30%,#f7f9f3 50%,#eef2e9 70%);background-size:300% 100%}
+@media(max-width:900px){.ultimos{grid-template-columns:1fr}.libro-fila{grid-template-columns:50px 1fr 110px;row-gap:4px}.libro-fila>span:nth-child(2),.libro-fila>span:nth-child(4),.libro-fila>span:nth-child(6){display:none}.libro-fila.cab{display:none}.libro-detalle{padding-left:18px}}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .js-fx .reveal{opacity:1;transform:none}

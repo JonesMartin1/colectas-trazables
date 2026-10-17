@@ -72,9 +72,10 @@
     card.append(barras, el("div", "kpis", `<div><strong>${n}</strong><span>DONACIONES</span></div><div><strong>${verificadas}</strong><span>VERIFICADAS</span></div><div><strong>${n ? corto((d.totales?.recaudado || 0) / n) : "$0"}</strong><span>PROMEDIO</span></div>`));
   }
 
-  fetch(`/api/colectas/${encodeURIComponent(id)}`)
+  // una sola lectura de la API, compartida con libro.js
+  (window.datosColecta ??= fetch(`/api/colectas/${encodeURIComponent(id)}`)
     .then((r) => (r.ok ? r.json() : Promise.reject()))
-    .catch(() => fetch("/ejemplo/colecta.json").then((r) => r.json()))
+    .catch(() => fetch("/ejemplo/colecta.json").then((r) => r.json())))
     .then((d) => { uso(d); medios(d); document.dispatchEvent(new Event("fx:nuevo")); })
     .catch(() => seccion.querySelector(".charts-grid").replaceWith(el("p", "chart-vacio", "No se pudieron cargar los gráficos.")));
 })();

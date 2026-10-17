@@ -12,7 +12,8 @@
     "alias": "node hedera/publicar-alias.js",
     "avisos-demo": "node hedera/avisos-demo.js",
     "fideicomiso": "node contratos/demo.js",
-    "nucleo": "node contratos/nucleo.js"
+    "nucleo": "node contratos/nucleo.js",
+    "donante": "node hedera/crear-donante.js"
   },
   "keywords": [],
   "author": "",
