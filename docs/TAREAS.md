@@ -22,13 +22,14 @@ El pitch dura **3 minutos** y se hace cuando anuncian a los ganadores.
 | Quién | Carpeta | Qué entrega |
 | --- | --- | --- |
 | Martín | `hedera/` | El módulo `colectas.js` (**ya está hecho y probado en testnet**), la publicación en Vercel, los merges y el formulario |
-| Facundo | `api/` | La API como funciones de Vercel: un archivo por ruta, ver `api/salud.js` de ejemplo (contrato abajo) |
-| Nicolás | `web/` | Las tres pantallas, primero con datos de ejemplo (`web/ejemplo/colecta.json`) y después contra la API |
+| Martín | `api/` | La API como funciones de Vercel: un archivo por ruta (contrato abajo) |
+| Facundo | `web/` | Las tres pantallas, primero con datos de ejemplo (`web/ejemplo/colecta.json`) y después contra la API |
+| Nicolás | `api/` | Donaciones verificables en el Mirror Node y clave del organizador para gastos y entregas |
 | Martín | (fuera del repo) | Como `hedera/` ya está, también: entrevistas, deck PDF de 8 secciones (pitch de 3 min) y video de hasta 5 min. Claude arma el borrador del deck y el guion. |
 
 Hasta que esté lo de al lado, cada uno trabaja contra el contrato con datos inventados. Nadie espera a nadie.
 
-## Contrato 1: `hedera/colectas.js` (Martín → Facu) — HECHO
+## Contrato 1: `hedera/colectas.js` (Martín) — HECHO
 
 Es un módulo ESM y todas sus funciones son `async`. `npm run probar` lo prueba de punta a punta en testnet.
 
@@ -48,7 +49,7 @@ leerEventos(topicId)
   // → [{ secuencia, fecha, evento, hashscan }]   desde el Mirror Node, en orden
 ```
 
-## Contrato 2: API (Facu → Nicolás)
+## Contrato 2: API (Martín → Facundo)
 
 Todas las respuestas son JSON. Los montos van en pesos, como número.
 
@@ -78,7 +79,7 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
   - Por eso `POST /api/colectas/:id/gastos` recibe JSON (`monto`, `proveedorCuit`, `cae`, `invoiceHash`), no multipart.
 - **Donación en USDC:** el beneficiario tiene que tener asociado el token USDCd. En la demo se usa la cuenta 0.0.11041201.
 
-## Pantallas (Nicolás)
+## Pantallas (Facundo)
 
 1. **`index.html`, crear colecta:** el formulario. Al guardar, muestra el link de la colecta y su QR.
 2. **`colecta.html?id=...`, página pública:**
