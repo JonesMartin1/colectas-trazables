@@ -45,6 +45,8 @@ Las claves de las cuentas de prueba quedan en `.cuentas.json`, que no se sube.
 
 ## Evidencia en testnet
 
+Todo esto se ve en vivo en la página **Hedera en vivo** (`/hedera.html`): último bloque, mensajes de cada topic, token, contrato y las transacciones de la plataforma, leídos directo del Mirror Node público.
+
 | Qué | ID | HashScan |
 | --- | --- | --- |
 | Topic de registro de colectas | 0.0.11051457 | https://hashscan.io/testnet/topic/0.0.11051457 |
@@ -61,6 +63,11 @@ Las claves de las cuentas de prueba quedan en `.cuentas.json`, que no se sube.
 | Cuenta de la plataforma | 0.0.10989169 | https://hashscan.io/testnet/account/0.0.10989169 |
 | Cuenta destinataria | 0.0.11041201 | https://hashscan.io/testnet/account/0.0.11041201 |
 | Cuenta donante | 0.0.11041202 | https://hashscan.io/testnet/account/0.0.11041202 |
+| Smart contract: fideicomiso de la colecta (HSCS) | 0.0.11057590 | https://hashscan.io/testnet/contract/0.0.11057590 |
+| Topic de propuestas sin aval (PROPOSAL) | 0.0.11058740 | https://hashscan.io/testnet/topic/0.0.11058740 |
+| Propuesta "Botes y chalecos para los parajes isleños de Itatí" | 0.0.10989169-1792224279-839643870 | https://hashscan.io/testnet/transaction/0.0.10989169-1792224279-839643870 |
+| Billetera donante de prueba (`npm run donante`) | 0.0.11058706 | https://hashscan.io/testnet/account/0.0.11058706 |
+| Donación USDC verificada en el Mirror Node | 0.0.10989169-1792224000-894514752 | https://hashscan.io/testnet/transaction/0.0.10989169-1792224000-894514752 |
 | Token USDCd (HTS, 6 decimales) | 0.0.11041203 | https://hashscan.io/testnet/token/0.0.11041203 |
 | Topic (HCS) | 0.0.11041205 | https://hashscan.io/testnet/topic/0.0.11041205 |
 | Transferencia de prueba | 0.0.10989169-1792102885-902378674 | https://hashscan.io/testnet/transaction/0.0.10989169-1792102885-902378674 |
