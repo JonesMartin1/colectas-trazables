@@ -55,8 +55,14 @@ export async function publicarEvento(topicId, evento) {
 export async function registrarColecta({ campaignId, titulo, descripcion, meta, beneficiarioCuenta, organizador, orgKeyHash }) {
   const { registro } = config();
   if (!registro) throw new Error("Falta REGISTRO_TOPIC_ID (correr node hedera/crear-registro.js)");
+  const datos = { type: "CAMPAIGN", campaignId, titulo, descripcion, meta, beneficiarioCuenta, organizador, orgKeyHash };
+  // medir antes de crear el topic: si el alta no entra en un mensaje, no dejar un topic huérfano
+  const prueba = JSON.stringify({ ...datos, topicId: "0.0.9999999999", timestamp: new Date().toISOString() });
+  if (Buffer.byteLength(prueba) > MAX_MENSAJE) {
+    throw Object.assign(new Error("Los textos de la colecta son demasiado largos: acortá el nombre, la descripción o la organización."), { status: 400 });
+  }
   const topic = await crearTopicColecta({ campaignId });
-  const evento = { type: "CAMPAIGN", campaignId, titulo, descripcion, meta, beneficiarioCuenta, organizador, orgKeyHash, topicId: topic.topicId, timestamp: new Date().toISOString() };
+  const evento = { ...datos, topicId: topic.topicId, timestamp: new Date().toISOString() };
   const alta = await publicarEvento(registro, evento);
   return { ...topic, registro: { ...alta, topicId: registro } };
 }
