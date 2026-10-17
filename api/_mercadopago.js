@@ -25,14 +25,15 @@ export const hashPagoMP = (paymentId) => sha256(comprobanteMP(paymentId));
 /** Preferencia de pago para una colecta: external_reference ata el pago a la colecta. */
 export function crearPreferencia({ colecta, monto, origen }) {
   const vuelta = `${origen}/colecta.html?id=${encodeURIComponent(colecta.campaignId)}`;
+  const publico = origen.startsWith("https://");
   return llamar("/checkout/preferences", {
     method: "POST",
     body: JSON.stringify({
       items: [{ title: `Donación: ${colecta.titulo}`.slice(0, 120), quantity: 1, unit_price: monto, currency_id: "ARS" }],
       external_reference: colecta.campaignId,
-      notification_url: `${origen}/api/webhooks/mercadopago`,
+      // MP solo acepta avisos y vuelta automática a URLs públicas https (en local no hay)
+      ...(publico ? { notification_url: `${origen}/api/webhooks/mercadopago`, auto_return: "approved" } : {}),
       back_urls: { success: vuelta, pending: vuelta, failure: vuelta },
-      auto_return: "approved",
     }),
   });
 }
