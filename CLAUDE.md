@@ -15,7 +15,7 @@ Colectas para emergencias donde cada donación, gasto, entrega y alias oficial q
 | `dev.js` | Servidor local sin Vercel (`npm run dev`). Enruta `/api/*` a las mismas funciones. Si agregás una ruta en `api/`, sumala también a la lista `RUTAS`. |
 | `docs/` | `PLAN` (idea), `TAREAS` (contratos), `NEGOCIO`, `LEGAL`, `ACTORES` (gobierno de Corrientes), `ANTECEDENTES`, `PITCH` (guion de 3 minutos). |
 
-**Eventos de un topic de colecta:** `DONATION`, `EXPENSE`, `DELIVERY`. En el registro de colectas, `CAMPAIGN`; en el registro de alias, `ALIAS`; en el canal de avisos, `AVISO`. Cada mensaje de HCS admite hasta 1024 bytes.
+**Eventos de un topic de colecta:** `DONATION`, `EXPENSE`, `DELIVERY`, `CONVERSION` (pesos a USDC en un PSAV, la hace la organización). En el registro de colectas, `CAMPAIGN`; en el registro de alias, `ALIAS`; en el canal de avisos, `AVISO`. Cada mensaje de HCS admite hasta 1024 bytes.
 
 **Lectura:** siempre desde el Mirror Node, que tarda unos segundos. Después de escribir, la API espera con `esperarEnMirror` antes de responder.
 

@@ -23,6 +23,7 @@ const RUTAS = [
   [/^\/api\/colectas\/([^/]+)\/entregas$/, "api/colectas/[id]/entregas.js", ["id"]],
   [/^\/api\/colectas\/([^/]+)\/mercadopago$/, "api/colectas/[id]/mercadopago.js", ["id"]],
   [/^\/api\/webhooks\/mercadopago$/, "api/webhooks/mercadopago.js", []],
+  [/^\/api\/colectas\/([^/]+)\/conversiones$/, "api/colectas/[id]/conversiones.js", ["id"]],
 ];
 
 function adaptarRes(res) {
