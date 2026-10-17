@@ -50,8 +50,8 @@
 .mp-button:disabled{opacity:.7;cursor:wait}
 .mp-button::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;transform:skewX(-20deg);background:linear-gradient(90deg,transparent,#ffffffb0,transparent);animation:barrido 3.2s ease-in-out infinite}
 @keyframes barrido{0%,60%{left:-60%}100%{left:140%}}
-.mp-logo{flex:none;width:46px;height:31px;display:grid;place-items:center;background:#fff;border-radius:50%/50%;box-shadow:0 0 0 2px #ffffff66}
-.mp-logo svg{width:40px;height:26px}
+.mp-logo{flex:none;display:grid;place-items:center;color:#fff;filter:drop-shadow(0 1px 1px #0003)}
+.mp-logo svg{width:44px;height:44px;margin:-8px 0}
 .donar-o{display:flex;align-items:center;gap:12px;margin:16px 0 0;color:#8a978a;font-size:11px;font-weight:800;letter-spacing:1.5px}
 .donar-o::before,.donar-o::after{content:"";flex:1;height:1px;background:#d4dfcf}
 .mp-seguro{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:11px;color:#6f8070}
@@ -150,7 +150,9 @@ body.simple .page-hero .goal-bar{margin-top:10px;padding:12px 16px;color:var(--i
 body.simple .page-hero #topic-id{display:inline-block;margin-top:12px;font-size:11px;letter-spacing:.5px;color:#a9bba9}
 body.simple .page-hero-actions{margin-top:18px}
 .donar-arriba{padding:24px!important;border-radius:16px!important;box-shadow:0 0 0 1px #d8f16a55,0 22px 50px #0007!important}
-.donar-arriba h2{font-size:24px;line-height:1.1;margin:8px 0 4px}
+.donar-arriba{color:var(--ink)}
+.donar-arriba h2{font-size:24px;line-height:1.1;margin:8px 0 4px;color:var(--ink);letter-spacing:-.5px}
+.donar-arriba h2 em{letter-spacing:0;color:#5b8d3a;margin-left:.25em}
 .donar-arriba h2 br{display:none}
 .donar-arriba>p{display:none}
 .donar-arriba form{margin-top:14px}
