@@ -5,7 +5,7 @@
 import crypto from "node:crypto";
 import {
   AccountAllowanceApproveTransaction, AccountId, Client, ContractCreateFlow, ContractExecuteTransaction,
-  ContractFunctionParameters, ContractId, TokenId, TransactionRecordQuery,
+  ContractFunctionParameters, ContractId, Hbar, TokenId, TransactionRecordQuery, TransferTransaction,
 } from "@hashgraph/sdk";
 import { clienteOperador, leerClave, leerJson, ESTADO, idTx, hashscan } from "./lib.js";
 import { COLECTA_BIN } from "./nucleo-abi.js";
@@ -25,6 +25,29 @@ export const ROLES = {
 };
 
 const usdc = (n) => Math.round(Number(n) * 1e6);
+// Testnet: cada contrato nuevo cuesta ~55 HBAR (subir el bytecode + crearlo). Se crea solo si al operador le queda
+// esta reserva, así nunca se queda sin HBAR para los registros en HCS de la colecta de siempre.
+const RESERVA_PARA_CREAR = Number(process.env.NUCLEO_RESERVA_CREAR_HBAR ?? 150);
+const MINIMO_ROL = 2; // HBAR: por debajo, el operador le recarga al rol antes de firmar (decisión D25)
+const RECARGA_ROL = 3;
+
+async function hbarDe(cuenta) {
+  const j = await (await fetch(`${MIRROR}/accounts/${cuenta}`)).json();
+  return (j.balance?.balance ?? 0) / 1e8;
+}
+
+/** Si la cuenta del rol se está quedando sin HBAR para pagar sus firmas, el operador le recarga un poco (si puede). */
+async function recargarSiHaceFalta(cuenta) {
+  if ((await hbarDe(cuenta.id)) >= MINIMO_ROL) return;
+  const { client, id: operador } = clienteOperador();
+  try {
+    if ((await hbarDe(operador.toString())) < RECARGA_ROL + 5) return;
+    const tx = await new TransferTransaction().addHbarTransfer(operador, new Hbar(-RECARGA_ROL)).addHbarTransfer(cuenta.id, new Hbar(RECARGA_ROL)).execute(client);
+    await tx.getReceipt(client);
+  } catch { /* sin recarga: la firma puede fallar por saldo, y el error se muestra */ } finally {
+    client.close();
+  }
+}
 const huella = (t) => "0x" + crypto.createHash("sha256").update(String(t)).digest("hex");
 const b32 = (hex) => Buffer.from(hex.slice(2), "hex");
 export const codigoDonante = (cuentaId) => huella(`donante:${cuentaId}`);
@@ -115,6 +138,7 @@ export async function accionDemo({ c, rol, accion, ...datos }) {
   if (ROLES[rol]?.tipo !== def.tipo) throw Object.assign(new Error(`Esa acción la hace ${QUIEN[def.tipo]}, no ${ROLES[rol]?.nombre ?? rol}.`), { status: 400 });
   if (!(await esColectaNuestra(c))) throw Object.assign(new Error("Ese contrato no es una colecta de esta plataforma."), { status: 403 });
   const cuenta = cuentaDeRol(rol);
+  await recargarSiHaceFalta(cuenta);
   const parametros = def.armar?.(datos, cuenta);
   if (accion === "donar") {
     // El donante le da permiso al contrato por el monto (allowance) y después dona.
@@ -128,11 +152,14 @@ export async function accionDemo({ c, rol, accion, ...datos }) {
       client.close();
     }
   }
-  const r = await ejecutar(c, cuenta, accion, parametros);
-  // Cuando valida la titular, la colecta se publica y la titular la registra en la Plataforma (lista y créditos).
-  if (accion === "validar" && r.ok && (await titularDe(c)).toLowerCase() === cuenta.evm.toLowerCase()) {
-    r.registro = await ejecutar(PLATAFORMA_ID, cuenta, "registrarColecta", new ContractFunctionParameters().addAddress(evmDeId(c)));
+  // La titular registra la colecta en la Plataforma ANTES de validarla (los contratos nuevos no publican una colecta
+  // sin registrar; con los viejos da igual el orden). Si ya estaba registrada, el registro se repite sin efecto.
+  let registro;
+  if (accion === "validar" && (await titularDe(c)).toLowerCase() === cuenta.evm.toLowerCase()) {
+    registro = await ejecutar(PLATAFORMA_ID, cuenta, "registrarColecta", new ContractFunctionParameters().addAddress(evmDeId(c)));
   }
+  const r = await ejecutar(c, cuenta, accion, parametros);
+  if (registro) r.registro = registro;
   return r;
 }
 
@@ -154,7 +181,12 @@ export async function crearColectaDemo({ titulo, items, titular, dias }) {
   if (!["ent-caritas", "ent-defensa"].includes(titular)) throw Object.assign(new Error("La titular tiene que ser una entidad argentina: Cáritas Itatí o Defensa Civil."), { status: 400 });
   const d = Math.min(90, Math.max(1, Math.round(num(dias ?? 30, "los días"))));
   const k = claves();
-  const { client } = clienteOperador();
+  const { client, id: operador } = clienteOperador();
+  const saldoOperador = await hbarDe(operador.toString());
+  if (saldoOperador < RESERVA_PARA_CREAR) {
+    client.close();
+    throw Object.assign(new Error(`Crear colectas en contrato está en pausa en la demo: cada contrato cuesta ~55 HBAR de testnet y el operador tiene ${saldoOperador.toFixed(0)}. La colecta de demo y el panel siguen funcionando.`), { status: 503 });
+  }
   const { tokenId } = leerJson(ESTADO);
   try {
     const tx = await new ContractCreateFlow()
