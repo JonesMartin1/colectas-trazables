@@ -9,6 +9,7 @@ interface IPlataforma {
     function esEntidad(address e) external view returns (bool);
     function esArgentina(address e) external view returns (bool);
     function inhabilitado(address organizador) external view returns (bool);
+    function esColecta(address colecta) external view returns (bool);
     function inhabilitar(address organizador) external;
     function registrarLiquidacion(uint256 totalAportado, uint256 restante) external;
 }
@@ -152,6 +153,8 @@ contract Colecta {
     function validar() external {
         require(plataforma.esEntidad(msg.sender), "Solo entidades aprobadas por la plataforma");
         require(msg.sender != organizador && !esValidadora[msg.sender], "Ya valido o es el organizador");
+        // Toda colecta publicada tiene que estar registrada: si no, no se podría liquidar a créditos.
+        if (msg.sender == titular) require(plataforma.esColecta(address(this)), "La titular primero tiene que registrar la colecta en la Plataforma");
         esValidadora[msg.sender] = true;
         validadoras.push(msg.sender);
         emit Validada(msg.sender, msg.sender == titular);
@@ -387,9 +390,15 @@ contract Colecta {
         pausada = true;
         uint256 restante = contable;
         contable = 0;
-        HTS.transferir(token, address(plataforma), restante);
-        plataforma.registrarLiquidacion(totalAportado, restante);
-        emit Liquidada(restante, motivo);
+        if (plataforma.esColecta(address(this))) {
+            HTS.transferir(token, address(plataforma), restante);
+            plataforma.registrarLiquidacion(totalAportado, restante);
+            emit Liquidada(restante, motivo);
+        } else {
+            // Red de seguridad: plata que llegó a una colecta nunca registrada (ej. transferencia directa) va a la titular, no queda trabada.
+            HTS.transferir(token, titular, restante);
+            emit Liquidada(restante, "sin registrar: va a la titular");
+        }
     }
 
     // ---------- lectura ----------

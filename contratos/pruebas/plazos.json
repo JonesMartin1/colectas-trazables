@@ -1,0 +1,185 @@
+{
+  "red": "testnet",
+  "plataforma": "0.0.11058602",
+  "colectaCierre": "0.0.11059828",
+  "colectaPlazos": "0.0.11059836",
+  "multifirma": "0.0.11059825",
+  "fallos": 1,
+  "pasos": [
+    {
+      "desc": "La plataforma aprueba una entidad con billetera multifirma",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.10989169-1792231930-528804771"
+    },
+    {
+      "desc": "Cáritas (titular) valida y publica",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058565-1792231948-231238410"
+    },
+    {
+      "desc": "Cáritas la registra en la Plataforma",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058565-1792231945-092743667"
+    },
+    {
+      "desc": "La entidad multifirma valida con 1 sola firma de 3",
+      "esperado": "se rechaza",
+      "ok": false,
+      "razon": "INVALID_SIGNATURE",
+      "tx": null
+    },
+    {
+      "desc": "La entidad multifirma valida con 2 de 3 firmas",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11059825-1792231948-570139288"
+    },
+    {
+      "desc": "Donante A dona 20",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058571-1792231950-308788067"
+    },
+    {
+      "desc": "Liquidar antes del cierre",
+      "esperado": "se rechaza",
+      "ok": false,
+      "razon": "Todavia no corresponde liquidar",
+      "tx": "0.0.11058573-1792231951-122545067"
+    },
+    {
+      "desc": "Cáritas valida y publica",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058565-1792231966-401708928"
+    },
+    {
+      "desc": "Donante B dona 30",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058572-1792231969-453505584"
+    },
+    {
+      "desc": "Santi pide una prórroga de 91 días (máximo 90)",
+      "esperado": "se rechaza",
+      "ok": false,
+      "razon": "Prorroga de hasta 90 dias",
+      "tx": "0.0.11058570-1792231970-971534018"
+    },
+    {
+      "desc": "Santi pide una prórroga de 30 días",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058570-1792231971-902487042"
+    },
+    {
+      "desc": "Una entidad que no es la titular intenta aprobar la prórroga",
+      "esperado": "se rechaza",
+      "ok": false,
+      "razon": "Solo la entidad titular",
+      "tx": "0.0.11058568-1792231972-227444491"
+    },
+    {
+      "desc": "Cáritas (titular) aprueba la prórroga",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058565-1792231974-225560853"
+    },
+    {
+      "desc": "El cierre se corrió 30 días (16/12/2026 → 15/1/2027)",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": "no cambió",
+      "tx": null
+    },
+    {
+      "desc": "Santi intenta cambiar el organizador él mismo",
+      "esperado": "se rechaza",
+      "ok": false,
+      "razon": "Solo la entidad titular",
+      "tx": "0.0.11058570-1792231975-166665465"
+    },
+    {
+      "desc": "Cáritas pide el cambio de billetera del organizador (tras repetir la verificación)",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058565-1792231980-412158752"
+    },
+    {
+      "desc": "Mientras espera, la colecta queda pausada",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": "no se pausó",
+      "tx": null
+    },
+    {
+      "desc": "Ejecutar el cambio antes de la espera",
+      "esperado": "se rechaza",
+      "ok": false,
+      "razon": "Todavia no",
+      "tx": "0.0.11058573-1792231978-707347914"
+    },
+    {
+      "desc": "Pasada la espera, se ejecuta el cambio",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058573-1792232047-647975955"
+    },
+    {
+      "desc": "La colecta se reanuda sola y el organizador es la billetera nueva",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": "no cambió",
+      "tx": null
+    },
+    {
+      "desc": "La billetera vieja intenta pedir un tramo",
+      "esperado": "se rechaza",
+      "ok": false,
+      "razon": "Solo el organizador",
+      "tx": "0.0.11058570-1792232046-905634044"
+    },
+    {
+      "desc": "La billetera nueva pide un tramo",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058573-1792232049-478742787"
+    },
+    {
+      "desc": "Pasado el cierre, cualquiera liquida la colecta A (va a créditos)",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058573-1792232096-849211987"
+    },
+    {
+      "desc": "El donante A reclama sus créditos de la colecta A",
+      "esperado": "pasa",
+      "ok": true,
+      "razon": null,
+      "tx": "0.0.11058573-1792232096-454192898"
+    },
+    {
+      "desc": "Por inactividad del organizador, cualquiera liquida la colecta B",
+      "esperado": "pasa",
+      "ok": false,
+      "razon": "Solo una colecta registrada",
+      "tx": "0.0.11058573-1792232152-343140235"
+    }
+  ]
+}

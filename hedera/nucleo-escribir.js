@@ -128,11 +128,14 @@ export async function accionDemo({ c, rol, accion, ...datos }) {
       client.close();
     }
   }
-  const r = await ejecutar(c, cuenta, accion, parametros);
-  // Cuando valida la titular, la colecta se publica y la titular la registra en la Plataforma (lista y créditos).
-  if (accion === "validar" && r.ok && (await titularDe(c)).toLowerCase() === cuenta.evm.toLowerCase()) {
-    r.registro = await ejecutar(PLATAFORMA_ID, cuenta, "registrarColecta", new ContractFunctionParameters().addAddress(evmDeId(c)));
+  // La titular registra la colecta en la Plataforma ANTES de validarla: el contrato no publica una colecta sin registrar
+  // (si no, no se podría liquidar a créditos). Si ya estaba registrada, el registro se repite sin efecto.
+  let registro;
+  if (accion === "validar" && (await titularDe(c)).toLowerCase() === cuenta.evm.toLowerCase()) {
+    registro = await ejecutar(PLATAFORMA_ID, cuenta, "registrarColecta", new ContractFunctionParameters().addAddress(evmDeId(c)));
   }
+  const r = await ejecutar(c, cuenta, accion, parametros);
+  if (registro) r.registro = registro;
   return r;
 }
 
