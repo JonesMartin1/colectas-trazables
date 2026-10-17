@@ -4,7 +4,9 @@ Colectas para emergencias donde cada donación y cada gasto quedan registrados e
 
 **Demo en vivo:** https://colectas-trazables.vercel.app · colecta de ejemplo: https://colectas-trazables.vercel.app/colecta.html?id=colchones-y-agua-para-itati-532f2d · **colecta en smart contract (podés actuar como cada rol):** https://colectas-trazables.vercel.app/nucleo
 
-**Entregables:** deck en [`entregables/colectas-deck.pdf`](entregables/colectas-deck.pdf) · video animado de 32 s en [`entregables/video/`](entregables/video/) · negocio, antecedentes, pitch y material para Hedera en [`entregables/`](entregables/).
+**Video demo (1 min, la app funcionando en vivo):** https://youtu.be/E6iJ921Zw7U
+
+**Entregables:** deck en [`entregables/colectas-deck.pdf`](entregables/colectas-deck.pdf) · guion del pitch en [`docs/PITCH.md`](docs/PITCH.md) · video animado de 32 s en [`entregables/video/`](entregables/video/) · negocio, antecedentes, pitch y material para Hedera en [`entregables/`](entregables/).
 
 Proyecto para el **track Hedera de NEA Tech 2026** (Corrientes). El plan completo está en [`docs/PLAN.md`](docs/PLAN.md), y quién hace qué, los contratos entre partes y el horario, en [`docs/TAREAS.md`](docs/TAREAS.md).
 
