@@ -1,7 +1,7 @@
 // POST /api/colectas/:id/mercadopago { monto } → link de Checkout Pro para donar a esta colecta.
 // No registra nada: la donación entra al registro cuando el webhook confirma el pago con la API de MP.
-import { json, error, leerCuerpo, buscarColecta } from "../../_comun.js";
-import { crearPreferencia } from "../../_mercadopago.js";
+import { json, error, leerCuerpo, buscarColecta } from "../_comun.js";
+import { crearPreferencia } from "../_mercadopago.js";
 
 export default async function handler(req, res) {
   try {

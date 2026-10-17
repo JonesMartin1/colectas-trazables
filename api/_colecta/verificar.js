@@ -1,7 +1,7 @@
 // GET /api/colectas/:id/verificar?comprobante=... → ¿está esta donación en el registro?
 // Se recalcula el hash del comprobante y se busca entre los eventos leídos del Mirror Node.
-import { leerEventos } from "../../../hedera/colectas.js";
-import { json, error, buscarColecta, sha256 } from "../../_comun.js";
+import { leerEventos } from "../../hedera/colectas.js";
+import { json, error, buscarColecta, sha256 } from "../_comun.js";
 
 export default async function handler(req, res) {
   try {

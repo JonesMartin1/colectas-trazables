@@ -2,9 +2,9 @@
 // en un PSAV registrado y el USDC llegó a su cuenta de Hedera. La compra la hace la organización, nunca la plataforma.
 // Solo el organizador. La transferencia se busca en el Mirror Node: el USDC sale de la red, no del cliente.
 // No se exige el memo de la colecta, porque un PSAV en general no permite ponerlo.
-import { leerEventos, publicarEvento, verificarTransferencia } from "../../../hedera/colectas.js";
-import { idTx } from "../../../hedera/lib.js";
-import { json, error, leerCuerpo, buscarColecta, esperarEnMirror, rechazoOrganizador } from "../../_comun.js";
+import { leerEventos, publicarEvento, verificarTransferencia } from "../../hedera/colectas.js";
+import { idTx } from "../../hedera/lib.js";
+import { json, error, leerCuerpo, buscarColecta, esperarEnMirror, rechazoOrganizador } from "../_comun.js";
 
 const TX_ID = /^0\.0\.\d+-\d+-\d+$/;
 

@@ -17,13 +17,8 @@ const RUTAS = [
   [/^\/api\/avisos$/, "api/avisos.js", []],
   [/^\/api\/colectas$/, "api/colectas/index.js", []],
   [/^\/api\/colectas\/([^/]+)$/, "api/colectas/[id]/index.js", ["id"]],
-  [/^\/api\/colectas\/([^/]+)\/donaciones$/, "api/colectas/[id]/donaciones.js", ["id"]],
-  [/^\/api\/colectas\/([^/]+)\/gastos$/, "api/colectas/[id]/gastos.js", ["id"]],
-  [/^\/api\/colectas\/([^/]+)\/verificar$/, "api/colectas/[id]/verificar.js", ["id"]],
-  [/^\/api\/colectas\/([^/]+)\/entregas$/, "api/colectas/[id]/entregas.js", ["id"]],
-  [/^\/api\/colectas\/([^/]+)\/mercadopago$/, "api/colectas/[id]/mercadopago.js", ["id"]],
+  [/^\/api\/colectas\/([^/]+)\/([^/]+)$/, "api/colectas/[id]/[accion].js", ["id", "accion"]],
   [/^\/api\/webhooks\/mercadopago$/, "api/webhooks/mercadopago.js", []],
-  [/^\/api\/colectas\/([^/]+)\/conversiones$/, "api/colectas/[id]/conversiones.js", ["id"]],
 ];
 
 function adaptarRes(res) {

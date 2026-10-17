@@ -3,9 +3,9 @@
 // acreditado USDC al beneficiario, llevar el memo de esta colecta y no estar registrada todavía.
 // El monto sale de la red, no del cliente. Al donante se le devuelve un comprobante; en el registro queda solo su hash.
 import crypto from "node:crypto";
-import { leerEventos, publicarEvento, verificarTransferencia } from "../../../hedera/colectas.js";
-import { idTx } from "../../../hedera/lib.js";
-import { json, error, leerCuerpo, buscarColecta, sha256, COTIZACION, esperarEnMirror } from "../../_comun.js";
+import { leerEventos, publicarEvento, verificarTransferencia } from "../../hedera/colectas.js";
+import { idTx } from "../../hedera/lib.js";
+import { json, error, leerCuerpo, buscarColecta, sha256, COTIZACION, esperarEnMirror } from "../_comun.js";
 
 const TX_ID = /^0\.0\.\d+-\d+-\d+$/;
 

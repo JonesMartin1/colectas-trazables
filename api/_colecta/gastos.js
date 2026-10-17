@@ -1,8 +1,8 @@
 // POST /api/colectas/:id/gastos { monto, proveedorCuit, cae, invoiceHash, clave } → evento EXPENSE.
 // Solo el organizador: la clave que recibió al crear la colecta tiene que coincidir con el orgKeyHash del registro.
 // El PDF nunca llega acá: el navegador calcula su SHA-256 y manda solo el hash.
-import { publicarEvento } from "../../../hedera/colectas.js";
-import { json, error, leerCuerpo, buscarColecta, esperarEnMirror, rechazoOrganizador } from "../../_comun.js";
+import { publicarEvento } from "../../hedera/colectas.js";
+import { json, error, leerCuerpo, buscarColecta, esperarEnMirror, rechazoOrganizador } from "../_comun.js";
 
 export default async function handler(req, res) {
   try {
