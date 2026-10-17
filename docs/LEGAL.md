@@ -42,6 +42,14 @@ Relevamiento del 16/10/2026. **No es asesoramiento legal.** Es el mapa para llev
 - ⚠ **La demo actual no es así:** la donación en USDC la firma una cuenta de prueba desde nuestro servidor. Sirve para mostrar el registro en testnet, pero **en producción se reemplaza** por la firma del donante con su billetera.
 - **Si la organización quiere pasar los USDC a pesos,** lo hace en un exchange registrado como PSAV ante la CNV.
 
+**El núcleo (17/10): la plata vive en un contrato sin dueño.** En el diseño D1–D29 ([`DISENO.md`](DISENO.md)) las donaciones entran al contrato de la colecta, y el contrato las libera por tramos a pedido del organizador, con la aprobación de una entidad validadora. La plataforma **no tiene ninguna firma** sobre esa plata: el contrato se despliega sin clave de administrador y nadie lo puede cambiar. La receptora legal es la **entidad titular** (argentina, inscripta). La plataforma cobra el 1 % dentro del mismo contrato. **A CONFIRMAR con un abogado:** que un contrato sin dueño no nos convierte en custodios ni en PSAV, y el encuadre de los créditos (saldo de donantes en un fondo común, que no se canjea por plata).
+
+**Pesos → USDC: qué averiguamos el 17/10**
+- **Mercado Pago no puede vender cripto:** la Comunicación BCRA "A" 7759 (2023, vigente) prohíbe a los PSP ofrecer o facilitar operaciones con criptoactivos, incluidos los botones de compra automáticos. La organización sí puede sacar sus pesos y comprar cripto por su cuenta en un PSAV (interpretación a confirmar).
+- **Rampas internacionales con USDC en Hedera** (Banxa, Alchemy Pay, MoonPay, Transak y otras): **ninguna figura en el registro de PSAV de la CNV**, salvo Zero Hash, que no cobra en pesos.
+- **Inscriptas en la CNV y útiles:** Binance retira **USDC por la red de Hedera** (API pública `getNetworkCoinAll`) y tiene un producto de rampa para empresas (Binance Connect, falta confirmar que acepte pesos); Bitso retira HBAR por Hedera pero en Argentina no cobra pesos de terceros; Ripio tiene una Ramps API que cobra con Mercado Pago, pero no opera Hedera.
+- **La solución de Hedera:** Stablecoin Studio, para que un banco emita un peso digital en Hedera (ej. un banco provincial).
+
 ## 3. Lavado de dinero: las organizaciones son sujetos obligados
 
 - **Res. UIF 30/2011**, modificada por las Res. UIF 50/2022, 84/2023 y 56/2024: las **personas jurídicas que reciben donaciones** son sujetos obligados, según el art. 20 inc. 18 de la Ley 25.246.
@@ -102,6 +110,11 @@ Relevamiento del 16/10/2026. **No es asesoramiento legal.** Es el mapa para llev
 | 8 | Texto vigente de la Res. UIF 30/2011 y de los regímenes de ARCA | Contador | Pendiente |
 | 9 | Constituir la S.A.S. | Equipo | Pendiente |
 | 10 | Inscripción en el RAGIR (SINAGIR) | Equipo | Pendiente |
+| 11 | Dictamen sobre el núcleo: contrato sin dueño, créditos, tramos al organizador por cuenta de la titular | Abogado | Pendiente |
+| 12 | Auditoría externa de `Plataforma.sol` y `Colecta.sol` antes de mainnet | Equipo + auditor | Pendiente |
+| 13 | Proveedor de verificación de identidad con convenio RENAPER | Producto | Pendiente |
+| 14 | Rampa en pesos inscripta en la CNV que entregue en Hedera (Binance Connect u otra) | Producto | Pendiente |
+| 15 | Inscripción de la base de datos (comprobantes) ante la Agencia de Acceso a la Información Pública | Equipo | Pendiente |
 
 ## Fuentes
 

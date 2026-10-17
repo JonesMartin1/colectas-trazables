@@ -131,7 +131,7 @@
     "verificable": "verifiable",
     "visible.": "visible.",
     "↗ CORRIENTES, ARGENTINA": "↗ CORRIENTES, ARGENTINA",
-    "✳ Gratis durante la emergencia": "✳ Free during the emergency",
+    "✳ El 99 % llega a la causa": "✳ 99% goes to the cause",
     "✳ Sin intermediación del dinero": "✳ Funds go directly to the organization",
     "✳ Un enlace para compartir": "✳ One link to share",
     "Crear una colecta — Colectas Trazables": "Create a fundraiser — Colectas Trazables",
