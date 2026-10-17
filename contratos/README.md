@@ -32,3 +32,50 @@ cd contratos && npx --yes solc@0.8.24 --optimize --bin --abi -o build Fideicomis
 ```
 
 Pendiente: la web todavía no lo muestra, y falta la devolución si la colecta vence sin gastarse. Para pagarle a una cuenta que recibe el token por primera vez hace falta gas alto (2.000.000), porque Hedera la asocia en el mismo pago.
+
+---
+
+# El núcleo: `Plataforma.sol` + `Colecta.sol` (diseño D1–D29)
+
+Es la primera etapa del diseño funcional que salió de la entrevista del 17/10:
+- un **organizador** verificado (Santi);
+- una **entidad titular argentina**, que es la receptora legal;
+- **entidades validadoras** que avalan;
+- **donantes** con código.
+
+| Contrato | Qué hace |
+| --- | --- |
+| `Plataforma.sol` | Registro de entidades aprobadas (con país y huella del registro oficial), colectas registradas por su titular, organizadores inhabilitados y **fondo de créditos**. La plataforma (`admin`) aprueba entidades y pasa las órdenes de los donantes, pero la plata del fondo solo puede ir a una colecta registrada y abierta. |
+| `Colecta.sol` | Una colecta con **ítems (barras)**. Se publica cuando valida la titular. Las donaciones pagan el **1 %** de comisión al entrar, una sola vez; las transferencias directas cuentan como anónimas. Tramos al organizador con **tope sin rendir del 30 %** de la meta, cada uno aprobado por una validadora. **Comprobantes** con o sin CAE (los tickets, hasta el 10 % de lo liberado) que nunca se repiten. Reasignación entre ítems aprobada. **Denuncias** solo de donantes o entidades. Pausa (la titular, o 2 validadoras), fraude, prórroga, cambio de organizador con 72 h de espera, y **liquidación a créditos** por fraude, cierre o 30 días de inactividad. |
+| `HTS.sol` | Asociar, transferir y cobrar con permiso (allowance) a través del servicio de tokens de Hedera. |
+
+Ningún contrato tiene clave de administrador: no se pueden cambiar.
+
+## Recorrido en testnet: `npm run nucleo` (49 pasos, todos como se esperaba, 17/10/2026)
+
+Plataforma [`0.0.11058602`](https://hashscan.io/testnet/contract/0.0.11058602) · colecta [`0.0.11058607`](https://hashscan.io/testnet/contract/0.0.11058607) · segunda colecta [`0.0.11058623`](https://hashscan.io/testnet/contract/0.0.11058623). El detalle de cada paso, con su transacción, está en `nucleo.json`.
+
+**Lo que se frena:**
+- que alguien se apruebe solo como entidad;
+- una titular extranjera;
+- donar antes de que valide la titular, o con la colecta pausada;
+- tramos que superan el tope sin rendir, o pedidos con la colecta pausada;
+- aprobaciones de una entidad que no validó;
+- tickets por encima del 10 %;
+- una factura repetida;
+- denuncias de quien no donó;
+- liquidar antes de tiempo o reclamar dos veces;
+- que un organizador inhabilitado abra otra colecta;
+- usar créditos en una colecta liquidada.
+
+**Lo que pasa:**
+- las dos donaciones (comisión 1 %) y la anónima, reconocida;
+- dos tramos (150 y 100), con comprobantes aprobados en el medio;
+- las barras: Comida 12/300, Camas 100/150, Gasolina 0/150 (después de reasignar 50 de Camas a Gasolina);
+- la denuncia, la pausa y el fraude confirmado;
+- la liquidación: los créditos se reparten en proporción a lo donado, y el donante A usa la mitad de los suyos en otra colecta sin pagar comisión de nuevo.
+
+**Pendientes:**
+- La parte anónima de una liquidación queda en el fondo sin dueño que la reclame (habría que decidir a dónde va).
+- La web todavía no usa estos contratos.
+- La identidad está simulada: el organizador y las entidades son cuentas de prueba.

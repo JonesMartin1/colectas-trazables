@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171d1b">
+  <meta name="description" content="Una colecta que vive en un smart contract de Hedera: barras por ítem, entidades que la avalan, tramos y comprobantes.">
+  <title>Colecta en contrato — Colectas Trazables</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/pages.css"><link rel="stylesheet" href="/vistoso.css">
+  <script src="/menu.js" defer></script><script src="/cuenta.js" defer></script><script src="/nucleo-view.js" defer></script>
+  <style>
+    .nu-chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+    .nu-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#eef3e8;color:#171d1b;font:600 12px var(--mono,monospace);letter-spacing:.4px}
+    .nu-chip.ok{background:#dff5d0;color:#24531a}.nu-chip.alerta{background:#fde6e1;color:#8a2b17}.nu-chip.titular{background:#171d1b;color:#d8f16a}
+    .nu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:22px}
+    @media(max-width:900px){.nu-grid{grid-template-columns:1fr}}
+    .nu-card{background:#fff;border-radius:16px;padding:22px;box-shadow:0 1px 0 #d9dfd3}
+    .nu-card h3{margin:0 0 4px}.nu-sub{font:500 11px var(--mono,monospace);color:#748274;letter-spacing:.6px;margin:0 0 16px}
+    .nu-tabla{width:100%;border-collapse:collapse;font-size:13px}.nu-tabla td,.nu-tabla th{padding:8px 6px;border-bottom:1px solid #eef1ea;text-align:left}
+    .nu-tabla th{font:600 10px var(--mono,monospace);letter-spacing:.6px;color:#748274}
+    .nu-linea{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    .nu-linea li{display:grid;grid-template-columns:140px 1fr auto;gap:12px;align-items:baseline;font-size:13px;border-bottom:1px solid #eef1ea;padding-bottom:8px}
+    .nu-linea time{font:500 11px var(--mono,monospace);color:#748274}.nu-linea a{font-size:12px;text-decoration:underline}
+    .nu-nota{font-size:12px;color:#748274;margin-top:10px}
+    main>section.section-wrap{padding-top:56px}
+    .page-hero .nu-nota,.page-hero .nu-nota a{color:#cfd8c8}
+    .nu-form{display:grid;gap:12px}.nu-form label{display:grid;gap:6px;font-size:13px;font-weight:600}
+    .nu-form input,.nu-form select{background:#eef1ea;border:1px solid #c9d1c5;border-radius:6px;padding:10px 12px;font:inherit;font-weight:400}
+    .nu-form .chk{display:flex;align-items:center;gap:8px;font-weight:400}
+    .nu-items{display:grid;grid-template-columns:2fr 1fr;gap:8px}
+    .nu-ok{color:#24531a}.nu-no{color:#8a2b17}
+    .nu-meter{height:10px;border-radius:999px;background:#e7ece2;overflow:hidden;margin:8px 0 4px}.nu-meter span{display:block;height:100%;background:#d97a2b}
+  </style>
+</head>
+<body data-page="nucleo">
+  <header class="site-header"><a class="brand" href="/" aria-label="Colectas Trazables, inicio"><span class="brand-mark"><i></i><i></i><i></i></span><span>colectas<span class="brand-light">trazables</span><small>VERIFICADO EN HEDERA</small></span></a><nav class="desktop-nav" aria-label="Navegación principal"></nav><a class="nav-action" href="/crear.html">Crear colecta</a></header>
+  <main>
+    <section class="page-hero"><div class="section-wrap">
+      <a class="back-link" href="/">← Volver al inicio</a>
+      <div class="eyebrow"><span class="signal"></span> COLECTA EN SMART CONTRACT · HEDERA TESTNET</div>
+      <h1 id="nu-titulo">Cargando la colecta…</h1>
+      <p id="nu-bajada">La plata vive en un contrato que nadie puede cambiar: sale por tramos, solo con el aval de una entidad, y cada gasto llena su barra con un comprobante.</p>
+      <div class="nu-chips" id="nu-estado"></div>
+      <div class="nu-chips" id="nu-entidades"></div>
+      <p class="nu-nota" id="nu-links"></p>
+    </div></section>
+
+    <section class="section-wrap">
+      <div class="section-kicker">01 / EN QUÉ SE USA LA PLATA</div>
+      <div class="nu-grid">
+        <article class="nu-card"><h3>Barras por ítem</h3><p class="nu-sub">GASTADO CON COMPROBANTE APROBADO / META DEL ÍTEM (USDC)</p><div class="barras" id="nu-barras"></div></article>
+        <article class="nu-card"><h3>El recorrido de la plata</h3><p class="nu-sub">TODO SALE DEL CONTRATO, NO DE NUESTRA PALABRA</p>
+          <div class="kpis" id="nu-kpis"></div>
+          <div id="nu-tope"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-wrap">
+      <div class="section-kicker">02 / COMPROBANTES Y TRAMOS</div>
+      <div class="nu-grid">
+        <article class="nu-card"><h3>Comprobantes</h3><p class="nu-sub">LA IMAGEN QUEDA FUERA DE LA RED · EN HEDERA, SU HUELLA</p><table class="nu-tabla" id="nu-comprobantes"></table></article>
+        <article class="nu-card"><h3>Tramos liberados</h3><p class="nu-sub">CADA TRAMO LO APRUEBA UNA ENTIDAD VALIDADORA</p><table class="nu-tabla" id="nu-tramos"></table></article>
+      </div>
+    </section>
+
+    <section class="section-wrap">
+      <div class="section-kicker">03 / TODO LO QUE PASÓ, EN ORDEN</div>
+      <article class="nu-card" style="margin-top:22px"><ul class="nu-linea" id="nu-eventos"></ul></article>
+    </section>
+
+    <section class="section-wrap" id="probar">
+      <div class="section-kicker">04 / PROBALO VOS · MODO DEMO EN TESTNET</div>
+      <div class="nu-grid">
+        <article class="nu-card"><h3>Actuá como cada rol</h3><p class="nu-sub">EL SERVIDOR FIRMA CON LA CUENTA DE PRUEBA DEL ROL · EN PRODUCCIÓN FIRMA CADA PERSONA CON SU BILLETERA</p>
+          <form id="nu-accion" class="nu-form">
+            <label>Soy<select name="rol" id="nu-rol"></select></label>
+            <label>Quiero<select name="accion" id="nu-acc"></select></label>
+            <div id="nu-campos"></div>
+            <button class="button button-dark" type="submit">Firmar en Hedera ↗</button>
+            <p class="nu-nota" id="nu-resultado" role="status" aria-live="polite"></p>
+          </form>
+        </article>
+        <article class="nu-card"><h3>Crear una colecta en contrato</h3><p class="nu-sub">SE DESPLIEGA UN CONTRATO NUEVO · SE PUBLICA CUANDO LA VALIDA LA TITULAR</p>
+          <form id="nu-crear" class="nu-form">
+            <label>Nombre<input name="titulo" required maxlength="60" placeholder="Ej. Agua para Goya"></label>
+            <div class="nu-items">
+              <input name="n0" placeholder="Ítem 1 (ej. Agua)" required maxlength="40"><input name="m0" type="number" min="1" placeholder="USDC" required>
+              <input name="n1" placeholder="Ítem 2 (opcional)" maxlength="40"><input name="m1" type="number" min="1" placeholder="USDC">
+              <input name="n2" placeholder="Ítem 3 (opcional)" maxlength="40"><input name="m2" type="number" min="1" placeholder="USDC">
+            </div>
+            <label>Entidad titular (argentina)<select name="titular"><option value="ent-caritas">Cáritas Itatí</option><option value="ent-defensa">Defensa Civil Corrientes</option></select></label>
+            <label>Días hasta el cierre (máx. 90)<input name="dias" type="number" min="1" max="90" value="30"></label>
+            <button class="button button-dark" type="submit">Crear contrato ↗</button>
+            <p class="nu-nota" id="nu-creado" role="status" aria-live="polite"></p>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-wrap" style="margin-bottom:80px">
+      <div class="section-kicker">05 / OTRAS COLECTAS EN CONTRATO</div>
+      <div class="nu-chips" id="nu-lista" style="margin-top:18px"></div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="section-wrap footer-simple"><a class="brand" href="/"><span class="brand-mark"><i></i><i></i><i></i></span><span>colectas<span class="brand-light">trazables</span><small>LA SOLIDARIDAD SE VE</small></span></a><span>La solidaridad se ve. © 2026</span></div></footer>
+</body>
+</html>

@@ -15,6 +15,7 @@ const RUTAS = [
   [/^\/api\/alias$/, "api/alias.js", []],
   [/^\/api\/demo\/donar$/, "api/demo/donar.js", []],
   [/^\/api\/avisos$/, "api/avisos.js", []],
+  [/^\/api\/nucleo$/, "api/nucleo.js", []],
   [/^\/api\/colectas$/, "api/colectas/index.js", []],
   [/^\/api\/colectas\/([^/]+)$/, "api/colectas/[id]/index.js", ["id"]],
   [/^\/api\/colectas\/([^/]+)\/([^/]+)$/, "api/colectas/[id]/[accion].js", ["id", "accion"]],
