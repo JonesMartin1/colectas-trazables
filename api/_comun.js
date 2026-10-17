@@ -47,7 +47,7 @@ export async function armarColecta(colecta) {
   for (const e of eventos) {
     const ev = e.evento;
     const base = { secuencia: e.secuencia, fecha: e.fecha, monto: Number(ev.amount) || 0, hashscan: ev.txHashscan || e.hashscan };
-    if (ev.type === "DONATION") donaciones.push({ ...base, metodo: ev.method, externalRefHash: ev.externalRefHash });
+    if (ev.type === "DONATION") donaciones.push({ ...base, metodo: ev.method, externalRefHash: ev.externalRefHash, verificada: Boolean(ev.txId) });
     if (ev.type === "EXPENSE") gastos.push({ ...base, proveedorCuit: ev.supplierCuit, cae: ev.cae, invoiceHash: ev.invoiceHash });
     if (ev.type === "DELIVERY") entregas.push({ secuencia: e.secuencia, fecha: e.fecha, hashscan: e.hashscan, item: ev.item, cantidad: ev.quantity, lugar: ev.place, fotoHash: ev.photoHash });
   }
