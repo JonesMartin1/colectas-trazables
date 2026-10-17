@@ -145,8 +145,9 @@ await desplegar("Colecta", parametrosColecta(plataforma, k.organizador.evm, k["e
 const colecta = await desplegar("Colecta", parametrosColecta(plataforma, k.organizador.evm, k["ent-caritas"].evm, "inundacion-itati-nucleo", NOMBRES, METAS, 60 * DIA), 5_000_000, "Colecta de Santi (organizador) con Cáritas Itatí como titular: Comida 300, Camas 200, Gasolina 100");
 await permitirYDonar(colecta, k["donante-a"], codigo.a, 50, "Donar antes de que la valide la titular", false);
 await llamar(colecta, k["ent-greenpeace"], "validar", null, "Greenpeace valida (aval extranjero; todavía no se publica)");
-await llamar(colecta, k["ent-caritas"], "validar", null, "Cáritas Itatí valida como titular → la colecta se publica");
+await llamar(colecta, k["ent-caritas"], "validar", null, "Cáritas intenta publicar sin haberla registrado en la Plataforma", false);
 await llamar(plataforma, k["ent-caritas"], "registrarColecta", new ContractFunctionParameters().addAddress(evmDeContrato(colecta)), "Cáritas registra la colecta en la Plataforma (habilita créditos)");
+await llamar(colecta, k["ent-caritas"], "validar", null, "Cáritas Itatí valida como titular → la colecta se publica");
 
 console.log("\n— Donaciones");
 await permitirYDonar(colecta, k["donante-a"], codigo.a, 200, "Donante A dona 200 USDCd (1 % de comisión a la plataforma)");
@@ -205,8 +206,8 @@ console.log(`   Créditos: A ${aUsdc(creditosA)} · B ${aUsdc(creditosB)} USDCd`
 
 await desplegar("Colecta", parametrosColecta(plataforma, k.organizador.evm, k["ent-defensa"].evm, "santi-otra-vez", ["Comida"], [100], 30 * DIA), 5_000_000, "Santi (inhabilitado) intenta abrir otra colecta", false);
 const colecta2 = await desplegar("Colecta", parametrosColecta(plataforma, k.organizador2.evm, k["ent-defensa"].evm, "agua-para-parajes", ["Agua"], [150], 30 * DIA), 5_000_000, "Otro organizador abre 'Agua para parajes' con Defensa Civil como titular");
-await llamar(colecta2, k["ent-defensa"], "validar", null, "Defensa Civil valida → se publica");
 await llamar(plataforma, k["ent-defensa"], "registrarColecta", new ContractFunctionParameters().addAddress(evmDeContrato(colecta2)), "Defensa Civil la registra en la Plataforma");
+await llamar(colecta2, k["ent-defensa"], "validar", null, "Defensa Civil valida → se publica");
 const usoA = (BigInt(creditosA.toString()) / 2n).toString();
 await llamar(plataforma, null, "usar", new ContractFunctionParameters().addBytes32(b32(codigo.a)).addAddress(evmDeContrato(colecta2)).addUint256(usoA), `El donante A usa ${aUsdc(usoA)} de sus créditos en 'Agua para parajes' (sin comisión de nuevo)`);
 await llamar(plataforma, null, "usar", new ContractFunctionParameters().addBytes32(b32(codigo.a)).addAddress(evmDeContrato(colecta)).addUint256(1), "Usar créditos en la colecta liquidada", false);

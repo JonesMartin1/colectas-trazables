@@ -28,8 +28,8 @@ const usdc = (n) => Math.round(Number(n) * 1e6);
 // Testnet: cada contrato nuevo cuesta ~55 HBAR (subir el bytecode + crearlo). Se crea solo si al operador le queda
 // esta reserva, así nunca se queda sin HBAR para los registros en HCS de la colecta de siempre.
 const RESERVA_PARA_CREAR = Number(process.env.NUCLEO_RESERVA_CREAR_HBAR ?? 150);
-const MINIMO_ROL = 2; // HBAR: por debajo, el operador le recarga al rol antes de firmar (decisión D25)
-const RECARGA_ROL = 3;
+const MINIMO_ROL = 10; // HBAR: con 2M de gas por firma, Hedera exige saldo para cubrir el máximo; por debajo, el operador recarga (D25)
+const RECARGA_ROL = 10;
 
 async function hbarDe(cuenta) {
   const j = await (await fetch(`${MIRROR}/accounts/${cuenta}`)).json();

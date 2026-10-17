@@ -79,3 +79,11 @@ Plataforma [`0.0.11058602`](https://hashscan.io/testnet/contract/0.0.11058602) �
 - La parte anónima de una liquidación queda en el fondo sin dueño que la reclame (habría que decidir a dónde va).
 - La web todavía no usa estos contratos.
 - La identidad está simulada: el organizador y las entidades son cuentas de prueba.
+
+## Pruebas de plazos y un arreglo (17/10/2026)
+
+`contratos/pruebas/` tiene una copia de `Colecta` con plazos de segundos (`ColectaPlazos.sol`, se genera desde `Colecta.sol`), porque en testnet no se puede adelantar el reloj.
+- **`plazos.js`** probó: entidad con billetera multifirma 2 de 3 (con 1 firma la red responde `INVALID_SIGNATURE`), prórroga con tope de 90 días aprobada solo por la titular, cambio de organizador con espera (la colecta queda pausada y la billetera vieja deja de operar), liquidación por cierre con reclamo de créditos, y liquidación por inactividad.
+- **Bug encontrado y arreglado:** una colecta que la titular validaba sin registrar en la Plataforma no se podía liquidar, y la plata quedaba trabada. Ahora **la titular tiene que registrarla antes de publicarla**, y si a una colecta nunca registrada le llega plata por fuera, al liquidarla **va a la titular**. Lo prueba `arreglo.js` (colecta `0.0.11060036`; liquidación: `0.0.11058573-1792233509-911036459`), y `npm run nucleo` pasó con 50 de 50 pasos (Plataforma `0.0.11060073`).
+
+**Costos en testnet:** desplegar un contrato de este tamaño cuesta unos 55 HBAR (subir el bytecode más crearlo con 5M de gas). Cada firma de una entidad o donante con 2M de gas exige tener saldo para cubrir el máximo; por eso la web recarga 10 HBAR a los roles de la demo cuando bajan de 10, y "crear colecta" se pausa si el operador tiene menos de 150.

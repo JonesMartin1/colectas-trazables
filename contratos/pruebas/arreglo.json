@@ -1,0 +1,27 @@
+{
+  "red": "testnet",
+  "colecta": "0.0.11060036",
+  "fallos": 2,
+  "pasos": [
+    {
+      "desc": "La titular intenta publicar sin registrar la colecta en la Plataforma",
+      "ok": false,
+      "esperado": false,
+      "razon": "La titular primero tiene que registrar la colecta en la Plataforma",
+      "tx": "0.0.11058567-1792233278-447757595"
+    },
+    {
+      "desc": "Vencido el cierre, se liquida: como nunca se registró, la plata va a la titular",
+      "ok": false,
+      "esperado": true,
+      "razon": "Hedera rechazo la transferencia",
+      "tx": "0.0.11058573-1792233378-754607851"
+    },
+    {
+      "desc": "La titular recibió lo que estaba trabado (0 → 0 USDCd)",
+      "ok": false,
+      "esperado": true,
+      "razon": "no recibió los 5"
+    }
+  ]
+}
