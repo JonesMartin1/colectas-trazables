@@ -59,6 +59,13 @@ function renderMovements(container, movements, kind) {
     const when = document.createElement("small");
     when.textContent = `#${movement.secuencia ?? "—"} · ${date(movement.fecha)}`;
     details.append(amount, when);
+    // donación cuya transferencia la API comprobó en el Mirror Node antes de registrarla
+    if (kind === "donation" && movement.verificada) {
+      const badge = document.createElement("small");
+      badge.className = "verified-badge";
+      badge.textContent = "✓ Pago verificado en Hedera";
+      details.append(badge);
+    }
     row.append(icon, details);
     const url = safeLink(movement.hashscan);
     if (url) {
