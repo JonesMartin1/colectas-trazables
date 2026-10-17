@@ -1,0 +1,146 @@
+/* Capa visual: botón de Mercado Pago, gráficos, marketplace del NEA, animaciones, hover y brillo.
+   Va aparte de styles.css y pages.css (base de Facundo). Todo el movimiento respeta prefers-reduced-motion. */
+:root{--mp:#009ee3;--mp-dark:#0079b8;--glow:#d8f16a;--coral:#f08a5d;--sky:#7cc4e8}
+
+/* ---------- aparición al hacer scroll ---------- */
+.js-fx .reveal{opacity:0;transform:translateY(28px) scale(.98);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.js-fx .reveal.visible{opacity:1;transform:none}
+
+/* ---------- cards con hover llamativo ---------- */
+.fx-card{position:relative;isolation:isolate;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+.fx-card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;opacity:0;transition:opacity .3s;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),#d8f16a38,transparent 45%)}
+.fx-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;
+  background:linear-gradient(115deg,transparent 35%,#ffffff70 48%,transparent 60%);background-size:250% 100%;background-position:130% 0;transition:background-position .9s}
+.fx-card:hover{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-8px) scale(1.015);
+  box-shadow:0 0 0 1px #d8f16a99,0 18px 40px #1d3a2a2e,0 0 36px #d8f16a55}
+.fx-card:hover::before{opacity:1}
+.fx-card:hover::after{background-position:-30% 0}
+
+/* botones: barrido de luz */
+.button{position:relative;overflow:hidden}
+.button::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;transform:skewX(-20deg);background:linear-gradient(90deg,transparent,#ffffffa0,transparent);transition:left .6s}
+.button:hover::after{left:130%}
+.button-lime{animation:latido 2.8s ease-in-out infinite}
+@keyframes latido{0%,100%{box-shadow:inset 0 1px 1px #fff9,0 5px 0 #0005,0 0 0 0 #d8f16a00}50%{box-shadow:inset 0 1px 1px #fff9,0 5px 0 #0005,0 0 26px 4px #d8f16a88}}
+
+/* destellos en los héroes */
+.sparkle{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--glow);box-shadow:0 0 10px 2px #d8f16acc;pointer-events:none;z-index:1;opacity:0;animation:titila var(--d,3s) ease-in-out var(--delay,0s) infinite}
+@keyframes titila{0%,100%{opacity:0;transform:scale(.3)}50%{opacity:.95;transform:scale(1)}}
+.hero,.page-hero{position:relative;overflow:hidden}
+.page-hero::before{content:"";position:absolute;inset:-40%;pointer-events:none;background:conic-gradient(from 0deg,transparent,#d8f16a14,transparent 30%);animation:gira 18s linear infinite}
+@keyframes gira{to{transform:rotate(1turn)}}
+.page-hero>*{position:relative;z-index:2}
+
+/* números que cuentan */
+.stat-card strong{transition:color .3s}
+.stat-card.contando strong{color:#5b8d3a}
+
+/* ---------- donar: montos rápidos + Mercado Pago ---------- */
+.monto-rapido{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.monto-rapido button{border:1px solid #cbd9c9;background:#f3f6ee;border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;color:#2f4636;transition:transform .2s,background .2s,box-shadow .2s}
+.monto-rapido button:hover{transform:translateY(-2px);background:var(--glow);box-shadow:0 6px 16px #8fb02e44}
+.monto-rapido button[aria-pressed="true"]{background:var(--ink);color:var(--glow);border-color:var(--ink)}
+.mp-button{width:100%;margin-top:18px;display:flex;align-items:center;justify-content:center;gap:12px;border:0;border-radius:8px;padding:14px 18px;background:var(--mp);color:#fff;font:800 15px/1 var(--body);letter-spacing:.2px;position:relative;overflow:hidden;
+  box-shadow:0 5px 0 var(--mp-dark),0 14px 26px #009ee355;transition:transform .2s,box-shadow .2s,background .2s}
+.mp-button:hover{background:#00a8f0;transform:translateY(-3px);box-shadow:0 8px 0 var(--mp-dark),0 20px 34px #009ee377}
+.mp-button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--mp-dark)}
+.mp-button:disabled{opacity:.7;cursor:wait}
+.mp-button::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;transform:skewX(-20deg);background:linear-gradient(90deg,transparent,#ffffffb0,transparent);animation:barrido 3.2s ease-in-out infinite}
+@keyframes barrido{0%,60%{left:-60%}100%{left:140%}}
+.mp-logo{flex:none;width:46px;height:31px;display:grid;place-items:center;background:#fff;border-radius:50%/50%;box-shadow:0 0 0 2px #ffffff66}
+.mp-logo svg{width:40px;height:26px}
+.donar-o{display:flex;align-items:center;gap:12px;margin:16px 0 0;color:#8a978a;font-size:11px;font-weight:800;letter-spacing:1.5px}
+.donar-o::before,.donar-o::after{content:"";flex:1;height:1px;background:#d4dfcf}
+.mp-seguro{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:11px;color:#6f8070}
+
+/* ---------- gráficos ---------- */
+.charts-area{padding:90px 0 20px}
+.charts-head h2{font:800 clamp(30px,3.4vw,46px)/1.05 var(--display);letter-spacing:-2px;margin:18px 0 8px}
+.charts-head h2 em{font-family:Georgia,serif;font-weight:400}
+.charts-head p{color:#748274;max-width:560px;line-height:1.6;margin:0 0 30px}
+.charts-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.chart-card{grid-column:span 4;background:#f9faf4;border:1px solid #d4dcd1;border-radius:14px;padding:24px;box-shadow:0 9px 19px #263f2e0c;min-height:300px}
+.chart-card.ancho{grid-column:span 8}
+.chart-card h3{font:800 17px var(--display);margin:0 0 4px}
+.chart-card .chart-sub{font-size:11px;color:#839183;margin:0 0 18px;letter-spacing:.4px}
+.donut{width:190px;height:190px;margin:8px auto 18px;border-radius:50%;position:relative;
+  background:conic-gradient(var(--coral) 0 calc(var(--g,0)*1%),var(--glow) 0 100%);transition:--g 1.4s}
+.donut::after{content:"";position:absolute;inset:26px;border-radius:50%;background:#f9faf4;box-shadow:inset 0 2px 8px #24402e18}
+.donut-centro{position:absolute;inset:0;display:grid;place-content:center;text-align:center;z-index:1}
+.donut-centro strong{font:800 34px/1 var(--display);letter-spacing:-1.5px}
+.donut-centro span{font-size:10px;letter-spacing:1.4px;color:#7d8b7d;margin-top:4px}
+.leyenda{display:grid;gap:8px;font-size:12px}
+.leyenda div{display:flex;align-items:center;gap:8px}
+.leyenda i{width:11px;height:11px;border-radius:3px;flex:none}
+.leyenda b{margin-left:auto}
+.barras{display:grid;gap:16px}
+.barra-fila{display:grid;gap:6px;font-size:12px}
+.barra-fila header{display:flex;justify-content:space-between;gap:8px}
+.barra-fila header b{font-family:var(--display)}
+.barra-pista{height:14px;border-radius:999px;background:#e7ece2;overflow:hidden;box-shadow:inset 1px 2px 4px #b4c4b066}
+.barra-pista span{display:block;height:100%;width:0;border-radius:inherit;transition:width 1.3s cubic-bezier(.2,.8,.2,1);position:relative;overflow:hidden}
+.barra-pista span::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,#ffffff80,transparent);animation:barrido-barra 2.4s ease-in-out infinite}
+@keyframes barrido-barra{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.linea svg{width:100%;height:230px;overflow:visible}
+.linea .trazo{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset 1.8s cubic-bezier(.4,.1,.2,1)}
+.linea.visible .trazo{stroke-dashoffset:0}
+.linea .area{opacity:0;transition:opacity 1.2s .8s}
+.linea.visible .area{opacity:1}
+.linea .punto{opacity:0;transition:opacity .4s 1.6s}
+.linea.visible .punto{opacity:1}
+.linea .eje{font-size:10px;fill:#8a978a}
+.chart-vacio{color:#8a978a;font-size:12px;padding:30px 0;text-align:center}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.kpis div{background:#eef3e8;border-radius:10px;padding:12px;text-align:center}
+.kpis strong{display:block;font:800 22px var(--display)}
+.kpis span{font-size:10px;color:#748274;letter-spacing:1px}
+@media(max-width:900px){.chart-card,.chart-card.ancho{grid-column:1/-1}}
+
+/* ---------- marketplace del NEA ---------- */
+.nea-section{background:#171d1b;color:#f2f5ec;padding:100px 0;position:relative;overflow:hidden}
+.nea-section::before{content:"";position:absolute;width:700px;height:700px;right:-200px;top:-260px;border-radius:50%;background:radial-gradient(circle,#d8f16a22,transparent 65%);animation:flota 9s ease-in-out infinite alternate}
+@keyframes flota{to{transform:translate(-120px,80px) scale(1.15)}}
+.nea-section .section-kicker{color:#d3e7b8}
+.nea-head{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;position:relative}
+.nea-head h2{font:800 clamp(34px,4vw,58px)/1.02 var(--display);letter-spacing:-2.5px;margin:20px 0 10px}
+.nea-head h2 em{font-family:Georgia,serif;font-weight:400;color:var(--glow)}
+.nea-head p{color:#aebdaf;max-width:520px;line-height:1.65;margin:0}
+.nea-buscar{min-width:260px;background:#232c28;border:1px solid #3d4a43;border-radius:8px;padding:13px 14px;color:#fff;outline:none}
+.nea-buscar:focus{border-color:var(--glow);box-shadow:0 0 0 3px #d8f16a33}
+.nea-filtros{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0 26px;position:relative}
+.nea-filtros button{border:1px solid #3d4a43;background:#202925;color:#cfdacd;border-radius:999px;padding:9px 16px;font-size:12px;font-weight:800;transition:all .25s}
+.nea-filtros button:hover{border-color:var(--glow);color:#fff;transform:translateY(-2px)}
+.nea-filtros button[aria-pressed="true"]{background:var(--glow);color:var(--ink);border-color:var(--glow);box-shadow:0 0 22px #d8f16a55}
+.nea-subtitulo{font:800 13px var(--body);letter-spacing:2px;color:#9fb0a1;margin:36px 0 16px;position:relative}
+.nea-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;position:relative}
+.nea-card{background:#222b27;border:1px solid #36433c;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;color:#eef3e8}
+.nea-card:hover{box-shadow:0 0 0 1px #d8f16aaa,0 22px 44px #0008,0 0 40px #d8f16a33}
+.nea-visual{height:128px;position:relative;display:grid;place-items:center;overflow:hidden;background:var(--fondo,#2e3a33)}
+.nea-visual::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,#ffffff2a,transparent 55%)}
+.nea-icono{font-size:52px;line-height:1;filter:drop-shadow(0 6px 10px #0006);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.nea-card:hover .nea-icono{transform:scale(1.18) rotate(-8deg)}
+.nea-chip{position:absolute;top:12px;left:12px;z-index:1;background:#0009;color:#fff;border-radius:999px;padding:5px 10px;font-size:10px;font-weight:800;letter-spacing:1px;backdrop-filter:blur(4px)}
+.nea-chip.real{background:var(--glow);color:var(--ink)}
+.nea-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.nea-body small{font-size:10px;letter-spacing:1.5px;color:#9fb0a1}
+.nea-body h3{font:800 18px/1.2 var(--display);margin:0}
+.nea-body p{font-size:13px;line-height:1.5;color:#b9c6ba;margin:0}
+.nea-tags{display:flex;flex-wrap:wrap;gap:6px}
+.nea-tags span{font-size:10px;border:1px solid #445249;border-radius:999px;padding:3px 8px;color:#cdd8cc}
+.nea-progreso{margin-top:auto}
+.nea-progreso header{display:flex;justify-content:space-between;font-size:11px;color:#b9c6ba;margin-bottom:6px}
+.nea-progreso header b{color:#fff;font-family:var(--display)}
+.nea-pista{height:8px;border-radius:999px;background:#33403a;overflow:hidden}
+.nea-pista span{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#9fd14b,var(--glow));box-shadow:0 0 12px #d8f16a99;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.nea-accion{margin-top:6px;display:flex;justify-content:center;align-items:center;gap:8px;border-radius:8px;padding:11px;font-size:12px;font-weight:800;background:#2f3b35;color:#eef3e8;border:1px solid #4a5a51;transition:all .25s}
+.nea-card:hover .nea-accion{background:var(--glow);color:var(--ink);border-color:var(--glow)}
+.nea-esqueleto{height:330px;border-radius:16px;background:linear-gradient(100deg,#222b27 30%,#2c3732 50%,#222b27 70%);background-size:300% 100%;animation:shimmer 1.4s linear infinite}
+@keyframes shimmer{to{background-position:-150% 0}}
+.nea-vacio{color:#9fb0a1;font-size:13px;padding:20px 0}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js-fx .reveal{opacity:1;transform:none}
+  .fx-card,.fx-card:hover{transform:none}
+}
