@@ -44,11 +44,13 @@ export async function armarColecta(colecta) {
   const donaciones = [];
   const gastos = [];
   const entregas = [];
+  const conversiones = [];
   for (const e of eventos) {
     const ev = e.evento;
     const base = { secuencia: e.secuencia, fecha: e.fecha, monto: Number(ev.amount) || 0, hashscan: ev.txHashscan || e.hashscan };
     if (ev.type === "DONATION") donaciones.push({ ...base, metodo: ev.method, externalRefHash: ev.externalRefHash });
     if (ev.type === "EXPENSE") gastos.push({ ...base, proveedorCuit: ev.supplierCuit, cae: ev.cae, invoiceHash: ev.invoiceHash });
+    if (ev.type === "CONVERSION") conversiones.push({ secuencia: e.secuencia, fecha: e.fecha, hashscan: ev.txHashscan || e.hashscan, ars: ev.ars, usdc: ev.usdc, tipoDeCambio: ev.rate });
     if (ev.type === "DELIVERY") entregas.push({ secuencia: e.secuencia, fecha: e.fecha, hashscan: e.hashscan, item: ev.item, cantidad: ev.quantity, lugar: ev.place, fotoHash: ev.photoHash });
   }
   const recaudado = donaciones.reduce((s, d) => s + d.monto, 0);
@@ -67,6 +69,7 @@ export async function armarColecta(colecta) {
     donaciones,
     gastos,
     entregas,
+    conversiones,
     totales: { recaudado, gastado, saldo: recaudado - gastado },
   };
 }

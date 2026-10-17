@@ -97,14 +97,14 @@ export async function leerTransaccion(txId, maxSeg = 10) {
  * Comprueba en el Mirror Node (no en nuestra palabra) que la transferencia existe, salió bien, acreditó USDCd
  * al beneficiario y lleva el memo de la colecta. Devuelve { usdc, hashscan } o { error }.
  */
-export async function verificarTransferencia({ txId, beneficiario, campaignId }) {
+export async function verificarTransferencia({ txId, beneficiario, campaignId, exigirMemo = true }) {
   const { token } = config();
   if (!token) throw new Error("Falta USDC_TOKEN_ID");
   const tx = await leerTransaccion(txId);
   if (!tx) return { error: "No existe esa transacción en Hedera." };
   if (tx.result !== "SUCCESS") return { error: `La transacción no salió bien (${tx.result}).` };
   const memo = Buffer.from(tx.memo_base64 ?? "", "base64").toString("utf8");
-  if (memo !== memoColecta(campaignId)) return { error: "La transferencia no está destinada a esta colecta (memo)." };
+  if (exigirMemo && memo !== memoColecta(campaignId)) return { error: "La transferencia no está destinada a esta colecta (memo)." };
   const unidades = (tx.token_transfers ?? [])
     .filter((t) => t.token_id === token && t.account === beneficiario && t.amount > 0)
     .reduce((s, t) => s + t.amount, 0);

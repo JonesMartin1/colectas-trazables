@@ -21,6 +21,7 @@ const RUTAS = [
   [/^\/api\/colectas\/([^/]+)\/gastos$/, "api/colectas/[id]/gastos.js", ["id"]],
   [/^\/api\/colectas\/([^/]+)\/verificar$/, "api/colectas/[id]/verificar.js", ["id"]],
   [/^\/api\/colectas\/([^/]+)\/entregas$/, "api/colectas/[id]/entregas.js", ["id"]],
+  [/^\/api\/colectas\/([^/]+)\/conversiones$/, "api/colectas/[id]/conversiones.js", ["id"]],
 ];
 
 function adaptarRes(res) {
