@@ -1,12 +1,12 @@
 {
   "red": "testnet",
-  "plataforma": "0.0.11058602",
-  "colecta": "0.0.11058607",
-  "colecta2": "0.0.11058623",
+  "plataforma": "0.0.11060073",
+  "colecta": "0.0.11060078",
+  "colecta2": "0.0.11060095",
   "hashscan": {
-    "plataforma": "https://hashscan.io/testnet/contract/0.0.11058602",
-    "colecta": "https://hashscan.io/testnet/contract/0.0.11058607",
-    "colecta2": "https://hashscan.io/testnet/contract/0.0.11058623"
+    "plataforma": "https://hashscan.io/testnet/contract/0.0.11060073",
+    "colecta": "https://hashscan.io/testnet/contract/0.0.11060078",
+    "colecta2": "https://hashscan.io/testnet/contract/0.0.11060095"
   },
   "cuentas": {
     "ent-caritas": {
@@ -66,343 +66,350 @@
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.10989169-1792223184-820943071"
+      "tx": "0.0.10989169-1792233538-854644468"
     },
     {
       "descripcion": "La plataforma aprueba a Caritas Itati (AR)",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.10989169-1792223184-568109583"
+      "tx": "0.0.10989169-1792233538-855793360"
     },
     {
       "descripcion": "La plataforma aprueba a Defensa Civil Corrientes (AR)",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.10989169-1792223186-471596475"
+      "tx": "0.0.10989169-1792233541-029287701"
     },
     {
       "descripcion": "La plataforma aprueba a Greenpeace (NL)",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.10989169-1792223187-076149364"
+      "tx": "0.0.10989169-1792233544-629067953"
     },
     {
       "descripcion": "Alguien que no es la plataforma intenta aprobarse como entidad",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "Solo la plataforma",
-      "tx": "0.0.11058573-1792223189-809930647"
+      "tx": "0.0.11058573-1792233545-610547725"
     },
     {
       "descripcion": "Colecta con titular extranjera (Greenpeace)",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "CONTRACT_REVERT_EXECUTED",
-      "tx": "0.0.10989169-1792223203-928811360"
+      "tx": "0.0.10989169-1792233558-731427371"
     },
     {
       "descripcion": "Colecta de Santi (organizador) con Cáritas Itatí como titular: Comida 300, Camas 200, Gasolina 100",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.10989169-1792223215-065297908"
+      "tx": "0.0.10989169-1792233570-654800628"
     },
     {
       "descripcion": "Donar antes de que la valide la titular",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "La colecta no esta abierta a donaciones",
-      "tx": "0.0.11058571-1792223221-072742868"
+      "tx": "0.0.11058571-1792233572-573708253"
     },
     {
       "descripcion": "Greenpeace valida (aval extranjero; todavía no se publica)",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058568-1792223219-378720185"
+      "tx": "0.0.11058568-1792233572-607903916"
     },
     {
-      "descripcion": "Cáritas Itatí valida como titular → la colecta se publica",
-      "esperado": "pasa",
-      "resultado": "pasó",
-      "razon": null,
-      "tx": "0.0.11058565-1792223223-264327793"
+      "descripcion": "Cáritas intenta publicar sin haberla registrado en la Plataforma",
+      "esperado": "se rechaza",
+      "resultado": "rechazado",
+      "razon": "La titular primero tiene que registrar la colecta en la Plataforma",
+      "tx": "0.0.11058565-1792233575-575683881"
     },
     {
       "descripcion": "Cáritas registra la colecta en la Plataforma (habilita créditos)",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058565-1792223221-381366903"
+      "tx": "0.0.11058565-1792233573-931552976"
+    },
+    {
+      "descripcion": "Cáritas Itatí valida como titular → la colecta se publica",
+      "esperado": "pasa",
+      "resultado": "pasó",
+      "razon": null,
+      "tx": "0.0.11058565-1792233574-285746659"
     },
     {
       "descripcion": "Donante A dona 200 USDCd (1 % de comisión a la plataforma)",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058571-1792223225-191970035"
+      "tx": "0.0.11058571-1792233579-631034787"
     },
     {
       "descripcion": "Donante B dona 100 USDCd",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058572-1792223224-402544341"
+      "tx": "0.0.11058572-1792233581-016814655"
     },
     {
       "descripcion": "Cualquiera reconoce la transferencia directa como donación anónima",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058573-1792223228-647623052"
+      "tx": "0.0.11058573-1792233585-265978463"
     },
     {
       "descripcion": "Santi pide un tramo de 200",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "Supera el tope sin rendir: primero carga comprobantes",
-      "tx": "0.0.11058569-1792223232-110296450"
+      "tx": "0.0.11058569-1792233583-182608807"
     },
     {
       "descripcion": "Santi pide un tramo de 150",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058569-1792223233-093734581"
+      "tx": "0.0.11058569-1792233587-784495408"
     },
     {
       "descripcion": "Defensa Civil (no validó esta colecta) intenta aprobar el tramo",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "Solo una entidad validadora de esta colecta",
-      "tx": "0.0.11058567-1792223232-096610231"
+      "tx": "0.0.11058567-1792233585-709376057"
     },
     {
       "descripcion": "Greenpeace (validadora) aprueba → Santi recibe 150",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058568-1792223235-051816605"
+      "tx": "0.0.11058568-1792233587-036140060"
     },
     {
       "descripcion": "Santi pide 50 más sin haber rendido nada (150 + 50 > 180)",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "Supera el tope sin rendir: primero carga comprobantes",
-      "tx": "0.0.11058569-1792223237-500249810"
+      "tx": "0.0.11058569-1792233590-380418229"
     },
     {
       "descripcion": "Santi carga factura con CAE: Camas 100",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058569-1792223238-541841898"
+      "tx": "0.0.11058569-1792233591-238695202"
     },
     {
       "descripcion": "Santi carga ticket sin factura: Comida 20",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058569-1792223235-845174806"
+      "tx": "0.0.11058569-1792233592-967663896"
     },
     {
       "descripcion": "Cáritas aprueba la factura de Camas",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058565-1792223238-824669143"
+      "tx": "0.0.11058565-1792233590-591686910"
     },
     {
       "descripcion": "Cáritas intenta aprobar el ticket de 20 (tope sin factura: 10 % de 150 = 15)",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "Supera el tope de tickets sin factura (10%)",
-      "tx": "0.0.11058565-1792223241-486587401"
+      "tx": "0.0.11058565-1792233592-166368509"
     },
     {
       "descripcion": "Cáritas rechaza el ticket de 20",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058565-1792223242-562785531"
+      "tx": "0.0.11058565-1792233596-124844273"
     },
     {
       "descripcion": "Santi carga un ticket de 12",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058569-1792223241-553135245"
+      "tx": "0.0.11058569-1792233594-497593300"
     },
     {
       "descripcion": "Cáritas aprueba el ticket de 12",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058565-1792223242-578504162"
+      "tx": "0.0.11058565-1792233594-676395251"
     },
     {
       "descripcion": "Santi intenta cargar otra vez la misma factura",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "Ese comprobante ya se cargo",
-      "tx": "0.0.11058569-1792223247-627994358"
+      "tx": "0.0.11058569-1792233599-504913443"
     },
     {
       "descripcion": "Ya rindió 112: pide 100 más (38 + 100 ≤ 180)",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058569-1792223245-121922340"
+      "tx": "0.0.11058569-1792233598-147309405"
     },
     {
       "descripcion": "Cáritas aprueba el segundo tramo",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058565-1792223249-525292671"
+      "tx": "0.0.11058565-1792233598-156758607"
     },
     {
       "descripcion": "Santi pide pasar 50 de Camas a Gasolina, con motivo",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058569-1792223248-967747814"
+      "tx": "0.0.11058569-1792233601-007828589"
     },
     {
       "descripcion": "Cáritas aprueba la reasignación",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058565-1792223250-055144577"
+      "tx": "0.0.11058565-1792233600-661548637"
     },
     {
       "descripcion": "Donante A denuncia el ticket de 12",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058571-1792223252-019418481"
+      "tx": "0.0.11058571-1792233601-344581960"
     },
     {
       "descripcion": "Alguien que no donó intenta denunciar",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "Solo donantes de esta colecta o entidades",
-      "tx": "0.0.11058573-1792223250-355038504"
+      "tx": "0.0.11058573-1792233604-616653018"
     },
     {
       "descripcion": "Greenpeace vota pausar (falta otra validadora o la titular)",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058568-1792223251-465821833"
+      "tx": "0.0.11058568-1792233607-212688040"
     },
     {
       "descripcion": "Cáritas (titular) pausa la colecta",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058565-1792223254-552304513"
+      "tx": "0.0.11058565-1792233607-652268010"
     },
     {
       "descripcion": "Santi pide un tramo con la colecta pausada",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "La colecta no admite tramos ahora",
-      "tx": "0.0.11058569-1792223254-125430967"
+      "tx": "0.0.11058569-1792233606-994367509"
     },
     {
       "descripcion": "Donar con la colecta pausada",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "La colecta no esta abierta a donaciones",
-      "tx": "0.0.11058572-1792223260-667856494"
+      "tx": "0.0.11058572-1792233610-149895803"
     },
     {
       "descripcion": "Alguien intenta liquidar antes de tiempo",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "Todavia no corresponde liquidar",
-      "tx": "0.0.11058573-1792223257-987742053"
+      "tx": "0.0.11058573-1792233613-003677468"
     },
     {
       "descripcion": "Cáritas confirma el fraude → Santi queda inhabilitado",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058565-1792223260-102905162"
+      "tx": "0.0.11058565-1792233613-227054143"
     },
     {
       "descripcion": "Cualquiera liquida: lo que queda va al fondo de créditos",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058573-1792223261-619527154"
+      "tx": "0.0.11058573-1792233615-685164988"
     },
     {
       "descripcion": "Se reclaman los créditos del donante A",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058573-1792223261-607794260"
+      "tx": "0.0.11058573-1792233613-367247443"
     },
     {
       "descripcion": "Se reclaman los créditos del donante B",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058573-1792223265-402009430"
+      "tx": "0.0.11058573-1792233614-418531391"
     },
     {
       "descripcion": "Reclamar dos veces lo mismo",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "Ya reclamado",
-      "tx": "0.0.11058573-1792223264-085591802"
+      "tx": "0.0.11058573-1792233616-759615571"
     },
     {
       "descripcion": "Santi (inhabilitado) intenta abrir otra colecta",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "CONTRACT_REVERT_EXECUTED",
-      "tx": "0.0.10989169-1792223278-666885143"
+      "tx": "0.0.10989169-1792233629-547287899"
     },
     {
       "descripcion": "Otro organizador abre 'Agua para parajes' con Defensa Civil como titular",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.10989169-1792223294-365616584"
-    },
-    {
-      "descripcion": "Defensa Civil valida → se publica",
-      "esperado": "pasa",
-      "resultado": "pasó",
-      "razon": null,
-      "tx": "0.0.11058567-1792223296-746743973"
+      "tx": "0.0.10989169-1792233645-684015090"
     },
     {
       "descripcion": "Defensa Civil la registra en la Plataforma",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.11058567-1792223299-770016873"
+      "tx": "0.0.11058567-1792233648-742877811"
+    },
+    {
+      "descripcion": "Defensa Civil valida → se publica",
+      "esperado": "pasa",
+      "resultado": "pasó",
+      "razon": null,
+      "tx": "0.0.11058567-1792233649-064815694"
     },
     {
       "descripcion": "El donante A usa 18.354838 de sus créditos en 'Agua para parajes' (sin comisión de nuevo)",
       "esperado": "pasa",
       "resultado": "pasó",
       "razon": null,
-      "tx": "0.0.10989169-1792223298-181509320"
+      "tx": "0.0.10989169-1792233646-672453837"
     },
     {
       "descripcion": "Usar créditos en la colecta liquidada",
       "esperado": "se rechaza",
       "resultado": "rechazado",
       "razon": "La colecta destino no esta abierta",
-      "tx": "0.0.10989169-1792223302-579974778"
+      "tx": "0.0.10989169-1792233648-032889602"
     }
   ]
 }

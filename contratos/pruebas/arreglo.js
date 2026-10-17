@@ -32,7 +32,7 @@ function motivo(hex) {
 async function llamar(contrato, quien, fn, desc, esperado) {
   const c = clienteDe(quien);
   try {
-    const tx = await new ContractExecuteTransaction().setContractId(contrato).setGas(800_000).setFunction(fn).execute(c);
+    const tx = await new ContractExecuteTransaction().setContractId(contrato).setGas(2_000_000).setFunction(fn).execute(c);
     const rec = await new TransactionRecordQuery().setTransactionId(tx.transactionId).setValidateReceiptStatus(false).execute(c);
     const ok = rec.receipt.status.toString() === "SUCCESS";
     anotar(desc, esperado, ok, ok ? null : motivo(rec.contractFunctionResult?.errorMessage) ?? rec.receipt.status.toString(), idTx(tx.transactionId));
@@ -45,7 +45,7 @@ async function llamar(contrato, quien, fn, desc, esperado) {
 const ARCHIVO = process.env.BYTECODE_FILE_ID;
 const { ContractCreateTransaction, FileId } = await import("@hashgraph/sdk");
 const base = ARCHIVO ? new ContractCreateTransaction().setBytecodeFileId(FileId.fromString(ARCHIVO)).setAutoRenewAccountId(clienteOperador().id) : new ContractCreateFlow().setBytecode(BIN);
-const crear = await base.setGas(3_000_000).setConstructorParameters(
+const crear = await base.setGas(5_000_000).setConstructorParameters(
   new ContractFunctionParameters().addAddress("0x" + PLATAFORMA.toSolidityAddress()).addAddress("0x" + token.toSolidityAddress())
     .addAddress(k.organizador2.evm).addAddress(k["ent-defensa"].evm).addString("prueba-arreglo").addStringArray(["Agua"]).addUint256Array([100e6])
     .addUint256(Math.floor(Date.now() / 1000) + 90)).execute(client);
