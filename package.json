@@ -11,7 +11,8 @@
     "registro-alias": "node hedera/crear-registro-alias.js",
     "alias": "node hedera/publicar-alias.js",
     "avisos-demo": "node hedera/avisos-demo.js",
-    "fideicomiso": "node contratos/demo.js"
+    "fideicomiso": "node contratos/demo.js",
+    "nucleo": "node contratos/nucleo.js"
   },
   "keywords": [],
   "author": "",
