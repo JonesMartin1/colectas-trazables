@@ -47,6 +47,6 @@ export default async function handler(req, res) {
       urlOrganizador: `/gasto.html?id=${idUrl}#clave=${claveOrganizador}`, // en el # para que no viaje al servidor
     });
   } catch (e) {
-    return error(res, 500, e.message);
+    return error(res, e.status || 500, e.message);
   }
 }
