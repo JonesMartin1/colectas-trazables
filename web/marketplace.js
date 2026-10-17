@@ -73,9 +73,16 @@
     const grid = seccion.querySelector("#nea-activas");
     const lista = activas.filter((c) => coincide(c.titulo, c.descripcion));
     grid.innerHTML = lista.length
-      ? lista.map((c) => tarjeta({ chip: "✓ EN HEDERA", real: true, icono: "🤝", fondo: "linear-gradient(135deg,#1e3b2c,#486b5d)", sobre: `REGISTRO ${c.topicId}`, titulo: c.titulo, cuerpo: c.descripcion || "Colecta registrada en Hedera.", tags: [c.organizador?.tipo || "Organización", `${c.donaciones} ${c.donaciones === 1 ? "donación" : "donaciones"}`], recaudado: c.recaudado, meta: c.meta, accion: "Ver y donar", href: `/colecta.html?id=${encodeURIComponent(c.campaignId)}` })).join("")
+      ? lista.map((c) => tarjeta({ chip: "✓ EN HEDERA", real: true, icono: "🤝", fondo: "linear-gradient(135deg,#1e3b2c,#486b5d)", sobre: `REGISTRO ${c.topicId}`, titulo: c.titulo, cuerpo: c.descripcion || "Colecta registrada en Hedera.", tags: [c.organizador?.tipo || "Organización", `${c.donaciones} ${c.donaciones === 1 ? "donación" : "donaciones"}`], recaudado: c.recaudado, meta: c.meta, ...accionDonar(c) })).join("")
       : '<p class="nea-vacio">No hay colectas activas con ese filtro.</p>';
     activar(grid);
+  }
+
+  // donar exige cuenta: sin sesión, la card lleva a registrarse y después vuelve a la colecta
+  function accionDonar(c) {
+    const url = `/colecta.html?id=${encodeURIComponent(c.campaignId)}`;
+    const sesion = window.Cuenta?.actual();
+    return sesion ? { accion: "Doná ahora", href: url } : { accion: "Registrate y doná", href: window.Cuenta ? Cuenta.urlLogin(url) : url };
   }
 
   function prellenar(c) {

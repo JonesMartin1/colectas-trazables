@@ -4,15 +4,15 @@
   const quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
   document.documentElement.classList.add("js-fx");
 
-  const CARDS = ".stat-card,.activity-panel,.action-panel,.campaign-card,.chart-card,.nea-card,.raised-panel,.goal-bar";
-  const INCLINAN = ".campaign-card,.nea-card,.chart-card,.stat-card";
+  const CARDS = ".stat-card,.activity-panel,.action-panel,.campaign-card,.chart-card,.nea-card,.raised-panel,.goal-bar,.step-card,.object-shell";
+  const INCLINAN = ".campaign-card,.nea-card,.chart-card,.stat-card,.step-card,.object-shell";
 
   const io = "IntersectionObserver" in window && !quieto
     ? new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: "0px 0px -40px 0px" })
     : null;
 
   function preparar() {
-    document.querySelectorAll(CARDS).forEach((c) => { c.classList.add("fx-card"); if (!c.classList.contains("reveal") && !c.closest(".reveal")) c.classList.add("reveal"); });
+    document.querySelectorAll(CARDS).forEach((c) => { c.classList.add("fx-card"); if (!c.classList.contains("reveal") && !c.closest(".reveal, .hero")) c.classList.add("reveal"); });
     document.querySelectorAll(".reveal:not(.visible)").forEach((n, i) => {
       if (!io) return n.classList.add("visible");
       if (!n.dataset.fx) { n.dataset.fx = "1"; n.style.transitionDelay = `${(i % 4) * 80}ms`; io.observe(n); }

@@ -193,6 +193,40 @@ body.simple .create-section{padding:70px 0}
 .nea-grid.carrusel .nea-vacio{grid-column:auto;white-space:nowrap}
 @media(max-width:900px){body.simple .page-hero-grid{grid-template-columns:1fr}.chart-card.mitad{grid-column:1/-1}.dona-fila{grid-template-columns:1fr;justify-items:center}}
 
+/* ---------- "cómo funciona" con el paso de la cuenta ---------- */
+.steps.cuatro{grid-template-columns:repeat(4,1fr)}
+.step-art-cero{background:radial-gradient(circle,#e6f7a8,#9fbf6a)}
+.paso-link{display:inline-block;margin-top:6px;font-weight:800;color:#3e653b;text-decoration:underline}
+@media(max-width:1000px){.steps.cuatro{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.steps.cuatro{grid-template-columns:1fr}}
+
+/* ---------- card principal de la portada: flota, se endereza y brilla ---------- */
+.hero-object .object-shell{position:relative;overflow:hidden;animation:flotar 6s ease-in-out infinite;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s}
+.hero-object .object-shell.fx-card{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) rotate(-5deg)}
+.hero-object:hover .object-shell.fx-card{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) rotate(0deg) scale(1.06);
+  box-shadow:inset 0 2px 1px #a7b5a66b,0 0 0 1px #d8f16aaa,0 30px 60px #000a,0 0 60px #d8f16a55}
+.hero-object .object-shell::after{animation:brillo-card 4.5s ease-in-out infinite}
+@keyframes brillo-card{0%,55%{background-position:130% 0}100%{background-position:-30% 0}}
+@keyframes flotar{0%,100%{translate:0 0}50%{translate:0 -18px}}
+.hero-object .floating-tag{animation:flotar 4.2s ease-in-out .8s infinite;transition:scale .3s}
+.hero-object:hover .floating-tag{scale:1.08}
+.hero-object .object-halo{animation:halo 5s ease-in-out infinite}
+@keyframes halo{0%,100%{opacity:.7;scale:1}50%{opacity:1;scale:1.05;box-shadow:0 0 0 48px #8eae7330,0 0 0 100px #d8f16a14,0 0 80px #d8f16a33}}
+
+/* ---------- cuenta: encabezado, login y aviso para donar ---------- */
+.cuenta-chip{display:flex;align-items:center;gap:10px;margin-left:auto;font-size:13px;color:#e6eee2}
+.cuenta-avatar{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--glow);color:var(--ink);font-weight:800;box-shadow:0 0 14px #d8f16a77}
+.cuenta-chip button{border:1px solid #4a5a51;background:transparent;color:#cfdacd;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800}
+.cuenta-chip button:hover{border-color:var(--glow);color:#fff}
+.cuenta-ingresar{border:1px solid var(--glow);color:var(--glow);border-radius:999px;padding:9px 16px;font-weight:800;font-size:12px;transition:all .25s}
+.cuenta-ingresar:hover{background:var(--glow);color:var(--ink);box-shadow:0 0 20px #d8f16a77}
+.login-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#e3e8dc;padding:5px;border-radius:10px;margin:22px 0 6px}
+.login-tabs button{border:0;background:transparent;border-radius:7px;padding:11px;font-size:13px;font-weight:800;color:#5a6b5d;transition:all .25s}
+.login-tabs button[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 3px 10px #22362a22}
+.aviso-cuenta{display:block;margin:0 0 14px;padding:12px 14px;border-radius:10px;background:#fff6d6;border:1px solid #f0d77a;color:#5c4a0c;font-size:13px;line-height:1.4;transition:transform .2s,box-shadow .2s}
+.aviso-cuenta:hover{transform:translateY(-2px);box-shadow:0 8px 18px #c9a52a33}
+@media(max-width:760px){.cuenta-nombre{display:none}}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .js-fx .reveal{opacity:1;transform:none}

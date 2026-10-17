@@ -37,6 +37,19 @@
       hero.after(nea);
     }
     document.querySelectorAll("#nea-activas,#nea-causas").forEach(carrusel);
+    pasoCuenta();
+  }
+
+  // "Cómo funciona": el primer paso es crear la cuenta (o ingresar); los demás se corren un número.
+  function pasoCuenta() {
+    const pasos = document.querySelector("#como-funciona .steps");
+    if (!pasos || pasos.querySelector(".paso-cuenta")) return;
+    pasos.querySelectorAll(".step-number").forEach((n, i) => (n.firstChild.textContent = `0${i + 2} `));
+    pasos.insertAdjacentHTML("afterbegin", `<article class="step-card paso-cuenta">
+      <div class="step-number">01 <span>↗</span></div>
+      <div class="step-art step-art-cero"><div class="alias-paper"><small>TU CUENTA</small><strong>Hola, Ana</strong><span><b>✓</b> Lista para donar</span></div></div>
+      <h3>Creás tu cuenta</h3><p>Te registrás o iniciás sesión en un minuto. Es el primer paso para donar. <a class="paso-link" href="/login.html">Crear mi cuenta ↗</a></p></article>`);
+    pasos.classList.add("cuatro");
   }
 
   // Donaciones, gastos y entregas en pestañas, en vez de paneles uno abajo del otro.
