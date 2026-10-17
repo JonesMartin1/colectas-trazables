@@ -9,3 +9,5 @@ node_modules
 hedera/.firmantes.json
 entregables/
 video/
+.demo-organizador.json
+hedera/.demo-organizador.json

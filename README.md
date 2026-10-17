@@ -2,7 +2,7 @@
 
 Colectas para emergencias donde cada donación y cada gasto quedan registrados en Hedera. Cualquiera puede verificar adónde fue la plata, y nadie puede borrar ni editar el registro: ni el organizador ni nosotros.
 
-**Demo en vivo:** https://colectas-trazables.vercel.app · colecta de ejemplo: https://colectas-trazables.vercel.app/colecta.html?id=colchones-y-agua-para-itati-c45ce7
+**Demo en vivo:** https://colectas-trazables.vercel.app · colecta de ejemplo: https://colectas-trazables.vercel.app/colecta.html?id=colchones-y-agua-para-itati-532f2d
 
 **Entregables:** deck en [`entregables/colectas-deck.pdf`](entregables/colectas-deck.pdf) · video animado de 32 s en [`entregables/video/`](entregables/video/) · negocio, antecedentes, pitch y material para Hedera en [`entregables/`](entregables/).
 
@@ -48,10 +48,10 @@ Las claves de las cuentas de prueba quedan en `.cuentas.json`, que no se sube.
 | Qué | ID | HashScan |
 | --- | --- | --- |
 | Topic de registro de colectas | 0.0.11051457 | https://hashscan.io/testnet/topic/0.0.11051457 |
-| Colecta de la demo: "Colchones y agua para Itatí", organiza una asociación civil de demostración (topic) | 0.0.11053326 | https://hashscan.io/testnet/topic/0.0.11053326 |
-| Donación de la demo: 17,86 USDCd al beneficiario | 0.0.10989169-1792183504-059546304 | https://hashscan.io/testnet/transaction/0.0.10989169-1792183504-059546304 |
-| Gasto de la demo (EXPENSE, mensaje #2) | 0.0.10989169-1792183508-079600388 | https://hashscan.io/testnet/transaction/0.0.10989169-1792183508-079600388 |
-| Entrega de la demo: 40 colchones, foto sin caras (DELIVERY, mensaje #3) | 0.0.10989169-1792183517-486027898 | https://hashscan.io/testnet/transaction/0.0.10989169-1792183517-486027898 |
+| Colecta de la demo: "Colchones y agua para Itatí", organiza una asociación civil de demostración (topic) | 0.0.11056795 | https://hashscan.io/testnet/topic/0.0.11056795 |
+| Donación de la demo: 17,86 USDCd al beneficiario | 0.0.10989169-1792209852-277727013 | https://hashscan.io/testnet/transaction/0.0.10989169-1792209852-277727013 |
+| Gasto de la demo (EXPENSE, mensaje #2) | 0.0.10989169-1792209867-647008676 | https://hashscan.io/testnet/transaction/0.0.10989169-1792209867-647008676 |
+| Entrega de la demo: 40 colchones, foto sin caras (DELIVERY, mensaje #3) | 0.0.10989169-1792209874-368603964 | https://hashscan.io/testnet/transaction/0.0.10989169-1792209874-368603964 |
 | Colecta de prueba (topic) | 0.0.11051460 | https://hashscan.io/testnet/topic/0.0.11051460 |
 | Donación de prueba en USDC | 0.0.10989169-1792172437-238686943 | https://hashscan.io/testnet/transaction/0.0.10989169-1792172437-238686943 |
 | Registro de alias oficiales, clave 2 de 4 (topic) | 0.0.11052767 | https://hashscan.io/testnet/topic/0.0.11052767 |

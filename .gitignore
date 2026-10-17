@@ -12,3 +12,4 @@ backend/datos/
 .frames/
 .tmp/
 exports/
+.demo-organizador.json
