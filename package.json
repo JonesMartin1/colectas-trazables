@@ -10,7 +10,8 @@
     "dev": "node dev.js",
     "registro-alias": "node hedera/crear-registro-alias.js",
     "alias": "node hedera/publicar-alias.js",
-    "avisos-demo": "node hedera/avisos-demo.js"
+    "avisos-demo": "node hedera/avisos-demo.js",
+    "fideicomiso": "node contratos/demo.js"
   },
   "keywords": [],
   "author": "",

@@ -13,3 +13,6 @@ backend/datos/
 .tmp/
 exports/
 .demo-organizador.json
+
+# claves de prueba del fideicomiso
+contratos/.claves.json

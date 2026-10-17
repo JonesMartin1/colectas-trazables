@@ -1,0 +1,71 @@
+{
+  "red": "testnet",
+  "contrato": "0.0.11057590",
+  "hashscan": "https://hashscan.io/testnet/contract/0.0.11057590",
+  "colecta": "colchones-y-agua-para-itati-532f2d",
+  "token": "0.0.11041203",
+  "umbral": 2,
+  "firmantes": {
+    "organizacion": {
+      "cuenta": "0.0.11057567",
+      "evm": "0xec754d448a364649ff7895e39796f3cfc035461a"
+    },
+    "defensa-civil": {
+      "cuenta": "0.0.11057568",
+      "evm": "0xcec950be4c343847997c61452770aee3bef13ee0"
+    },
+    "caritas": {
+      "cuenta": "0.0.11057569",
+      "evm": "0xf9aa17f1a870407d8fa8e4b29859d5855ed5559f"
+    }
+  },
+  "proveedor": "0.0.11057571",
+  "factura": "0x00ae78f4dc689c12f4b37131d3dd47d26a577295c5471634490989b47bd93a19",
+  "fondeo": "0.0.11041202-1792215892-554311658",
+  "pasos": [
+    {
+      "descripcion": "La organización intenta pagarle a un proveedor que nadie aprobó",
+      "ok": false,
+      "tx": "0.0.11057567-1792215898-280445875",
+      "motivo": "El proveedor no esta aprobado"
+    },
+    {
+      "descripcion": "El proveedor intenta aprobarse solo",
+      "ok": false,
+      "tx": "0.0.11057571-1792215895-978994374",
+      "motivo": "No sos firmante de esta colecta"
+    },
+    {
+      "descripcion": "La organización propone al proveedor (1 de 2 firmas)",
+      "ok": true,
+      "tx": "0.0.11057567-1792215898-592231816",
+      "motivo": null
+    },
+    {
+      "descripcion": "Defensa Civil aprueba al proveedor (2 de 2: queda aprobado)",
+      "ok": true,
+      "tx": "0.0.11057568-1792215902-680068781",
+      "motivo": null
+    },
+    {
+      "descripcion": "La organización pide pagar 20 USDCd con la huella de la factura (1 de 2)",
+      "ok": true,
+      "tx": "0.0.11057567-1792215900-297321954",
+      "motivo": null
+    },
+    {
+      "descripcion": "La organización intenta firmar dos veces",
+      "ok": false,
+      "tx": "0.0.11057567-1792215900-462252443",
+      "motivo": "Ya aprobaste esta propuesta"
+    },
+    {
+      "descripcion": "Cáritas aprueba el pago (2 de 2: se paga solo)",
+      "ok": true,
+      "tx": "0.0.11057569-1792215902-421505687",
+      "motivo": null
+    }
+  ],
+  "saldoFinal": 30,
+  "proveedorRecibio": 20
+}
