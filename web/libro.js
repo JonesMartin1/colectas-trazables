@@ -56,6 +56,7 @@
     filtros();
     pintar("todo");
     document.dispatchEvent(new Event("fx:nuevo"));
+    if (location.hash === "#libro") sec.scrollIntoView({ behavior: "smooth" }); // llegó desde "Ver trazabilidad"
   }).catch(() => { sec.querySelector("#libro-filas").innerHTML = '<p class="chart-vacio">No se pudo leer el libro.</p>'; });
 
   function verificador(hash, acepta) {

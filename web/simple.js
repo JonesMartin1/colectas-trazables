@@ -155,15 +155,70 @@
     fila.className = "carrusel-fila";
     const flechas = document.createElement("div");
     flechas.className = "carrusel-flechas";
-    for (const [txt, dir] of [["←", -1], ["→", 1]]) {
+    const paso = () => (grid.querySelector(".nea-card")?.offsetWidth || 280) + 18;
+    const botones = [["←", -1], ["→", 1]].map(([txt, dir]) => {
       const b = document.createElement("button");
       b.type = "button";
       b.textContent = txt;
       b.setAttribute("aria-label", dir < 0 ? "Anteriores" : "Siguientes");
-      b.addEventListener("click", () => grid.scrollBy({ left: dir * grid.clientWidth * 0.8, behavior: "smooth" }));
+      b.addEventListener("click", () => { tocado = Date.now(); grid.scrollBy({ left: dir * paso(), behavior: "smooth" }); });
       flechas.append(b);
-    }
+      return b;
+    });
     if (titulo?.classList.contains("nea-subtitulo")) { titulo.before(fila); fila.append(titulo, flechas); }
     else grid.before(fila), fila.append(flechas);
+
+    // barra de progreso, bordes difuminados y flechas apagadas en los extremos
+    const barra = document.createElement("div");
+    barra.className = "carrusel-barra";
+    barra.innerHTML = "<span></span>";
+    grid.after(barra);
+    const BORDE = 20; // el ajuste de las tarjetas deja unos píxeles de margen en los extremos
+    const actualizar = () => {
+      const max = grid.scrollWidth - grid.clientWidth;
+      const k = max > 0 ? grid.scrollLeft / max : 0;
+      const visible = grid.scrollWidth > 0 ? grid.clientWidth / grid.scrollWidth : 1;
+      barra.firstChild.style.width = `${Math.max(12, visible * 100)}%`;
+      barra.firstChild.style.left = `${k * (100 - Math.max(12, visible * 100))}%`;
+      barra.hidden = max <= 2;
+      grid.classList.toggle("fade-izq", grid.scrollLeft > BORDE);
+      grid.classList.toggle("fade-der", grid.scrollLeft < max - BORDE);
+      botones[0].disabled = grid.scrollLeft <= BORDE;
+      botones[1].disabled = grid.scrollLeft >= max - BORDE;
+    };
+    grid.addEventListener("scroll", actualizar, { passive: true });
+    addEventListener("resize", actualizar);
+    new MutationObserver(actualizar).observe(grid, { childList: true });
+    actualizar();
+
+    // arrastrar con el mouse (en el celular ya se desliza solo)
+    let x0 = 0, s0 = 0, arrastrando = false, movio = false, tocado = 0;
+    grid.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      arrastrando = true; movio = false; x0 = e.clientX; s0 = grid.scrollLeft;
+    });
+    addEventListener("pointermove", (e) => {
+      if (!arrastrando) return;
+      const dx = e.clientX - x0;
+      if (Math.abs(dx) > 5) { movio = true; grid.classList.add("arrastrando"); }
+      if (movio) grid.scrollLeft = s0 - dx;
+    });
+    addEventListener("pointerup", () => { if (arrastrando) { arrastrando = false; tocado = Date.now(); grid.classList.remove("arrastrando"); } });
+    grid.addEventListener("click", (e) => { if (movio) { e.preventDefault(); e.stopPropagation(); movio = false; } }, true);
+
+    // avance automático lento, en pausa si el mouse está encima, si hay foco adentro o si lo tocaron hace poco
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let encima = false;
+    grid.addEventListener("pointerenter", () => (encima = true));
+    grid.addEventListener("pointerleave", () => (encima = false));
+    setInterval(() => {
+      if (encima || arrastrando || grid.contains(document.activeElement) || Date.now() - tocado < 8000 || document.hidden) return;
+      const r = grid.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return; // solo si está a la vista
+      const max = grid.scrollWidth - grid.clientWidth;
+      if (max <= 2) return;
+      grid.scrollTo({ left: grid.scrollLeft >= max - BORDE ? 0 : grid.scrollLeft + paso(), behavior: "smooth" });
+    }, 4500);
   }
+
 })();

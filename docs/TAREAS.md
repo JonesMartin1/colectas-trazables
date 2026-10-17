@@ -64,6 +64,8 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 | `GET /api/colectas/:id/verificar?comprobante=...` | — | `{ encontrada, secuencia, hashscan }` |
 | `POST /api/colectas/:id/entregas` | `{ item, cantidad, lugar, foto, fotoHash, clave }` | `{ secuencia, hashscan }` (`401` sin la clave del organizador) |
 | `POST /api/colectas/:id/mercadopago` | `{ monto }` | `{ url, urlPrueba }` (link de Checkout Pro; no registra nada) |
+| `GET /api/propuestas` | — | `{ topicId, hashscan, propuestas[] }`: ideas postuladas, sin aval todavía |
+| `POST /api/propuestas` | `{ titulo, descripcion, provincia, categoria, montoEstimado }` | `{ secuencia, hashscan }`. Publica `PROPOSAL` en el topic de propuestas, sin datos de quien postula. No recibe donaciones: una ONG verificada la avala creando la colecta. |
 | `POST /api/webhooks/mercadopago` | aviso de Mercado Pago (`type=payment`, `data.id`) | `200` siempre. Busca el pago en la API de MP y, si está aprobado y no se registró, publica `DONATION` con `method: "mercadopago"` y `externalRefHash = sha256("mp-<paymentId>")`. El comprobante del donante es `mp-<paymentId>`. |
 | `POST /api/colectas/:id/conversiones` | `{ txId, ars, clave }` | `{ secuencia, hashscan, usdc, tipoDeCambio }`. Solo el organizador. La organización compró USDC en un PSAV; la transferencia se verifica en el Mirror Node (sin exigir memo) y se publica `CONVERSION` con pesos, USDC y tipo de cambio. `GET /api/colectas/:id` suma `conversiones[]`. |
 

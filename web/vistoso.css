@@ -345,6 +345,47 @@ body[data-page="crear"] .create-section{padding:60px 0 80px}
 .nea-esqueleto.claro{height:180px;background:linear-gradient(100deg,#eef2e9 30%,#f7f9f3 50%,#eef2e9 70%);background-size:300% 100%}
 @media(max-width:900px){.ultimos{grid-template-columns:1fr}.libro-fila{grid-template-columns:50px 1fr 110px;row-gap:4px}.libro-fila>span:nth-child(2),.libro-fila>span:nth-child(4),.libro-fila>span:nth-child(6){display:none}.libro-fila.cab{display:none}.libro-detalle{padding-left:18px}}
 
+/* ---------- aprobadas vs. propuestas sin aval ---------- */
+.grupo{margin-top:8px}
+.grupo-sello{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;margin-right:8px;font:700 12px var(--body);vertical-align:-5px}
+.grupo-sello.ok{background:var(--glow);color:var(--ink);box-shadow:0 0 14px #d8f16a88}
+.grupo-sello.pend{background:#f4b740;color:#3d2a00}
+.grupo-aprobadas .nea-subtitulo{color:#d8f16a}
+.grupo-propuestas .nea-subtitulo{color:#f4c862}
+.nea-card.aprobada{border:1px solid #6d8f4f;box-shadow:0 0 0 1px #d8f16a33,0 14px 30px #0006}
+.nea-card.aprobada h3 a:hover{color:var(--glow)}
+.nea-card.propuesta{background:#1e2622;border:1.5px dashed #6b6447}
+.nea-card.propuesta .nea-visual{filter:saturate(.55) brightness(.85)}
+.nea-card.propuesta:hover .nea-visual{filter:none}
+.nea-chip.pend{background:#f4b740;color:#3d2a00}
+.propuesta-estado{margin-top:auto;display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 12px;border-radius:10px;background:#2a2a1f;border:1px solid #4d4630;font-size:11px;color:#c9c19c}
+.propuesta-estado b{font:700 15px var(--display);color:#fff;text-align:right}
+.propuesta-estado em{grid-column:1/-1;font-style:normal;color:#f4c862;font-weight:700}
+.nea-botones{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px;margin-top:6px}
+.nea-botones .nea-accion{margin-top:0}
+.nea-accion.secundaria{background:transparent;border-color:#4a5a51}
+.nea-card:hover .nea-accion.secundaria{background:transparent;color:#eef3e8;border-color:#d8f16a88}
+.nea-card.propuesta:hover .nea-accion:not(.secundaria){background:#f4b740;border-color:#f4b740;color:#3d2a00}
+.nea-herramientas{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.nea-herramientas .button{white-space:nowrap}
+.postular{margin:26px 0 6px;color:var(--ink);animation:entra .35s ease}
+.postular-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 14px;margin-top:10px}
+.postular-grid .ancho{grid-column:1/-1}
+.postular label{display:block;font-size:11px;font-weight:800;color:#4c5c50;margin:14px 0 7px}
+.postular input,.postular select,.postular textarea{width:100%;background:#e8ebe1;border:1px solid #c9d1c5;border-radius:5px;padding:12px 13px;color:#243429;font:inherit}
+.postular .button{margin-top:18px}
+@media(max-width:760px){.postular-grid{grid-template-columns:1fr}}
+
+/* ---------- carrusel ---------- */
+.nea-grid.carrusel{scroll-behavior:smooth;cursor:grab;-webkit-mask-image:none;mask-image:none}
+.nea-grid.carrusel.arrastrando{cursor:grabbing;scroll-behavior:auto;scroll-snap-type:none;user-select:none}
+.nea-grid.carrusel.fade-der{-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}
+.nea-grid.carrusel.fade-izq{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%);mask-image:linear-gradient(90deg,transparent,#000 12%)}
+.nea-grid.carrusel.fade-izq.fade-der{-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 88%,transparent)}
+.carrusel-barra{position:relative;height:4px;border-radius:999px;background:#2c3631;margin:2px 6px 0;overflow:hidden}
+.carrusel-barra span{position:absolute;top:0;bottom:0;border-radius:inherit;background:linear-gradient(90deg,#9fd14b,var(--glow));box-shadow:0 0 10px #d8f16a88;transition:left .25s,width .25s}
+.carrusel-flechas button:disabled{opacity:.3;cursor:default;background:#202925;color:#fff;border-color:#3d4a43;box-shadow:none}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .js-fx .reveal{opacity:1;transform:none}
