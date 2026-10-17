@@ -136,7 +136,7 @@
   <h2>Cuatro momentos, <em>una sola historia.</em></h2>
   <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-top:24px;align-items:start;">
     <div class="step"><span class="sn">01 · ANTES DE DONAR</span><img class="shot" src="app-alias-ok.png" style="width:100%;height:330px;object-fit:cover;object-position:0 78%;"><p style="font-size:14px;"><b>¿Este alias es real?</b> Oficial, firmado por 2 de 4 instituciones. Si es una imitación, avisa.</p></div>
-    <div class="step"><span class="sn">02 · DONAR</span><img class="shot" src="app-donar.png" style="width:100%;height:330px;object-fit:cover;object-position:top;"><p style="font-size:14px;"><b>Doná como siempre.</b> La plata va directo a la organización; recibís un código de comprobante.</p></div>
+    <div class="step"><span class="sn">02 · DONAR</span><img class="shot" src="app-donar.png" style="width:100%;height:330px;object-fit:cover;object-position:top;"><p style="font-size:14px;"><b>Doná como siempre.</b> La plata entra al contrato de la colecta y sale por tramos, con el aval de una entidad. Recibís un código de comprobante.</p></div>
     <div class="step"><span class="sn">03 · EN QUÉ SE USÓ</span><img class="shot" src="app-balance.png" style="width:100%;height:330px;object-fit:cover;object-position:top;"><p style="font-size:14px;"><b>Balance público.</b> Gastos con factura y CAE verificable en ARCA.</p></div>
     <div class="step"><span class="sn">04 · LO QUE LLEGÓ</span><img class="shot" src="app-entregas.png" style="width:100%;"><p style="font-size:14px;"><b>Entregas</b> con la huella de una foto, sin datos personales.</p></div>
   </div>
@@ -148,12 +148,13 @@
   <p class="k">Funciona hoy, en Hedera testnet</p>
   <h2>Cada paso tiene su registro <em>en HashScan.</em></h2>
   <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:20px;">
-    <div><img class="shot" src="hs-mensajes.png" style="width:100%;"><p class="src" style="margin-top:8px;">Topic de una colecta: DONATION y EXPENSE, solo con hashes.</p></div>
-    <div><img class="shot" src="hs-donacion.png" style="width:100%;"><p class="src" style="margin-top:8px;">Donación en USDC: SUCCESS, fee de la red USD 0,0011.</p></div>
+    <div><img class="shot" src="hs-mensajes.png" style="width:100%;height:300px;object-fit:cover;object-position:top;"><p class="src" style="margin-top:8px;">Topic de una colecta: DONATION y EXPENSE, solo con hashes.</p></div>
+    <div><img class="shot" src="hs-donacion.png" style="width:100%;height:300px;object-fit:cover;object-position:top;"><p class="src" style="margin-top:8px;">Donación en USDC: SUCCESS, fee de la red USD 0,0011.</p></div>
   </div>
   <table style="margin-top:14px;font-size:12.5px;">
     <tr><td><b>Colecta de demo</b> (topic)</td><td>0.0.11056795</td><td><b>Registro de colectas</b></td><td>0.0.11051457</td></tr>
     <tr><td><b>Registro de alias 2 de 4</b></td><td>0.0.11052767</td><td><b>Alias con 1 firma: rechazado</b></td><td>INVALID_SIGNATURE · 0.0.10989169-1792180079-660526390</td></tr>
+    <tr><td><b>Colecta en smart contract</b> (en vivo en /nucleo)</td><td>0.0.11058739</td><td><b>Plataforma: entidades y créditos</b></td><td>0.0.11058602 · recorrido de 49 pasos, del fraude a los créditos: 0.0.11058607</td></tr>
   </table>
   <div class="pie"><span>Todos los IDs y links en el README del repo</span><span>5 / 12</span></div>
 </section>
@@ -165,7 +166,7 @@
   <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:28px;">
     <div class="card"><h3>El donante no confía en la plataforma</h3><p class="muted" style="margin-top:8px;font-size:15px;">Con su código encuentra su aporte en el registro público. Sin exponer sus datos.</p></div>
     <div class="card"><h3>El público no confía en el organizador</h3><p class="muted" style="margin-top:8px;font-size:15px;">Cada gasto queda atado a una factura con CAE y cada entrega a la huella de su foto.</p></div>
-    <div class="card"><h3>Nadie confía en nosotros</h3><p class="muted" style="margin-top:8px;font-size:15px;">El topic se crea <b style="color:var(--lime)">sin clave de administrador</b>: ni nosotros podemos borrarlo. Y un alias oficial necesita <b style="color:var(--lime)">2 de 4 firmas</b>.</p></div>
+    <div class="card"><h3>Nadie confía en nosotros</h3><p class="muted" style="margin-top:8px;font-size:15px;">El topic se crea <b style="color:var(--lime)">sin clave de administrador</b>: ni nosotros podemos borrarlo. Un alias oficial necesita <b style="color:var(--lime)">2 de 4 firmas</b>. Y la plata vive en un <b style="color:var(--lime)">contrato sin dueño</b> que solo la libera con el aval de una entidad.</p></div>
   </div>
   <p style="margin-top:30px;font:700 22px/1.35 var(--display);max-width:1000px;">Hedera es un registro distribuido (DLT) con consenso hashgraph: orden y fecha de consenso, finalidad en segundos. No prueba que un gasto sea verdadero: prueba que <span style="background:var(--lime);color:var(--ink);padding:0 6px;">nadie lo cambió después</span>.</p>
   <div class="pie"><span>Colectas Trazables</span><span>6 / 12</span></div>
@@ -176,9 +177,9 @@
   <p class="k"><span class="n">5</span> Equipo</p>
   <h2>Tres personas de Corrientes, <em>construyendo para Corrientes.</em></h2>
   <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:34px;">
-    <div class="card"><div class="num" style="font-size:40px;">Martín</div><p class="numlab">Producto, integración con Hedera, API, negocio y marco legal.</p></div>
+    <div class="card"><div class="num" style="font-size:40px;">Martín</div><p class="numlab">Producto, integración con Hedera, smart contracts, API, negocio y marco legal.</p></div>
     <div class="card"><div class="num" style="font-size:40px;">Facundo</div><p class="numlab">Diseño y desarrollo de la web: inicio, página pública de la colecta y carga de gastos.</p></div>
-    <div class="card"><div class="num" style="font-size:40px;">Nicolás</div><p class="numlab">Integrante del equipo.</p></div>
+    <div class="card"><div class="num" style="font-size:40px;">Nicolás</div><p class="numlab">Mercado Pago, donaciones verificadas en la red, rediseño visual, cuenta e identidad, libro de la colecta, propuestas y Hedera en vivo.</p></div>
   </div>
   <p class="muted" style="margin-top:28px;font-size:15px;">Uso de IA declarado: el equipo usó Claude (Anthropic) como asistente para programar, investigar y documentar. Todo el código se escribió durante el ideathon.</p>
   <div class="pie"><span>Colectas Trazables</span><span>7 / 12</span></div>
@@ -192,10 +193,10 @@
     <div class="grid" style="gap:9px;">
       <div class="layer"><span class="lname">Usuarios</span><div class="boxes" style="grid-template-columns:repeat(3,1fr)"><div class="bx on"><b>Personas</b>donantes</div><div class="bx on"><b>Organizaciones</b>ONG, RSE</div><div class="bx on"><b>Gobierno</b>Defensa Civil</div></div></div>
       <div class="layer"><span class="lname">Caso de uso</span><div class="boxes" style="grid-template-columns:repeat(6,1fr)"><div class="bx"><b>DeFi</b></div><div class="bx"><b>RWA</b></div><div class="bx"><b>ESG</b></div><div class="bx next"><b>IA</b>roadmap</div><div class="bx"><b>Identity</b></div><div class="bx on"><b>Pagos</b>+ trazab.</div></div></div>
-      <div class="layer"><span class="lname">Aceleradores</span><div class="boxes" style="grid-template-columns:repeat(6,1fr)"><div class="bx"><b>Stablecoin</b></div><div class="bx"><b>Guardian</b></div><div class="bx"><b>Tokeniz.</b></div><div class="bx"><b>NFT</b></div><div class="bx on"><b>SDK JS</b></div><div class="bx next"><b>AI Studio</b></div></div></div>
-      <div class="layer"><span class="lname">Servicios</span><div class="boxes" style="grid-template-columns:repeat(4,1fr)"><div class="bx on"><b>HCS</b>colectas, alias 2 de 4</div><div class="bx on"><b>HTS</b>USDC</div><div class="bx"><b>HSCS</b>no custodiamos</div><div class="bx on"><b>Mirror Node</b>lectura gratis</div></div></div>
+      <div class="layer"><span class="lname">Aceleradores</span><div class="boxes" style="grid-template-columns:repeat(6,1fr)"><div class="bx next"><b>Stablecoin</b>peso digital</div><div class="bx"><b>Guardian</b></div><div class="bx"><b>Tokeniz.</b></div><div class="bx"><b>NFT</b></div><div class="bx on"><b>SDK JS</b></div><div class="bx next"><b>AI Studio</b></div></div></div>
+      <div class="layer"><span class="lname">Servicios</span><div class="boxes" style="grid-template-columns:repeat(4,1fr)"><div class="bx on"><b>HCS</b>colectas, alias 2 de 4</div><div class="bx on"><b>HTS</b>USDC</div><div class="bx on"><b>HSCS</b>colecta en contrato, sin dueño</div><div class="bx on"><b>Mirror Node</b>lectura gratis</div></div></div>
       <div class="layer"><span class="lname">Red</span><div class="boxes"><div class="bx net"><b>Hashgraph consensus</b>DLT · aBFT · finalidad en segundos</div></div></div>
-      <p class="src" style="margin-top:6px;">App: HTML/JS sin build + funciones Node en Vercel · @hashgraph/sdk · KeyList con umbral · SHA-256 en el navegador.</p>
+      <p class="src" style="margin-top:6px;">App: HTML/JS sin build + funciones Node en Vercel · @hashgraph/sdk · Solidity (HSCS + precompilado HTS) · KeyList con umbral · SHA-256 en el navegador.</p>
     </div>
     <div class="card">
       <h3 style="margin-bottom:4px;">Costo de red por colecta</h3>
@@ -210,22 +211,21 @@
 <!-- 9 · MODELO -->
 <section class="s">
   <p class="k"><span class="n">7</span> Modelo de negocio</p>
-  <h2>En la emergencia es gratis. Se sostiene con <em>la transparencia de todos los días.</em></h2>
+  <h2>El 99 % llega a la causa. <em>El 1 % sostiene la plataforma.</em></h2>
   <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:22px;">
     <div>
       <table>
         <tr><th>Quién</th><th>Lo usa para</th><th>Paga</th></tr>
-        <tr><td><b>Donante</b></td><td>verificar alias y su aporte</td><td>No</td></tr>
-        <tr><td><b>ONG y fundaciones</b></td><td>rendición automática, cumplir con UIF</td><td>USD 40/mes</td></tr>
-        <tr><td><b>Municipios y provincia</b></td><td>portal de donaciones de emergencia</td><td>USD 200–1.500/mes</td></tr>
-        <tr><td><b>Empresas con RSE</b></td><td>mostrar adónde fue su aporte</td><td>1,5 % de lo donado</td></tr>
+        <tr><td><b>Donante</b></td><td>donar y seguir su aporte, verificar alias</td><td>No paga extra</td></tr>
+        <tr><td><b>Organizador y entidad titular</b></td><td>publicar, rendir por tramos, cumplir con UIF</td><td>Sin suscripción</td></tr>
+        <tr><td><b>Plataforma</b></td><td>cobra dentro del contrato, al entrar cada donación, una sola vez y a la vista (los créditos reusados no pagan de nuevo)</td><td>1 % de lo donado</td></tr>
       </table>
       <p style="margin-top:16px;font-size:15px;"><b>Primer paso concreto:</b> colectas piloto gratis con 2 o 3 organizaciones de Itatí, Empedrado y la capital, la semana del 19/10.</p>
-      <p class="src">Legal: quien recibe es una persona jurídica (IGPJ); la plata va directo a ella (no somos PSAV); sin datos personales en la red. Detalle en docs/LEGAL.md.</p>
+      <p class="src">Legal: la receptora es una entidad argentina inscripta (IGPJ/CENOC); la plata vive en un contrato sin dueño, así que la plataforma no la custodia (no somos PSAV); sin datos personales en la red. Detalle en docs/LEGAL.md.</p>
     </div>
     <div class="card">
-      <h3 style="margin-bottom:4px;">Ingresos por año (escenarios a validar)</h3>
-      <p class="src">USD · línea punteada: equilibrio ≈ USD 65.000/año</p>
+      <h3 style="margin-bottom:4px;">Ingreso = 1 % de lo donado (escenarios a validar)</h3>
+      <p class="src">USD por año según el volumen donado · línea punteada: equilibrio ≈ USD 65.000/año</p>
       <svg id="g-rev" width="520" height="290"></svg>
     </div>
   </div>
@@ -241,18 +241,19 @@
       <h3 style="margin-bottom:10px;">Aprendizajes</h3>
       <ul class="clean" style="font-size:15px;">
         <li>Las soluciones parecidas fallaron por mostrar solo la entrada de plata, usar redes privadas o exigir cripto al donante.</li>
-        <li>La mentoría de Henry Tong nos llevó a registrar <b>entregas</b> y a que reciban organizaciones, no personas.</li>
+        <li>La mentoría de Henry Tong nos llevó a registrar <b>entregas</b>, a un <b>canal de avisos oficiales</b> y a que reciban organizaciones, no personas.</li>
+        <li><b>Nadie tiene la plata:</b> la tiene un contrato que la libera por tramos, con comprobantes. Ya anda en testnet.</li>
         <li>La ley ordena el diseño: personas jurídicas (IGPJ), sin custodia, sin datos personales.</li>
       </ul>
     </div>
     <div class="card">
       <h3 style="margin-bottom:10px;">Próximos pasos</h3>
       <ul class="clean" style="font-size:15px;">
-        <li>El donante firma con su billetera (HashPack) y Mercado Pago en solo lectura.</li>
-        <li>Convenio de adhesión con los 4 firmantes del registro de alias.</li>
-        <li><b>Canal de avisos oficiales</b> de Defensa Civil en HCS (idea de Henry).</li>
+        <li>Organizador verificado con RENAPER (vía un proveedor con convenio) + entidad titular argentina y avales de cualquier país.</li>
+        <li>El donante firma con su billetera (HashPack) y dona en pesos con una rampa inscripta en la CNV.</li>
+        <li><b>Peso digital</b> con un banco provincial, con <b>Stablecoin Studio</b>.</li>
         <li>Agente auditor con <b>Hedera Agent Kit</b>: valida CAE y deja su veredicto.</li>
-        <li>Fotos en IPFS o Hedera File Service · mainnet con dictamen legal.</li>
+        <li>SAS del equipo, dictamen legal y mainnet.</li>
       </ul>
     </div>
   </div>
@@ -310,7 +311,7 @@ function vbar(id, data, max, o = {}) {
 }
 hbar("g-plata", [{ k:"Maratea · Corrientes", s:"una noche · 2022", v:111 }, { k:"Maratea · Corrientes", s:"≈ 48 horas · 2022", v:173 }, { k:"Gran Hermano · Bahía Bl.", s:"una hora · 2025", v:500 }], 600, " M");
 vbar("g-costo", [{ k:"100", s:"don.", v:0.09 }, { k:"1.000", s:"don.", v:0.81 }, { k:"10.000", s:"don.", v:8.01 }], 10, { x0:40, dec:1, vdec:2 });
-vbar("g-rev", [{ k:"Año 1", s:"Corrientes", v:34000 }, { k:"Año 2", s:"Litoral", v:246000 }, { k:"Año 3", s:"Argentina", v:966000 }], 1000000, { x0:70, ref:65000 });
+vbar("g-rev", [{ k:"USD 1 M", s:"donados", v:10000 }, { k:"USD 6,5 M", s:"donados", v:65000 }, { k:"USD 20 M", s:"donados", v:200000 }], 220000, { x0:70, ref:65000 });
 </script>
 </body>
 </html>
