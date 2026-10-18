@@ -42,7 +42,7 @@ const MP_LOGO = "M11.115 16.479a.93.927 0 0 1-.939-.886c-.002-.042-.006-.155-.10
   seguro.textContent = "🔒 Pagás en Mercado Pago: la plata va directo a la organización.";
   const separador = document.createElement("div");
   separador.className = "donar-o";
-  separador.textContent = "O CON CRIPTO (DEMO)";
+  separador.textContent = "O PROBÁ LA DEMO CON CRIPTO";
   usdc.before(boton, seguro, separador);
 
   const aviso = form.querySelector("#donate-feedback");
@@ -67,7 +67,7 @@ const MP_LOGO = "M11.115 16.479a.93.927 0 0 1-.939-.886c-.002-.042-.006-.155-.10
   const pago = q.get("payment_id") || q.get("collection_id");
   if (pago && /^\d+$/.test(pago) && (q.get("status") || q.get("collection_status")) === "approved") {
     aviso.className = "form-feedback success";
-    aviso.textContent = `¡Gracias! Tu pago se está registrando en Hedera. Guardá este comprobante: mp-${pago}`;
+    aviso.textContent = `¡Gracias! Tu donación se está registrando. Guardá este comprobante: mp-${pago}`;
     const verificar = document.getElementById("receipt-code");
     if (verificar) verificar.value = `mp-${pago}`;
   }

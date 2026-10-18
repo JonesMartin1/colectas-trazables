@@ -28,12 +28,12 @@
   seccion.className = "nea-section";
   seccion.id = "nea";
   seccion.innerHTML = `<div class="section-wrap">
-    <div class="nea-head reveal"><div><span class="section-kicker">MARKETPLACE SOLIDARIO · NEA</span>
+    <div class="nea-head reveal"><div><span class="section-kicker">COLECTAS DEL NEA</span>
       <h2>Los problemas del NEA,<br><em>a un clic de ayudar.</em></h2>
-      <p>Las colectas <b>aprobadas</b> ya reciben donaciones y muestran cada peso en Hedera. Las <b>propuestas</b> son ideas de la comunidad que esperan el aval de una ONG.</p></div>
+      <p>Las colectas <b>aprobadas</b> ya reciben donaciones y muestran en qué se gasta cada peso. Las <b>propuestas</b> son ideas de la comunidad que esperan el aval de una ONG.</p></div>
       <div class="nea-herramientas"><input class="nea-buscar" type="search" placeholder="Buscar: agua, Chaco, incendios…" aria-label="Buscar"><button type="button" class="button button-lime" id="postular-abrir">Postular una idea <span aria-hidden="true">↗</span></button></div></div>
     <form class="postular raised-panel" id="postular" hidden>
-      <div class="form-head"><span>NUEVA PROPUESTA</span><span>QUEDA REGISTRADA EN HEDERA</span></div>
+      <div class="form-head"><span>NUEVA PROPUESTA</span><span>QUEDA EN EL REGISTRO PÚBLICO</span></div>
       <div class="postular-grid">
         <div class="ancho"><label for="p-titulo">¿Qué hace falta?</label><input id="p-titulo" name="titulo" required minlength="5" maxlength="90" placeholder="Ej. Botes y chalecos para los parajes isleños de Itatí"></div>
         <div class="ancho"><label for="p-desc">¿Para quién y por qué?</label><textarea id="p-desc" name="descripcion" required minlength="20" maxlength="260" rows="3" placeholder="Contá la situación y qué se compraría. Sin nombres de personas."></textarea></div>
@@ -41,7 +41,7 @@
         <div><label for="p-cat">Tema</label><select id="p-cat" name="categoria" required><option value="">Elegí…</option>${Object.keys(ICONOS).map((c) => `<option>${c}</option>`).join("")}</select></div>
         <div><label for="p-monto">Monto estimado ($)</label><input id="p-monto" name="montoEstimado" type="number" min="1" step="1" required placeholder="1500000"></div>
       </div>
-      <button class="button button-dark" type="submit">Postular en Hedera <span aria-hidden="true">↗</span></button>
+      <button class="button button-dark" type="submit">Postular la idea <span aria-hidden="true">↗</span></button>
       <p class="form-feedback" role="status" aria-live="polite"></p>
       <p class="file-note">Tu propuesta se publica sin tu nombre ni tu email. Una ONG verificada la puede avalar y convertir en colecta.</p>
     </form>
@@ -55,7 +55,6 @@
   let filtro = "Todas", texto = "", activas = [], propuestas = [...EJEMPLOS];
   const coincide = (...c) => !texto || c.join(" ").toLowerCase().includes(texto);
   const sesion = () => window.Cuenta?.actual();
-  const loginA = (url) => (window.Cuenta && !sesion() ? Cuenta.urlLogin(url) : url);
 
   const filtros = seccion.querySelector(".nea-filtros");
   ["Todas", ...Object.keys(ICONOS)].forEach((c) => {
@@ -75,9 +74,9 @@
       return `<article class="nea-card aprobada fx-card reveal">
         <a class="nea-visual" href="${url}" style="--fondo:linear-gradient(180deg,#0e3d3a10,#0e3d3a99),url(${FOTOS[i % FOTOS.length]}) center/cover"><span class="nea-chip real">✓ APROBADA</span></a>
         <div class="nea-body"><small>${esc(c.organizador?.nombre || "Organización verificada")}</small><h3><a href="${url}">${esc(c.titulo)}</a></h3><p>${esc(c.descripcion || "Colecta registrada en Hedera.")}</p>
-          <div class="nea-tags"><span>✓ Organización verificada</span><span>${c.donaciones} ${c.donaciones === 1 ? "donación" : "donaciones"}</span><span class="mono">${esc(c.topicId)}</span></div>
+          <div class="nea-tags"><span>✓ Organización verificada</span><span>${c.donaciones} ${c.donaciones === 1 ? "donación" : "donaciones"}</span></div>
           <div class="nea-progreso"><header><b>${pesos(c.recaudado)}</b><span>de ${pesos(c.meta)}</span></header><div class="nea-pista"><span data-pct="${pct.toFixed(1)}"></span></div></div>
-          <div class="nea-botones"><a class="nea-accion secundaria" href="${url}#libro">Ver trazabilidad ↗</a><a class="nea-accion" href="${loginA(url + "#donar")}">${sesion() ? "Doná ahora" : "Registrate y doná"} ↗</a></div></div></article>`;
+          <div class="nea-botones"><a class="nea-accion secundaria" href="${url}#libro">En qué se gastó ↗</a><a class="nea-accion" href="${url}#donar">Doná ↗</a></div></div></article>`;
     }).join("") : '<p class="nea-vacio">No hay colectas aprobadas con ese filtro.</p>';
     activar(grid);
   }
@@ -92,7 +91,7 @@
         <div class="nea-visual" style="--fondo:${fondo}"><span class="nea-chip pend">${p.ejemplo ? "EJEMPLO · SIN AVAL" : "SIN AVAL"}</span>${icono ? `<span class="nea-icono" aria-hidden="true">${icono}</span>` : ""}</div>
         <div class="nea-body"><small>${esc(p.categoria.toUpperCase())} · ${esc(p.provincia.toUpperCase())}${p.secuencia ? ` · PROPUESTA #${esc(p.secuencia)}` : ""}</small><h3>${esc(p.titulo)}</h3><p>${esc(p.descripcion)}</p>
           <div class="propuesta-estado"><span>Monto estimado</span><b>${pesos(p.montoEstimado)}</b><em>Esperando el aval de una ONG</em></div>
-          <div class="nea-botones">${p.hashscan ? `<a class="nea-accion secundaria" href="${esc(p.hashscan)}" target="_blank" rel="noopener noreferrer">Ver en HashScan ↗</a>` : ""}<a class="nea-accion" href="${crear}">Soy ONG: avalar y crear ↗</a></div></div></article>`;
+          <div class="nea-botones"><a class="nea-accion" href="${crear}">Soy ONG: avalar y crear ↗</a></div></div></article>`;
     }).join("") : '<p class="nea-vacio">No hay propuestas con ese filtro.</p>';
     activar(grid);
   }
@@ -108,13 +107,13 @@
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const fb = form.querySelector(".form-feedback"), boton = form.querySelector("button[type=submit]");
-    boton.disabled = true; fb.className = "form-feedback"; fb.textContent = "Registrando tu propuesta en Hedera…";
+    boton.disabled = true; fb.className = "form-feedback"; fb.textContent = "Publicando tu propuesta…";
     try {
       const r = await fetch("/api/propuestas", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
       const d = await r.json();
       if (!r.ok) throw new Error(d.error || `Error ${r.status}`);
       fb.className = "form-feedback success";
-      fb.innerHTML = `¡Listo! Tu propuesta quedó registrada (#${d.secuencia}). <a href="${esc(d.hashscan)}" target="_blank" rel="noopener noreferrer">Verla en HashScan ↗</a>`;
+      fb.innerHTML = `¡Listo! Tu propuesta quedó registrada (#${d.secuencia}). <a href="${esc(d.hashscan)}" target="_blank" rel="noopener noreferrer">Verla en el registro ↗</a>`;
       form.reset();
       cargarPropuestas();
     } catch (err) { fb.className = "form-feedback error"; fb.textContent = err.message; }

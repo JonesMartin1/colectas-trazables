@@ -21,7 +21,7 @@
     donacion: { nombre: "Donación", clase: "t-don", signo: 1 },
     gasto: { nombre: "Gasto", clase: "t-gas", signo: -1 },
     entrega: { nombre: "Entrega", clase: "t-ent", signo: 0 },
-    conversion: { nombre: "Pesos → USDC", clase: "t-con", signo: 0 },
+    conversion: { nombre: "Cambio de moneda", clase: "t-con", signo: 0 },
   };
 
   const sec = document.createElement("section");
@@ -30,9 +30,7 @@
   sec.innerHTML = `
     <div class="libro-head reveal"><div><span class="section-kicker">LIBRO DE LA COLECTA · REGISTRO EN HEDERA</span>
       <h2>Cada peso: de dónde vino <em>y a dónde fue.</em></h2></div>
-      <div class="libro-acciones"><button type="button" class="quiet-button" id="libro-csv">Descargar CSV ↓</button>
-      <a class="quiet-button" href="/gasto.html?id=${encodeURIComponent(id)}">Registrar gasto ↗</a>
-      <a class="quiet-button" href="/entrega.html?id=${encodeURIComponent(id)}">Registrar entrega ↗</a></div></div>
+      <div class="libro-acciones"><button type="button" class="quiet-button" id="libro-csv">Descargar CSV ↓</button></div></div>
     <p class="libro-sub">ÚLTIMOS GASTOS</p><div class="ultimos" id="ultimos-gastos"><div class="nea-esqueleto claro"></div></div>
     <article class="chart-card fx-card reveal libro-grafico"><h3>Saldo en el tiempo</h3><p class="chart-sub">RECAUDADO, GASTADO Y SALDO, MOVIMIENTO POR MOVIMIENTO</p><div id="libro-linea"></div></article>
     <div class="libro-filtros" role="group" aria-label="Filtrar el libro"></div>
@@ -44,10 +42,10 @@
   const datos = (window.datosColecta ??= fetch(`/api/colectas/${encodeURIComponent(id)}`).then((r) => (r.ok ? r.json() : Promise.reject())).catch(() => fetch("/ejemplo/colecta.json").then((r) => r.json())));
   datos.then((d) => {
     movs = [
-      ...(d.donaciones || []).map((x) => ({ tipo: "donacion", ...x, detalle: `${x.metodo === "mercadopago" ? "Mercado Pago" : x.metodo === "usdc" ? "USDC en Hedera" : x.metodo || "Donación"}${x.verificada ? " · pago verificado" : ""}`, hash: x.externalRefHash })),
+      ...(d.donaciones || []).map((x) => ({ tipo: "donacion", ...x, detalle: `${x.metodo === "mercadopago" ? "Mercado Pago" : x.metodo === "usdc" ? "Dólares digitales" : x.metodo || "Donación"}${x.verificada ? " · pago verificado" : ""}`, hash: x.externalRefHash })),
       ...(d.gastos || []).map((x) => ({ tipo: "gasto", ...x, detalle: `Proveedor CUIT ${x.proveedorCuit || "—"} · CAE ${x.cae || "—"}`, hash: x.invoiceHash })),
       ...(d.entregas || []).map((x) => ({ tipo: "entrega", ...x, monto: 0, detalle: `${x.cantidad} × ${x.item} · ${x.lugar}`, hash: x.fotoHash })),
-      ...(d.conversiones || []).map((x) => ({ tipo: "conversion", ...x, monto: x.ars, detalle: `${x.usdc} USDC a $${x.tipoDeCambio} por dólar` })),
+      ...(d.conversiones || []).map((x) => ({ tipo: "conversion", ...x, monto: x.ars, detalle: `${x.usdc} dólares digitales a $${x.tipoDeCambio} por dólar` })),
     ].sort((a, b) => (a.secuencia ?? 0) - (b.secuencia ?? 0) || new Date(a.fecha) - new Date(b.fecha));
     let saldo = 0;
     for (const m of movs) { saldo += TIPOS[m.tipo].signo * (Number(m.monto) || 0); m.saldo = saldo; }
@@ -111,7 +109,7 @@
   function filtros() {
     const caja = sec.querySelector(".libro-filtros");
     const cuenta = (t) => movs.filter((m) => t === "todo" || m.tipo === t).length;
-    const opciones = [["todo", "Todo"], ["donacion", "Donaciones"], ["gasto", "Gastos"], ["entrega", "Entregas"], ["conversion", "Pesos → USDC"]].filter(([t]) => t === "todo" || cuenta(t));
+    const opciones = [["todo", "Todo"], ["donacion", "Donaciones"], ["gasto", "Gastos"], ["entrega", "Entregas"], ["conversion", "Cambios de moneda"]].filter(([t]) => t === "todo" || cuenta(t));
     caja.innerHTML = opciones.map(([t, n]) => `<button type="button" data-t="${t}" aria-pressed="${t === "todo"}">${n} <b>${cuenta(t)}</b></button>`).join("");
     caja.addEventListener("click", (e) => {
       const b = e.target.closest("button"); if (!b) return;
@@ -131,9 +129,9 @@
       fila.className = "libro-item";
       const monto = T.signo === 0 ? (m.tipo === "conversion" ? pesos(m.monto) : "—") : `${T.signo > 0 ? "+" : "−"} ${pesos(m.monto)}`;
       const link = hs(m.hashscan);
-      fila.innerHTML = `<summary class="libro-fila" role="row"><span class="mono">#${esc(m.secuencia)}</span><span>${esc(fecha(m.fecha))}</span><span><span class="t-chip ${T.clase}">${T.nombre}</span></span><span class="det">${esc(m.detalle)}</span><span class="der ${T.signo > 0 ? "pos" : T.signo < 0 ? "neg" : ""}">${monto}</span><span class="der mono">${esc(pesos(m.saldo))}</span><span class="der">${link ? `<a href="${link}" target="_blank" rel="noopener noreferrer" title="Ver en HashScan">HashScan ↗</a>` : ""}</span></summary>
+      fila.innerHTML = `<summary class="libro-fila" role="row"><span class="mono">#${esc(m.secuencia)}</span><span>${esc(fecha(m.fecha))}</span><span><span class="t-chip ${T.clase}">${T.nombre}</span></span><span class="det">${esc(m.detalle)}</span><span class="der ${T.signo > 0 ? "pos" : T.signo < 0 ? "neg" : ""}">${monto}</span><span class="der mono">${esc(pesos(m.saldo))}</span><span class="der">${link ? `<a href="${link}" target="_blank" rel="noopener noreferrer" title="Ver en HashScan">Verificar ↗</a>` : ""}</span></summary>
         <div class="libro-detalle"><dl>
-          <dt>Mensaje en Hedera</dt><dd class="mono">#${esc(m.secuencia)} del topic de la colecta</dd>
+          <dt>Registro en Hedera</dt><dd class="mono">N.º ${esc(m.secuencia)} de esta colecta</dd>
           ${m.hash ? `<dt>${m.tipo === "gasto" ? "Huella SHA-256 de la factura" : m.tipo === "entrega" ? "Huella SHA-256 de la foto" : "Huella del comprobante"}</dt><dd class="mono">${esc(m.hash)}</dd>` : ""}
           ${m.tipo === "gasto" ? `<dt>CAE (verificable en ARCA)</dt><dd class="mono">${esc(m.cae)}</dd>` : ""}
           <dt>Fecha de consenso</dt><dd>${esc(fecha(m.fecha))}</dd></dl></div>`;

@@ -9,12 +9,12 @@
   const pesos = (v) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(Number(v) || 0);
   const corto = (v) => (v >= 1e6 ? `$${(v / 1e6).toLocaleString("es-AR", { maximumFractionDigits: 1 })} M` : v >= 1e3 ? `$${Math.round(v / 1e3)} mil` : `$${Math.round(v)}`);
   const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
-  const NOMBRES = { mercadopago: "Mercado Pago", usdc: "USDC (Hedera)" };
+  const NOMBRES = { mercadopago: "Mercado Pago", usdc: "Dólares digitales" };
   const COLORES = { mercadopago: "#009ee3", usdc: "#2775ca" };
 
   const seccion = el("section", "charts-area section-wrap", `
     <div class="charts-grid">
-      <article class="chart-card mitad fx-card reveal" id="g-uso"><h3>Uso de lo recaudado</h3><p class="chart-sub">GASTADO VS. SALDO · TODO SALE DEL REGISTRO EN HEDERA</p></article>
+      <article class="chart-card mitad fx-card reveal" id="g-uso"><h3>Uso de lo recaudado</h3><p class="chart-sub">GASTADO VS. SALDO · SALE DEL REGISTRO PÚBLICO</p></article>
       <article class="chart-card mitad fx-card reveal" id="g-medios"><h3>Cómo se donó</h3><p class="chart-sub">POR MEDIO DE PAGO</p></article>
     </div>`);
   seccion.id = "graficos";

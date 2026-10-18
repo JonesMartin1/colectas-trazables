@@ -465,3 +465,10 @@ body[data-page="hedera"]{background:var(--f-0f1412);color:var(--t-e6eee2)}
   .js-fx .reveal{opacity:1;transform:none}
   .fx-card,.fx-card:hover{transform:none}
 }
+
+/* Donar simple (devolución del jurado): pie para organizadores, link de la franja y botón fijo de donar en el celular */
+.por-que-grid a{color:var(--glow);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.organizador-pie{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;padding:26px 0 40px;border-top:1px solid #dfe5da;font-size:14px;color:#6f8070}
+.organizador-pie span{font-weight:700;color:#3e4b41}
+.organizador-pie a{text-decoration:underline;text-underline-offset:3px;color:#243429}
+.donar-fijo{display:none}

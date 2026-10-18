@@ -9,7 +9,7 @@
   const links = [
     ["/#colectas", "Colectas"],
     ["/#como-funciona", "Cómo funciona"],
-    ["/hedera.html", "Hedera en vivo"],
+    ["/hedera.html", "Verificá"],
     ["/alias.html", "¿Alias real?"],
   ];
   const nav = header.querySelector(".desktop-nav") || document.createElement("nav");
@@ -39,7 +39,9 @@
   nav.addEventListener("click", (e) => { if (e.target.closest("a")) abrir(false); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") abrir(false); });
 
-  // indicador en vivo: último bloque de Hedera testnet, leído del Mirror Node público
+  // indicador en vivo: último bloque de Hedera testnet, leído del Mirror Node público. Solo en la página de Hedera:
+  // en el resto distrae a quien dona (devolución del jurado).
+  if (aqui === "/hedera.html" || aqui === "/hedera") {
   const ticker = document.createElement("a");
   ticker.className = "ticker-red";
   ticker.href = "/hedera.html";
@@ -49,6 +51,7 @@
     .then((d) => { const b = d.blocks?.[0]; if (b) ticker.lastChild.textContent = `Hedera testnet · bloque #${b.number.toLocaleString("es-AR")}`; }).catch(() => {});
   bloque();
   setInterval(() => { if (!document.hidden) bloque(); }, 10000);
+  }
 
   let accion = header.querySelector(".nav-action");
   if (accion?.id) return; // gasto y entrega: es "Volver a la colecta" y lo usa app.js

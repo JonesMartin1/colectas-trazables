@@ -55,26 +55,23 @@
     accion ? accion.before(chip) : header.append(chip);
   }
 
-  // ---- donar exige sesión: el clic se corta antes de que llegue a los botones de donar
-  if (document.body.dataset.page === "colecta") {
-    document.addEventListener("click", (e) => {
-      const boton = e.target.closest?.(".mp-button, #donate-button");
-      if (!boton || Cuenta.actual()) return;
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      location.href = Cuenta.urlLogin();
-    }, true);
-    if (!Cuenta.actual()) {
-      addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("donate-form");
-        if (!form) return;
-        const aviso = document.createElement("a");
-        aviso.className = "aviso-cuenta";
-        aviso.href = Cuenta.urlLogin();
-        aviso.innerHTML = "<b>Para donar, primero creá tu cuenta</b> o iniciá sesión ↗";
-        form.prepend(aviso);
-      });
-    }
+  // ---- donar NO exige sesión (devolución del jurado: "requiere muchos pasos"). La cuenta se ofrece después:
+  // cuando el aviso de donar pasa a éxito, abajo aparece la invitación a guardar los comprobantes.
+  if (document.body.dataset.page === "colecta" && !Cuenta.actual()) {
+    addEventListener("DOMContentLoaded", () => {
+      const aviso = document.getElementById("donate-feedback");
+      if (!aviso) return;
+      const invitar = () => {
+        if (!aviso.classList.contains("success") || document.querySelector(".aviso-cuenta")) return;
+        const a = document.createElement("a");
+        a.className = "aviso-cuenta";
+        a.href = Cuenta.urlLogin(location.pathname + location.search + "#donar");
+        a.innerHTML = "<b>¿Querés seguir tus aportes?</b> Creá tu cuenta y guardá tus comprobantes ↗";
+        aviso.after(a);
+      };
+      new MutationObserver(invitar).observe(aviso, { attributes: true, attributeFilter: ["class"] });
+      invitar(); // la vuelta de Mercado Pago ya puede traer el éxito puesto
+    });
   }
 
   // ---- página de login
@@ -128,7 +125,7 @@
         try {
           if (modo === "registro") await Cuenta.registrar({ nombre: f.get("nombre"), email: f.get("email"), clave: f.get("clave") });
           else await Cuenta.ingresar({ email: f.get("email"), clave: f.get("clave") });
-          fb.className = "form-feedback success"; fb.textContent = "¡Listo! Te llevamos a donar…";
+          fb.className = "form-feedback success"; fb.textContent = "¡Listo! Te llevamos de vuelta…";
           setTimeout(() => location.replace(volver), 700);
         } catch (e) {
           fb.className = "form-feedback error"; fb.textContent = e.message;

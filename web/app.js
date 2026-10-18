@@ -110,7 +110,7 @@ function renderCampaign(data, isExample) {
   byId("colecta-mode").textContent = isExample ? "· EJEMPLO" : "· REGISTRO PÚBLICO";
   byId("sample-banner").hidden = !isExample;
   byId("donate-button").disabled = isExample;
-  byId("donate-button").innerHTML = isExample ? "Donación no disponible en el ejemplo" : 'Donar con billetera de prueba (USDC) <span aria-hidden="true">↗</span>';
+  byId("donate-button").innerHTML = isExample ? "Donación no disponible en el ejemplo" : 'Probar con dólares digitales de prueba <span aria-hidden="true">↗</span>';
   byId("topic-id").textContent = `Registro: ${campaign.topicId || "no disponible"}`;
   const totals = data.totales || {};
   byId("total-recaudado").textContent = money(totals.recaudado);

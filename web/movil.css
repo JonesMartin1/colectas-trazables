@@ -66,3 +66,10 @@
   /* el indicador de Hedera no tapa los botones del final de la página */
   .ticker-red{max-width:calc(100% - 96px);overflow:hidden;white-space:nowrap}
 }
+
+@media(max-width:700px){
+  /* colecta: "Donar" siempre a mano, abajo; se esconde cuando el formulario ya está a la vista */
+  .donar-fijo{display:flex;align-items:center;justify-content:center;gap:8px;position:fixed;left:14px;right:84px;bottom:16px;z-index:60;min-height:56px;border-radius:16px;background:var(--glow,#d8f16a);color:#171d1b;font:800 18px var(--display,inherit);box-shadow:0 14px 30px #0007;transition:transform .3s,opacity .3s}
+  .donar-fijo.escondido{transform:translateY(140%);opacity:0;pointer-events:none}
+  body[data-page="colecta"] main{padding-bottom:84px}
+}

@@ -37,22 +37,7 @@
     if (c && !c.contains(e.relatedTarget)) { c.style.removeProperty("--rx"); c.style.removeProperty("--ry"); }
   });
 
-  // destellos en los héroes
-  if (!quieto) {
-    document.querySelectorAll(".hero,.page-hero,.nea-section").forEach((h) => {
-      for (let i = 0; i < 22; i++) {
-        const s = document.createElement("span");
-        s.className = "sparkle";
-        s.style.left = `${Math.random() * 100}%`;
-        s.style.top = `${Math.random() * 100}%`;
-        s.style.setProperty("--d", `${2 + Math.random() * 3}s`);
-        s.style.setProperty("--delay", `${Math.random() * 4}s`);
-        const t = 3 + Math.random() * 5;
-        s.style.width = s.style.height = `${t}px`;
-        h.append(s);
-      }
-    });
-  }
+  // (los destellos de los héroes se sacaron: el jurado pidió menos efecto tecnológico y más foco en lo humano)
 
   // números que cuentan: cuando app.js escribe un monto en las tarjetas de balance, se anima desde 0
   const formato = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 });
