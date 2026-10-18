@@ -57,17 +57,22 @@
   // números que cuentan: cuando app.js escribe un monto en las tarjetas de balance, se anima desde 0
   const formato = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 });
   document.querySelectorAll(".stat-card strong").forEach((n) => {
-    let propio = false;
+    // El observer avisa después (microtarea), así que una bandera alrededor de la escritura no alcanza:
+    // se reconoce lo propio comparando los dígitos con lo último escrito (i18n puede cambiar el formato, no el número),
+    // y cada monto nuevo corta la animación anterior.
+    const digitos = (s) => s.replace(/\D/g, "");
+    let escrito = null, turno = 0;
     new MutationObserver(() => {
-      if (propio || quieto) return;
+      if (quieto || (escrito !== null && digitos(n.textContent) === digitos(escrito))) return;
       const signo = /[-−]/.test(n.textContent) ? -1 : 1;
-      const valor = Number(n.textContent.replace(/\D/g, ""));
+      const valor = Number(digitos(n.textContent));
       if (!(valor > 0)) return;
-      const card = n.closest(".stat-card"), t0 = performance.now(), ms = 1300;
+      const card = n.closest(".stat-card"), t0 = performance.now(), ms = 1300, este = ++turno;
       card?.classList.add("contando");
       const paso = (t) => {
-        const k = Math.min(1, (t - t0) / ms);
-        propio = true; n.textContent = formato.format(signo * Math.round(valor * (1 - Math.pow(1 - k, 3))) || 0); propio = false;
+        if (este !== turno) return;
+        const k = Math.min(1, Math.max(0, (t - t0) / ms));
+        escrito = n.textContent = formato.format(signo * Math.round(valor * (1 - Math.pow(1 - k, 3))) || 0);
         if (k < 1) requestAnimationFrame(paso); else card?.classList.remove("contando");
       };
       requestAnimationFrame(paso);

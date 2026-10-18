@@ -78,7 +78,7 @@
       const pesos = (v) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(Number(v) || 0);
       const pct = c.meta > 0 ? Math.min(100, (c.recaudado / c.meta) * 100) : 0;
       const poner = (sel, txt) => { const n = card.querySelector(sel); if (n) n.textContent = txt; };
-      poner(".object-top span:last-child", c.topicId);
+      poner(".object-top > span:last-child", c.topicId);
       poner(".object-label", "EN VIVO · REGISTRADA EN HEDERA");
       poner(".object-face h2", c.titulo);
       poner(".object-stat span", "Recaudado, leído de la red");

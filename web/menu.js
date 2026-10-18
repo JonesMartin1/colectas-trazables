@@ -16,8 +16,28 @@
   nav.className = "desktop-nav menu-corto";
   nav.setAttribute("aria-label", "Navegación principal");
   nav.innerHTML = links.map(([href, txt]) => `<a href="${href}"${href === aqui ? ' aria-current="page"' : ""}>${txt}</a>`).join("");
+  nav.id = "menu-principal";
+  nav.insertAdjacentHTML("beforeend", '<a class="solo-movil" href="/crear.html">Crear colecta <span aria-hidden="true">↗</span></a>');
   const brand = header.querySelector(".brand");
   if (!nav.isConnected) brand ? brand.after(nav) : header.prepend(nav);
+
+  // en el celular el nav no entra: se abre con un botón y cae debajo del encabezado (estilos en movil.css)
+  const boton = document.createElement("button");
+  boton.type = "button";
+  boton.className = "menu-boton";
+  boton.setAttribute("aria-controls", "menu-principal");
+  boton.setAttribute("aria-expanded", "false");
+  boton.setAttribute("aria-label", "Abrir el menú");
+  boton.innerHTML = "<span></span><span></span><span></span>";
+  header.append(boton);
+  const abrir = (si) => {
+    header.classList.toggle("menu-abierto", si);
+    boton.setAttribute("aria-expanded", String(si));
+    boton.setAttribute("aria-label", si ? "Cerrar el menú" : "Abrir el menú");
+  };
+  boton.addEventListener("click", () => abrir(!header.classList.contains("menu-abierto")));
+  nav.addEventListener("click", (e) => { if (e.target.closest("a")) abrir(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") abrir(false); });
 
   // indicador en vivo: último bloque de Hedera testnet, leído del Mirror Node público
   const ticker = document.createElement("a");

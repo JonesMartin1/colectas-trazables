@@ -1,0 +1,68 @@
+/* Celular y tablet: va último en todas las páginas, así pisa a styles.css, vistoso.css y los <style> de cada página. */
+
+/* piezas que solo existen en un tamaño */
+.desktop-nav .solo-movil,.menu-boton{display:none}
+
+@media(max-width:1000px){
+  /* el nav se esconde desde 1000 px (styles.css): acá aparece el botón que lo abre */
+  .menu-boton{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;flex:none;padding:0 11px;border:1px solid #4a5a51;border-radius:12px;background:transparent;cursor:pointer}
+  .menu-boton span{display:block;height:2px;border-radius:2px;background:#e6eee2;transition:transform .25s,opacity .2s}
+  .menu-abierto .menu-boton{border-color:var(--glow,#d8f16a)}
+  .menu-abierto .menu-boton span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menu-abierto .menu-boton span:nth-child(2){opacity:0}
+  .menu-abierto .menu-boton span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  .site-header.menu-abierto .desktop-nav{display:flex;flex-direction:column;gap:0;position:absolute;left:0;right:0;top:100%;z-index:40;padding:8px 20px 20px;background:#171d1b;border-bottom:1px solid #37413a;box-shadow:0 24px 40px #0008;font-size:19px}
+  .site-header.menu-abierto .desktop-nav a{padding:16px 2px;border-bottom:1px solid #2b342f;color:#eef3e8}
+  .site-header.menu-abierto .desktop-nav a::after{display:none}
+  .site-header.menu-abierto .desktop-nav a[aria-current]{color:var(--glow,#d8f16a)}
+  .site-header.menu-abierto .desktop-nav .solo-movil{display:block;margin-top:14px;border:0;border-radius:12px;background:var(--glow,#d8f16a);color:#171d1b;text-align:center;font-weight:800}
+}
+
+@media(max-width:700px){
+  /* nada se sale de la pantalla para el costado */
+  body{overflow-x:clip}
+
+  /* encabezado: marca + Ingresar + menú (Crear colecta queda adentro del menú) */
+  .site-header{height:64px;padding:0 14px;gap:8px}
+  .site-header .brand small{display:none}
+  .site-header .brand{font-size:17px;margin-right:auto;min-width:0}
+  .site-header .cuenta-chip{margin-left:0}
+  .cuenta-ingresar{padding:9px 14px;font-size:13px;white-space:nowrap}
+  .solo-escritorio{display:none}
+  .site-header .nav-action:not([id]){display:none}
+  .site-header .nav-action[id]{padding:10px 12px}
+
+  /* portada: la tarjeta de ejemplo va debajo del texto, sin taparlo */
+  .hero-object,body.simple .hero-object{height:auto;margin-top:34px;padding:22px 0 30px}
+  .hero-object .object-halo{width:330px;height:330px;box-shadow:0 0 0 30px #8eae7318}
+  .hero-object .object-shell{width:min(330px,88%)}
+  .hero-actions{gap:14px 22px}
+  .hero-actions .button{min-height:52px}
+
+  /* textos y toques: nada por debajo de 16 px donde se lee, botones de 44 px */
+  .button,.nav-action,.cuenta-ingresar,button{touch-action:manipulation}
+  input,select,textarea{font-size:16px}
+
+  /* núcleo: las tablas pasan a tarjetas, una por fila */
+  .nu-card{padding:20px 18px}
+  .nu-tabla,.nu-tabla tbody{display:block}
+  .nu-tabla tr:has(th){display:none}
+  .nu-tabla tr{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;padding:14px 0;border-bottom:1px solid #eef1ea}
+  .nu-tabla tr:last-child{border-bottom:0}
+  .nu-tabla td{display:flex;flex-direction:column;gap:2px;padding:0;border:0;font-size:15px}
+  .nu-tabla td[data-label]::before{content:attr(data-label);font:600 10px var(--mono,monospace);letter-spacing:.6px;text-transform:uppercase;color:#748274}
+  .nu-tabla td.nu-num{grid-column:1/-1;flex-direction:row;align-items:baseline;gap:4px;font:800 17px var(--display,inherit)}
+  .nu-tabla td.nu-num::before{font-size:12px}
+
+  /* núcleo: el registro de eventos, fecha arriba y texto a lo ancho */
+  .nu-linea li{grid-template-columns:1fr auto;gap:4px 12px;font-size:15px}
+  .nu-linea li time{grid-column:1/-1}
+  .nu-linea li a{align-self:end;white-space:nowrap}
+
+  .nu-items{grid-template-columns:1fr}
+  .nu-nota{font-size:14px}
+
+  /* el indicador de Hedera no tapa los botones del final de la página */
+  .ticker-red{max-width:calc(100% - 96px);overflow:hidden;white-space:nowrap}
+}

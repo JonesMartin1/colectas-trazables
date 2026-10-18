@@ -49,7 +49,7 @@
       chip.querySelector(".cuenta-nombre").textContent = `Hola, ${s.nombre.split(" ")[0]}`;
       chip.querySelector("button").addEventListener("click", () => { Cuenta.salir(); location.reload(); });
     } else if (document.body.dataset.page !== "login") {
-      chip.innerHTML = `<a class="cuenta-ingresar" href="${Cuenta.urlLogin()}">Ingresar / Registrarme</a>`;
+      chip.innerHTML = `<a class="cuenta-ingresar" href="${Cuenta.urlLogin()}">Ingresar<span class="solo-escritorio"> / Registrarme</span></a>`;
     }
     const accion = header.querySelector(".nav-action");
     accion ? accion.before(chip) : header.append(chip);

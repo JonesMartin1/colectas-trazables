@@ -26,6 +26,7 @@
     "Hecho en Argentina para quienes siempre están.": "Made in Argentina for those who always show up.",
     "© 2026 Colectas Trazables": "© 2026 Colectas Trazables",
     "Ingresar / Registrarme": "Sign in / Sign up",
+    "/ Registrarme": "/ Sign up",
     "Salir": "Sign out",
     "Ingresar": "Sign in",
     "Para donar, primero creá tu cuenta": "To donate, create an account first",

@@ -64,10 +64,11 @@
 
     $("nu-comprobantes").innerHTML = d.comprobantes.length
       ? `<tr><th>#</th><th>ÍTEM</th><th>MONTO</th><th>TIPO</th><th>ESTADO</th><th>DENUNCIAS</th></tr>` +
-        d.comprobantes.map((c) => `<tr><td>${c.id}</td><td>${esc(d.items[c.item]?.nombre)}</td><td>${u(c.monto)}</td><td>${c.conCAE ? "Factura con CAE" : "Ticket"}</td><td>${c.estado}</td><td>${c.denuncias ? `⚠ ${c.denuncias}` : "—"}</td></tr>`).join("")
+        // data-label: en el celular cada fila se muestra como tarjeta con su etiqueta (movil.css)
+        d.comprobantes.map((c) => `<tr><td class="nu-num" data-label="Comprobante #">${c.id}</td><td data-label="Ítem">${esc(d.items[c.item]?.nombre)}</td><td data-label="Monto">${u(c.monto)}</td><td data-label="Tipo">${c.conCAE ? "Factura con CAE" : "Ticket"}</td><td data-label="Estado">${c.estado}</td><td data-label="Denuncias">${c.denuncias ? `⚠ ${c.denuncias}` : "—"}</td></tr>`).join("")
       : '<tr><td class="chart-vacio">Todavía no hay comprobantes.</td></tr>';
     $("nu-tramos").innerHTML = d.tramos.length
-      ? `<tr><th>#</th><th>MONTO</th><th>ESTADO</th></tr>` + d.tramos.map((r) => `<tr><td>${r.id}</td><td>${u(r.monto)}</td><td>${r.aprobado ? "Liberado" : "Esperando aprobación"}</td></tr>`).join("")
+      ? `<tr><th>#</th><th>MONTO</th><th>ESTADO</th></tr>` + d.tramos.map((r) => `<tr><td class="nu-num" data-label="Tramo #">${r.id}</td><td data-label="Monto">${u(r.monto)}</td><td data-label="Estado">${r.aprobado ? "Liberado" : "Esperando aprobación"}</td></tr>`).join("")
       : '<tr><td class="chart-vacio">Todavía no se pidió ningún tramo.</td></tr>';
 
     $("nu-eventos").innerHTML = d.eventos.map((e) => {
