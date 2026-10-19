@@ -83,3 +83,20 @@ html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after
   /* el indicador en vivo de Hedera, más chico (abajo a la derecha está el botón de accesibilidad) */
   .ticker-red{padding:6px 10px;font-size:9px}
 }
+
+/* ---------- interfaz más limpia (pedido de Martín, 19/10): menos rótulos alrededor de lo importante ---------- */
+/* portada: la tarjeta de la colecta muestra solo el título, lo recaudado y la meta */
+.hero-object .object-top,.hero-object .object-label,.hero-object .object-bottom,.hero-object .floating-tag,
+.hero .hero-note,.hero .hero-index,.hero .hero-grid{display:none}
+/* tarjetas de colectas: la descripción en 3 líneas, sin fila de etiquetas */
+.nea-card.aprobada .nea-body p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+/* ideas de la comunidad: plegadas detrás de un botón */
+.ver-ideas{display:inline-flex;align-items:center;gap:6px;margin:6px 0 0;padding:12px 20px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;font:700 14px var(--display,inherit);cursor:pointer;opacity:.85;transition:opacity .2s}
+.ver-ideas:hover{opacity:1}
+.ideas{margin-top:22px}
+@media(max-width:700px){
+  /* en el celular la tarjeta de portada ocupaba una pantalla: las colectas aparecen enseguida abajo */
+  body .hero-object,body.simple .hero-object{display:none}
+  /* colecta: el botón fijo "Donar" ya cumple esa función */
+  body[data-page="colecta"] .page-hero-actions .button-lime{display:none}
+}

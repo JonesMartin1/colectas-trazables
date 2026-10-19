@@ -63,7 +63,7 @@ function renderMovements(container, movements, kind) {
     if (kind === "donation" && movement.verificada) {
       const badge = document.createElement("small");
       badge.className = "verified-badge";
-      badge.textContent = "✓ Pago verificado en Hedera";
+      badge.textContent = "✓ Pago verificado";
       details.append(badge);
     }
     row.append(icon, details);

@@ -28,7 +28,7 @@
   sec.className = "libro section-wrap";
   sec.id = "libro";
   sec.innerHTML = `
-    <div class="libro-head reveal"><div><span class="section-kicker">LIBRO DE LA COLECTA · REGISTRO EN HEDERA</span>
+    <div class="libro-head reveal"><div><span class="section-kicker">LIBRO DE LA COLECTA · REGISTRO PÚBLICO</span>
       <h2>Cada peso: de dónde vino <em>y a dónde fue.</em></h2></div>
       <div class="libro-acciones"><button type="button" class="quiet-button" id="libro-csv">Descargar CSV ↓</button></div></div>
     <p class="libro-sub">ÚLTIMOS GASTOS</p><div class="ultimos" id="ultimos-gastos"><div class="nea-esqueleto claro"></div></div>
@@ -131,7 +131,7 @@
       const link = hs(m.hashscan);
       fila.innerHTML = `<summary class="libro-fila" role="row"><span class="mono">#${esc(m.secuencia)}</span><span>${esc(fecha(m.fecha))}</span><span><span class="t-chip ${T.clase}">${T.nombre}</span></span><span class="det">${esc(m.detalle)}</span><span class="der ${T.signo > 0 ? "pos" : T.signo < 0 ? "neg" : ""}">${monto}</span><span class="der mono">${esc(pesos(m.saldo))}</span><span class="der">${link ? `<a href="${link}" target="_blank" rel="noopener noreferrer" title="Ver en HashScan">Verificar ↗</a>` : ""}</span></summary>
         <div class="libro-detalle"><dl>
-          <dt>Registro en Hedera</dt><dd class="mono">N.º ${esc(m.secuencia)} de esta colecta</dd>
+          <dt>Registro público</dt><dd class="mono">N.º ${esc(m.secuencia)} de esta colecta</dd>
           ${m.hash ? `<dt>${m.tipo === "gasto" ? "Huella SHA-256 de la factura" : m.tipo === "entrega" ? "Huella SHA-256 de la foto" : "Huella del comprobante"}</dt><dd class="mono">${esc(m.hash)}</dd>` : ""}
           ${m.tipo === "gasto" ? `<dt>CAE (verificable en ARCA)</dt><dd class="mono">${esc(m.cae)}</dd>` : ""}
           <dt>Fecha de consenso</dt><dd>${esc(fecha(m.fecha))}</dd></dl></div>`;

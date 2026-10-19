@@ -45,17 +45,27 @@
       <p class="form-feedback" role="status" aria-live="polite"></p>
       <p class="file-note">Tu propuesta se publica sin tu nombre ni tu email. Una ONG verificada la puede avalar y convertir en colecta.</p>
     </form>
-    <div class="nea-filtros" role="group" aria-label="Filtrar por tema"></div>
     <div class="grupo grupo-aprobadas"><p class="nea-subtitulo"><span class="grupo-sello ok">✓</span> COLECTAS APROBADAS · RECIBEN DONACIONES</p>
       <div class="nea-grid" id="nea-activas">${'<div class="nea-esqueleto"></div>'.repeat(3)}</div></div>
+    <button type="button" class="ver-ideas" aria-expanded="false" aria-controls="ideas">Ver ideas de la comunidad ↓</button>
+    <div class="ideas" id="ideas" hidden><div class="nea-filtros" role="group" aria-label="Filtrar por tema"></div>
     <div class="grupo grupo-propuestas"><p class="nea-subtitulo"><span class="grupo-sello pend">!</span> PROPUESTAS SIN AVAL · TODAVÍA NO RECIBEN DONACIONES</p>
-      <div class="nea-grid" id="nea-causas"></div></div></div>`;
+      <div class="nea-grid" id="nea-causas"></div></div></div></div>`;
   ancla.after(seccion);
 
   let filtro = "Todas", texto = "", activas = [], propuestas = [...EJEMPLOS];
   const coincide = (...c) => !texto || c.join(" ").toLowerCase().includes(texto);
   const sesion = () => window.Cuenta?.actual();
 
+  // las ideas sin aval (y sus filtros) quedan plegadas: la portada muestra primero lo que ya recibe donaciones
+  const ideas = seccion.querySelector("#ideas"), verIdeas = seccion.querySelector(".ver-ideas");
+  const abrirIdeas = (si) => {
+    ideas.hidden = !si;
+    verIdeas.setAttribute("aria-expanded", String(si));
+    verIdeas.textContent = si ? "Ocultar ideas de la comunidad ↑" : "Ver ideas de la comunidad ↓";
+    if (si) dispatchEvent(new Event("resize")); // el carrusel recalcula su ancho al hacerse visible
+  };
+  verIdeas.addEventListener("click", () => abrirIdeas(ideas.hidden));
   const filtros = seccion.querySelector(".nea-filtros");
   ["Todas", ...Object.keys(ICONOS)].forEach((c) => {
     const b = document.createElement("button");
@@ -74,7 +84,6 @@
       return `<article class="nea-card aprobada fx-card reveal">
         <a class="nea-visual" href="${url}" style="--fondo:linear-gradient(180deg,#0e3d3a10,#0e3d3a99),url(${FOTOS[i % FOTOS.length]}) center/cover"><span class="nea-chip real">✓ APROBADA</span></a>
         <div class="nea-body"><small>${esc(c.organizador?.nombre || "Organización verificada")}</small><h3><a href="${url}">${esc(c.titulo)}</a></h3><p>${esc(c.descripcion || "Colecta registrada en Hedera.")}</p>
-          <div class="nea-tags"><span>✓ Organización verificada</span><span>${c.donaciones} ${c.donaciones === 1 ? "donación" : "donaciones"}</span></div>
           <div class="nea-progreso"><header><b>${pesos(c.recaudado)}</b><span>de ${pesos(c.meta)}</span></header><div class="nea-pista"><span data-pct="${pct.toFixed(1)}"></span></div></div>
           <div class="nea-botones"><a class="nea-accion secundaria" href="${url}#libro">En qué se gastó ↗</a><a class="nea-accion" href="${url}#donar">Doná ↗</a></div></div></article>`;
     }).join("") : '<p class="nea-vacio">No hay colectas aprobadas con ese filtro.</p>';
@@ -104,6 +113,7 @@
     if (!form.hidden) form.querySelector("input").focus();
   });
   if (location.hash === "#postular" && sesion()) form.hidden = false;
+  form.addEventListener("submit", () => abrirIdeas(true));
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const fb = form.querySelector(".form-feedback"), boton = form.querySelector("button[type=submit]");
