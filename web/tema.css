@@ -1,0 +1,70 @@
+/* Identidad TRAMA: paleta, tipografía Manrope, logo, interruptor de tema y fotos reales del NEA.
+   Va después de vistoso.css. Los colores migrados están en tema-colores.css; acá van la paleta y los ajustes a mano.
+   Paleta: petróleo #0E3D3A, turquesa #18B5A6, lima #C8FF64, gris claro #F4F6F5, gris oscuro #1F2937. */
+@import url("/tema-colores.css");
+
+:root{--petroleo:#0E3D3A;--turquesa:#18B5A6;--gris-claro:#F4F6F5;--gris-oscuro:#1F2937;
+  --display:"Manrope",sans-serif;--body:"Manrope",sans-serif;
+  --lime:#C8FF64;--glow:#C8FF64;
+  --acento-txt:#0b7f74;--acento-borde:#18B5A6;--marca-trazo:#0E3D3A;--marca-texto:#0E3D3A;--marca-lema:#0f9488}
+:root[data-tema="oscuro"]{--acento-txt:#C8FF64;--acento-borde:#C8FF64;--marca-trazo:#F4F6F5;--marca-texto:#F4F6F5;--marca-lema:#3fd6c7}
+html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after{transition:background-color .4s,color .4s,border-color .4s,box-shadow .4s!important}
+
+/* ---------- logo ---------- */
+.brand:not(.marca){visibility:hidden} /* el logo viejo de los HTML base no llega a verse: tema.js lo cambia al cargar */
+.marca{gap:10px;letter-spacing:0}
+.marca-svg{width:42px;height:42px;flex:none;overflow:visible}
+.marca-texto{display:flex;flex-direction:column;font:800 17px/.98 var(--display);letter-spacing:-.6px;color:var(--marca-texto)}
+.marca-texto b{font-weight:800}
+.marca-texto small{margin-top:4px;font:700 10px/1 var(--body);letter-spacing:0;color:var(--marca-lema)}
+.site-footer .marca-svg{width:48px;height:48px}
+
+/* ---------- interruptor soleado / nocturno ---------- */
+.tema-switch{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--b-37413a);background:transparent;border-radius:999px;padding:6px 9px;color:inherit;font-size:14px;line-height:1;flex:none}
+.tema-switch:hover{border-color:var(--turquesa)}
+.tema-pista{position:relative;width:38px;height:22px;border-radius:999px;background:#d7e2e0;transition:background .3s}
+.tema-bolita{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0e3d3a55;transition:transform .3s cubic-bezier(.3,.7,.3,1.3),background .3s}
+.tema-switch[aria-checked="true"] .tema-pista{background:var(--turquesa)}
+.tema-switch[aria-checked="true"] .tema-bolita{transform:translateX(16px);background:var(--lime)}
+.tema-sol{color:#e3a008}.tema-luna{color:var(--turquesa)}
+.tema-switch[aria-checked="true"] .tema-sol,.tema-switch[aria-checked="false"] .tema-luna{opacity:.4}
+
+/* ---------- fotos reales del NEA (Wikimedia Commons; créditos en terminos.html) ---------- */
+/* portada: las Cataratas del Iguazú detrás de la tarjeta de la colecta */
+.hero-object .object-halo{inset:-24px -8px -24px 24%;width:auto;height:auto;border:0;border-radius:32px;animation:none;
+  background:linear-gradient(200deg,#0e3d3a00 45%,#0e3d3ab3),url(/img/cataratas.jpg) center 40%/cover;
+  box-shadow:0 30px 70px -24px #0e3d3a80,inset 0 0 0 1px #ffffff26}
+.hero-object .object-halo::after{content:"Cataratas del Iguazú, Misiones";inset:auto auto 16px 18px;border:0;border-radius:999px;
+  padding:6px 12px;background:#0e3d3ab3;color:#e8f5f3;font:600 11px/1 var(--body);backdrop-filter:blur(4px)}
+.hero-object .object-shell{width:min(340px,64%);margin-right:auto}
+:root[data-tema="oscuro"] .hero-object .object-halo{box-shadow:0 30px 70px -24px #000c,inset 0 0 0 1px #ffffff1f}
+.hero h1 em{color:var(--acento-titulo,#0f9488)}
+:root[data-tema="oscuro"] .hero h1 em{--acento-titulo:var(--lime)}
+
+/* franja "por qué Hedera": el río serpenteando entre la selva, igual en los dos temas */
+.por-que{background:linear-gradient(90deg,#0b2523f0,#0e3d3ad9 55%,#0e3d3a8c),url(/img/rio-aereo.jpg) center 62%/cover;color:#d9ebe8;border:0;padding:40px 0}
+.por-que-grid div{border-left-color:var(--lime)}
+.por-que-grid div:hover{border-color:#fff}
+.por-que-grid b{color:#fff}
+
+/* cards del marketplace con foto: un poco más altas para que se luzca */
+.nea-visual{height:150px}
+
+/* ---------- celular ---------- */
+@media(max-width:700px){
+  .marca-svg{width:36px;height:36px}
+  .marca-texto{font-size:15px}
+  .tema-sol,.tema-luna{display:none}
+  .tema-switch{padding:4px}
+  body .hero-object,body.simple .hero-object{height:auto;min-height:420px;padding:36px 0}
+  .hero-object .object-shell{width:min(330px,84%)}
+  .hero-object .object-halo{inset:0 -6px 0 20%}
+}
+/* en pantallas angostas el header pasa a dos filas: logo e interruptor arriba; ingresar y crear abajo */
+@media(max-width:560px){
+  .site-header{height:auto;flex-wrap:wrap;row-gap:10px;padding:10px 16px 12px}
+  .site-header .tema-switch{order:1;margin-left:auto}
+  .site-header::after{content:"";order:2;flex-basis:100%}
+  .site-header .cuenta-chip,.site-header .nav-action{order:3}
+  .site-header .nav-action{margin-left:auto}
+}

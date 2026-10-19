@@ -9,30 +9,30 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/pages.css"><link rel="stylesheet" href="/vistoso.css">
+  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/pages.css"><link rel="stylesheet" href="/vistoso.css"><link rel="stylesheet" href="/tema.css"><script src="/tema.js"></script>
   <script src="/menu.js" defer></script><script src="/cuenta.js" defer></script><script src="/nucleo-view.js" defer></script>
   <style>
     .nu-chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
-    .nu-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#eef3e8;color:#171d1b;font:600 12px var(--mono,monospace);letter-spacing:.4px}
-    .nu-chip.ok{background:#dff5d0;color:#24531a}.nu-chip.alerta{background:#fde6e1;color:#8a2b17}.nu-chip.titular{background:#171d1b;color:#d8f16a}
+    .nu-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--f-eef3e8);color:var(--t-171d1b);font:600 12px var(--mono,monospace);letter-spacing:.4px}
+    .nu-chip.ok{background:var(--f-dff5d0);color:var(--t-24531a)}.nu-chip.alerta{background:var(--f-fde6e1);color:var(--t-8a2b17)}.nu-chip.titular{background:var(--f-171d1b);color:var(--t-d8f16a)}
     .nu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:22px}
     @media(max-width:900px){.nu-grid{grid-template-columns:1fr}}
-    .nu-card{background:#fff;border-radius:16px;padding:22px;box-shadow:0 1px 0 #d9dfd3}
-    .nu-card h3{margin:0 0 4px}.nu-sub{font:500 11px var(--mono,monospace);color:#748274;letter-spacing:.6px;margin:0 0 16px}
-    .nu-tabla{width:100%;border-collapse:collapse;font-size:13px}.nu-tabla td,.nu-tabla th{padding:8px 6px;border-bottom:1px solid #eef1ea;text-align:left}
-    .nu-tabla th{font:600 10px var(--mono,monospace);letter-spacing:.6px;color:#748274}
+    .nu-card{background:var(--f-fff);border-radius:16px;padding:22px;box-shadow:0 1px 0 var(--s-d9dfd3)}
+    .nu-card h3{margin:0 0 4px}.nu-sub{font:500 11px var(--mono,monospace);color:var(--t-748274);letter-spacing:.6px;margin:0 0 16px}
+    .nu-tabla{width:100%;border-collapse:collapse;font-size:13px}.nu-tabla td,.nu-tabla th{padding:8px 6px;border-bottom:1px solid var(--b-eef1ea);text-align:left}
+    .nu-tabla th{font:600 10px var(--mono,monospace);letter-spacing:.6px;color:var(--t-748274)}
     .nu-linea{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-    .nu-linea li{display:grid;grid-template-columns:140px 1fr auto;gap:12px;align-items:baseline;font-size:13px;border-bottom:1px solid #eef1ea;padding-bottom:8px}
-    .nu-linea time{font:500 11px var(--mono,monospace);color:#748274}.nu-linea a{font-size:12px;text-decoration:underline}
-    .nu-nota{font-size:12px;color:#748274;margin-top:10px}
+    .nu-linea li{display:grid;grid-template-columns:140px 1fr auto;gap:12px;align-items:baseline;font-size:13px;border-bottom:1px solid var(--b-eef1ea);padding-bottom:8px}
+    .nu-linea time{font:500 11px var(--mono,monospace);color:var(--t-748274)}.nu-linea a{font-size:12px;text-decoration:underline}
+    .nu-nota{font-size:12px;color:var(--t-748274);margin-top:10px}
     main>section.section-wrap{padding-top:56px}
-    .page-hero .nu-nota,.page-hero .nu-nota a{color:#cfd8c8}
+    .page-hero .nu-nota,.page-hero .nu-nota a{color:var(--t-cfd8c8)}
     .nu-form{display:grid;gap:12px}.nu-form label{display:grid;gap:6px;font-size:13px;font-weight:600}
-    .nu-form input,.nu-form select{background:#eef1ea;border:1px solid #c9d1c5;border-radius:6px;padding:10px 12px;font:inherit;font-weight:400}
+    .nu-form input,.nu-form select{background:var(--f-eef1ea);border:1px solid var(--b-c9d1c5);border-radius:6px;padding:10px 12px;font:inherit;font-weight:400}
     .nu-form .chk{display:flex;align-items:center;gap:8px;font-weight:400}
     .nu-items{display:grid;grid-template-columns:2fr 1fr;gap:8px}
-    .nu-ok{color:#24531a}.nu-no{color:#8a2b17}
-    .nu-meter{height:10px;border-radius:999px;background:#e7ece2;overflow:hidden;margin:8px 0 4px}.nu-meter span{display:block;height:100%;background:#d97a2b}
+    .nu-ok{color:var(--t-24531a)}.nu-no{color:var(--t-8a2b17)}
+    .nu-meter{height:10px;border-radius:999px;background:var(--f-e7ece2);overflow:hidden;margin:8px 0 4px}.nu-meter span{display:block;height:100%;background:var(--f-d97a2b)}
   </style>
 </head>
 <body data-page="nucleo">

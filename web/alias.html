@@ -11,15 +11,15 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
   <style>
-    .alias-page{background:#26362c;color:#f1f5e9;padding:90px 0 110px;min-height:calc(100vh - 84px)}
+    .alias-page{background:var(--f-26362c);color:var(--t-f1f5e9);padding:90px 0 110px;min-height:calc(100vh - 84px)}
     .alias-grid{display:grid;grid-template-columns:1fr 1fr;gap:8%;align-items:start}
     .alias-copy h1{font:800 clamp(40px,4.6vw,66px)/1.08 var(--display);letter-spacing:-3.5px;margin:30px 0}
-    .alias-copy h1 em{font-family:Georgia,serif;font-weight:400;color:var(--lime)}
-    .alias-copy p{max-width:440px;color:#b8c9bb;line-height:1.7}
-    .alias-copy .section-kicker{color:#d3e7b8}
-    .alias-form label{display:block;font-size:11px;font-weight:800;color:#4c5c50;margin:18px 0 8px}
-    .alias-form input{width:100%;background:#e8ebe1;border:1px solid #c9d1c5;border-radius:5px;padding:15px 16px;font:600 20px/1 ui-monospace,Consolas,monospace;color:#243429;box-shadow:inset 2px 3px 5px #76827635,0 1px white;outline:none}
-    .alias-form input:focus{border-color:#689673;box-shadow:inset 2px 3px 5px #76827635,0 0 0 3px #9fc78255}
+    .alias-copy h1 em{font-family:Georgia,serif;font-weight:400;color:var(--acento-txt)}
+    .alias-copy p{max-width:440px;color:var(--t-b8c9bb);line-height:1.7}
+    .alias-copy .section-kicker{color:var(--t-d3e7b8)}
+    .alias-form label{display:block;font-size:11px;font-weight:800;color:var(--t-4c5c50);margin:18px 0 8px}
+    .alias-form input{width:100%;background:var(--f-e8ebe1);border:1px solid var(--b-c9d1c5);border-radius:5px;padding:15px 16px;font:600 20px/1 ui-monospace,Consolas,monospace;color:var(--t-243429);box-shadow:inset 2px 3px 5px var(--s-76827635),0 1px var(--s-fff);outline:none}
+    .alias-form input:focus{border-color:var(--b-689673);box-shadow:inset 2px 3px 5px var(--s-76827635),0 0 0 3px var(--s-9fc78255)}
     .alias-form button{margin-top:20px}
     .alias-result{margin-top:22px;border-radius:10px;padding:20px 20px 18px;display:none}
     .alias-result.show{display:block}
@@ -27,17 +27,17 @@
     .alias-result p{margin:6px 0;font-size:14px;line-height:1.55}
     .alias-result small{display:block;margin-top:10px;font-size:11px;line-height:1.5}
     .alias-result a{font-weight:800;text-decoration:underline}
-    .r-ok{background:#e3f4cf;color:#1f4a2c;border:1px solid #a9d28c}
-    .r-warn{background:#fbe9c7;color:#6b4300;border:1px solid #e5bd6e}
-    .r-bad{background:#f6dcda;color:#7a2420;border:1px solid #e0a29d}
+    .r-ok{background:var(--f-e3f4cf);color:var(--tc-1f4a2c);border:1px solid var(--b-a9d28c)}
+    .r-warn{background:var(--f-fbe9c7);color:var(--t-6b4300);border:1px solid var(--b-e5bd6e)}
+    .r-bad{background:var(--f-f6dcda);color:var(--t-7a2420);border:1px solid var(--b-e0a29d)}
     .badge{display:inline-block;font:800 11px/1 var(--body);letter-spacing:1.6px;padding:7px 10px;border-radius:4px}
-    .r-ok .badge{background:#2f7a45;color:#fff}.r-warn .badge{background:#b07600;color:#fff}.r-bad .badge{background:#a13c37;color:#fff}
+    .r-ok .badge{background:var(--f-2f7a45);color:var(--to-fff)}.r-warn .badge{background:var(--f-b07600);color:var(--to-fff)}.r-bad .badge{background:var(--f-a13c37);color:var(--to-fff)}
     .signers{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-    .signers span{background:#ffffffb0;border:1px solid #a9d28c;border-radius:20px;padding:5px 11px;font-size:12px;font-weight:700}
-    .how{margin-top:40px;display:grid;gap:12px;color:#d9edc4;font-size:13px}
+    .signers span{background:var(--f-ffffffb0);border:1px solid var(--b-a9d28c);border-radius:20px;padding:5px 11px;font-size:12px;font-weight:700}
+    .how{margin-top:40px;display:grid;gap:12px;color:var(--t-d9edc4);font-size:13px}
     @media (max-width:860px){.alias-grid{grid-template-columns:1fr}.section-wrap{width:calc(100% - 40px)}.desktop-nav{display:none}}
   </style>
-<link rel="stylesheet" href="/vistoso.css"><script src="/menu.js" defer></script><script src="/cuenta.js" defer></script><script src="/efectos.js" defer></script></head>
+<link rel="stylesheet" href="/vistoso.css"><link rel="stylesheet" href="/tema.css"><script src="/tema.js"></script><script src="/menu.js" defer></script><script src="/cuenta.js" defer></script><script src="/efectos.js" defer></script></head>
 <body>
   <header class="site-header">
     <a class="brand" href="/" aria-label="Colectas Trazables, inicio"><span class="brand-mark"><i></i><i></i><i></i></span><span>colectas<span class="brand-light">trazables</span><small>LA SOLIDARIDAD SE VE</small></span></a>
@@ -62,7 +62,7 @@
         <input id="alias-input" name="alias" required minlength="3" maxlength="60" autocomplete="off" spellcheck="false" placeholder="colecta.itati">
         <button class="button button-dark" type="submit">Verificar alias <span aria-hidden="true">↗</span></button>
         <div class="alias-result" id="alias-result" role="status" aria-live="polite"></div>
-        <small style="display:block;margin-top:18px;color:#8a9487;font-size:10px;line-height:1.5">Demo en Hedera testnet: los alias y las firmas son de prueba.</small>
+        <small style="display:block;margin-top:18px;color:var(--t-8a9487);font-size:10px;line-height:1.5">Demo en Hedera testnet: los alias y las firmas son de prueba.</small>
       </form>
     </div>
   </main>
