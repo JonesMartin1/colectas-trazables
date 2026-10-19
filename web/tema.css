@@ -34,7 +34,7 @@ html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after
 .hero-object .object-halo{inset:-24px -8px -24px 24%;width:auto;height:auto;border:0;border-radius:32px;animation:none;
   background:linear-gradient(200deg,#0e3d3a00 45%,#0e3d3ab3),url(/img/cataratas.jpg) center 40%/cover;
   box-shadow:0 30px 70px -24px #0e3d3a80,inset 0 0 0 1px #ffffff26}
-.hero-object .object-halo::after{content:"Cataratas del Iguazú, Misiones";inset:auto auto 16px 18px;border:0;border-radius:999px;
+.hero-object .object-halo::after{content:"Cataratas del Iguazú, Misiones";inset:14px 14px auto auto;border:0;border-radius:999px;
   padding:6px 12px;background:#0e3d3ab3;color:#e8f5f3;font:600 11px/1 var(--body);backdrop-filter:blur(4px)}
 .hero-object .object-shell{width:min(340px,64%);margin-right:auto}
 :root[data-tema="oscuro"] .hero-object .object-halo{box-shadow:0 30px 70px -24px #000c,inset 0 0 0 1px #ffffff1f}
@@ -59,6 +59,24 @@ html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after
   body .hero-object,body.simple .hero-object{height:auto;min-height:420px;padding:36px 0}
   .hero-object .object-shell{width:min(330px,84%)}
   .hero-object .object-halo{inset:0 -6px 0 20%}
+  /* la tarjeta de la portada, compacta: el título largo de una colecta real la hacía enorme */
+  .object-face h2{font-size:26px;letter-spacing:-1px;margin:16px 0}
+  .object-face{padding:18px}
+  /* filtros del marketplace en una sola fila que se desliza */
+  .nea-filtros{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding:4px 16px 8px 0}
+  .nea-filtros::-webkit-scrollbar{display:none}
+  .nea-filtros button{flex:none}
+  /* leyendas y números que no entraban a lo ancho */
+  .leyenda.tres{grid-template-columns:1fr}
+  .kpis{gap:6px}
+  .kpis div{padding:10px 4px}
+  .kpis span{font-size:9px;letter-spacing:.3px}
+  .kpi strong{font-size:28px}
+  /* la topología se lee deslizando, en vez de achicarse hasta no verse */
+  .topologia-caja{overflow-x:auto}
+  #topologia{min-width:640px}
+  /* el indicador en vivo de Hedera, más chico para que no tape botones */
+  .ticker-red{left:auto;right:10px;bottom:10px;padding:6px 10px;font-size:9px;opacity:.92}
 }
 /* en pantallas angostas el header pasa a dos filas: logo e interruptor arriba; ingresar y crear abajo */
 @media(max-width:560px){
