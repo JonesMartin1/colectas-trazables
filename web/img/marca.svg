@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Colectas Trazables">
+  <!-- Símbolo TRAMA: una red de nodos que forma una "T". Paleta: petróleo, turquesa, lima. -->
+  <path d="M38 13 9 44l26 29" fill="none" stroke="#0E3D3A" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M42 39h37M60 39v48" fill="none" stroke="#18B5A6" stroke-width="15" stroke-linecap="round"/>
+  <circle cx="38" cy="13" r="9.5" fill="#0E3D3A"/>
+  <circle cx="88" cy="21" r="11" fill="#C8FF64"/>
+  <circle cx="79" cy="39" r="9" fill="#0E3D3A"/>
+  <circle cx="34" cy="76" r="10" fill="#C8FF64"/>
+</svg>

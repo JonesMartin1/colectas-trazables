@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Ícono de app / favicon: el símbolo sobre petróleo, con el trazo oscuro en blanco. -->
+  <rect width="100" height="100" rx="24" fill="#0E3D3A"/>
+  <g transform="translate(14 14) scale(.72)">
+    <path d="M38 13 9 44l26 29" fill="none" stroke="#F4F6F5" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M42 39h37M60 39v48" fill="none" stroke="#18B5A6" stroke-width="15" stroke-linecap="round"/>
+    <circle cx="38" cy="13" r="9.5" fill="#F4F6F5"/>
+    <circle cx="88" cy="21" r="11" fill="#C8FF64"/>
+    <circle cx="79" cy="39" r="9" fill="#F4F6F5"/>
+    <circle cx="34" cy="76" r="10" fill="#C8FF64"/>
+  </g>
+</svg>

@@ -105,7 +105,7 @@
       <path d="${area((p) => p.r)}" fill="url(#lr)"/>
       <path class="trazo" d="${path((p) => p.r)}" stroke="#6fae2c"/><path class="trazo" d="${path((p) => p.g)}" stroke="#e0703f"/><path class="trazo" d="${path((p) => p.r - p.g)}" stroke="#2775ca" stroke-dasharray="6 5"/>
     </svg>
-    <div class="leyenda tres"><div><i style="background:#6fae2c"></i>Recaudado<b>${pesos(r)}</b></div><div><i style="background:#e0703f"></i>Gastado<b>${pesos(g)}</b></div><div><i style="background:#2775ca"></i>Saldo<b>${pesos(r - g)}</b></div></div>`;
+    <div class="leyenda tres"><div><i style="background:var(--f-6fae2c)"></i>Recaudado<b>${pesos(r)}</b></div><div><i style="background:var(--f-e0703f)"></i>Gastado<b>${pesos(g)}</b></div><div><i style="background:var(--f-2775ca)"></i>Saldo<b>${pesos(r - g)}</b></div></div>`;
   }
 
   function filtros() {

@@ -11,32 +11,32 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
   <style>
-    .avisos-page{background:#26362c;color:#f1f5e9;padding:80px 0 100px;min-height:calc(100vh - 84px)}
+    .avisos-page{background:var(--f-26362c);color:var(--t-f1f5e9);padding:80px 0 100px;min-height:calc(100vh - 84px)}
     .avisos-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:7%;align-items:start}
     .avisos-copy h1{font:800 clamp(38px,4.4vw,62px)/1.08 var(--display);letter-spacing:-3px;margin:28px 0}
-    .avisos-copy h1 em{font-family:Georgia,serif;font-weight:400;color:var(--lime)}
-    .avisos-copy p{max-width:440px;color:#b8c9bb;line-height:1.7}
-    .avisos-copy .section-kicker{color:#d3e7b8}
-    .serie{margin-top:30px;background:#ffffff10;border:1px solid #ffffff22;border-radius:12px;padding:18px 20px}
+    .avisos-copy h1 em{font-family:Georgia,serif;font-weight:400;color:var(--acento-txt)}
+    .avisos-copy p{max-width:440px;color:var(--t-b8c9bb);line-height:1.7}
+    .avisos-copy .section-kicker{color:var(--t-d3e7b8)}
+    .serie{margin-top:30px;background:var(--f-ffffff10);border:1px solid var(--b-ffffff22);border-radius:12px;padding:18px 20px}
     .serie h3{font:800 16px var(--display);margin:0 0 12px}
-    .serie-row{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid #ffffff1c;padding:9px 0;font-size:14px}
-    .serie-row strong{font:800 26px var(--display);color:var(--lime)}
+    .serie-row{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--b-ffffff1c);padding:9px 0;font-size:14px}
+    .serie-row strong{font:800 26px var(--display);color:var(--acento-txt)}
     .lista{display:grid;gap:14px}
-    .aviso{background:linear-gradient(140deg,#fbfaf4,#e7e9dc);color:var(--ink);border-radius:12px;padding:20px 22px;box-shadow:inset 0 1px #fff,0 10px 0 #142218,0 18px 30px #06130c66}
-    .aviso .meta{display:flex;justify-content:space-between;gap:10px;font:700 10px/1.4 var(--body);letter-spacing:1.4px;color:#6f7f71;text-transform:uppercase}
+    .aviso{background:linear-gradient(140deg,var(--f-fbfaf4),var(--f-e7e9dc));color:var(--ink);border-radius:12px;padding:20px 22px;box-shadow:inset 0 1px var(--s-fff),0 10px 0 var(--s-142218),0 18px 30px var(--s-06130c66)}
+    .aviso .meta{display:flex;justify-content:space-between;gap:10px;font:700 10px/1.4 var(--body);letter-spacing:1.4px;color:var(--t-6f7f71);text-transform:uppercase}
     .aviso h2{font:800 22px/1.2 var(--display);letter-spacing:-.6px;margin:10px 0 6px}
     .aviso .cifras{display:flex;gap:22px;margin:10px 0}
-    .aviso .cifras div{font-size:12px;color:#5d6b60}
+    .aviso .cifras div{font-size:12px;color:var(--t-5d6b60)}
     .aviso .cifras strong{display:block;font:800 30px var(--display);color:var(--ink)}
-    .aviso p{margin:6px 0;font-size:14px;line-height:1.55;color:#3d4a41}
-    .aviso .fuente{font-size:12px;color:#7a877c}
+    .aviso p{margin:6px 0;font-size:14px;line-height:1.55;color:var(--t-3d4a41)}
+    .aviso .fuente{font-size:12px;color:var(--t-7a877c)}
     .aviso a{font-weight:800;text-decoration:underline;font-size:13px}
-    .badge{display:inline-block;font:800 10px/1 var(--body);letter-spacing:1.4px;padding:6px 9px;border-radius:4px;background:#2f7a45;color:#fff}
-    .badge.alerta{background:#b07600}
-    .demo-note{margin-top:22px;font-size:12px;color:#9fb2a2;line-height:1.6}
+    .badge{display:inline-block;font:800 10px/1 var(--body);letter-spacing:1.4px;padding:6px 9px;border-radius:4px;background:var(--f-2f7a45);color:var(--to-fff)}
+    .badge.alerta{background:var(--f-b07600)}
+    .demo-note{margin-top:22px;font-size:12px;color:var(--t-9fb2a2);line-height:1.6}
     @media (max-width:860px){.avisos-grid{grid-template-columns:1fr}.section-wrap{width:calc(100% - 40px)}.desktop-nav{display:none}}
   </style>
-<link rel="stylesheet" href="/vistoso.css"><script src="/menu.js" defer></script><script src="/cuenta.js" defer></script><script src="/efectos.js" defer></script><link rel="stylesheet" href="/accessibility.css"><link rel="stylesheet" href="/movil.css"><script src="/i18n.js" defer></script><script src="/accessibility.js" defer></script></head>
+<link rel="stylesheet" href="/vistoso.css"><script src="/menu.js" defer></script><script src="/cuenta.js" defer></script><script src="/efectos.js" defer></script><link rel="stylesheet" href="/accessibility.css"><link rel="stylesheet" href="/movil.css"><link rel="stylesheet" href="/tema.css"><script src="/tema.js"></script><script src="/i18n.js" defer></script><script src="/accessibility.js" defer></script></head>
 <body>
   <header class="site-header">
     <a class="brand" href="/" aria-label="Colectas Trazables, inicio"><span class="brand-mark"><i></i><i></i><i></i></span><span>colectas<span class="brand-light">trazables</span><small>LA SOLIDARIDAD SE VE</small></span></a>

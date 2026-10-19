@@ -43,7 +43,7 @@
     fila.append(dn, el("div", "leyenda", `
       <div><i style="background:var(--coral)"></i>Gastado<b>${pesos(gastado)}</b></div>
       <div><i style="background:var(--glow)"></i>Saldo<b>${pesos(saldo)}</b></div>
-      <div><i style="background:#cfd8cb"></i>Recaudado<b>${pesos(recaudado)}</b></div>`));
+      <div><i style="background:var(--f-cfd8cb)"></i>Recaudado<b>${pesos(recaudado)}</b></div>`));
     card.append(fila, el("div", "kpis", `<div><strong>${(d.gastos || []).length}</strong><span>FACTURAS</span></div><div><strong>${ent.length}</strong><span>ENTREGAS</span></div><div><strong>${ent.reduce((s, e) => s + (Number(e.cantidad) || 0), 0)}</strong><span>UNIDADES</span></div>`));
     cuando(card, () => animar(1400, (t) => {
       dn.style.setProperty("--g", (pct * t).toFixed(2));

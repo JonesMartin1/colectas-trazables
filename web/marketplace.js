@@ -11,7 +11,8 @@
 
   const pesos = (v) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(Number(v) || 0);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-  const ICONOS = { Inundaciones: ["🌊", "linear-gradient(135deg,#1b4f72,#2e86c1)"], Incendios: ["🔥", "linear-gradient(135deg,#7b241c,#e67e22)"], Agua: ["💧", "linear-gradient(135deg,#0e6655,#48c9b0)"], Salud: ["🩺", "linear-gradient(135deg,#4a235a,#a569bd)"], Alimentación: ["🍲", "linear-gradient(135deg,#7d6608,#f4d03f)"], Educación: ["🎒", "linear-gradient(135deg,#186a3b,#58d68d)"], Otra: ["🤲", "linear-gradient(135deg,#34495e,#7f8c8d)"] };
+  const FOTOS = ["/img/rio-aereo.jpg", "/img/garganta.jpg", "/img/esteros.jpg", "/img/cataratas.jpg"];
+  const ICONOS = { Inundaciones: ["", "linear-gradient(180deg,#0e3d3a10,#0e3d3a99),url(/img/esteros.jpg) center/cover"], Incendios: ["🔥", "linear-gradient(135deg,#7b241c,#e67e22)"], Agua: ["", "linear-gradient(180deg,#0e3d3a10,#0e3d3a99),url(/img/garganta.jpg) center/cover"], Salud: ["🩺", "linear-gradient(135deg,#4a235a,#a569bd)"], Alimentación: ["🍲", "linear-gradient(135deg,#7d6608,#f4d03f)"], Educación: ["🎒", "linear-gradient(135deg,#186a3b,#58d68d)"], Otra: ["🤲", "linear-gradient(135deg,#34495e,#7f8c8d)"] };
 
   // Causas de ejemplo: problemas reales de la región, como propuestas ilustrativas (no están en Hedera).
   const EJEMPLOS = [
@@ -68,11 +69,11 @@
   function pintarActivas() {
     const grid = seccion.querySelector("#nea-activas");
     const lista = activas.filter((c) => coincide(c.titulo, c.descripcion, c.organizador?.nombre));
-    grid.innerHTML = lista.length ? lista.map((c) => {
+    grid.innerHTML = lista.length ? lista.map((c, i) => {
       const pct = c.meta > 0 ? Math.min(100, (c.recaudado / c.meta) * 100) : 0;
       const url = `/colecta.html?id=${encodeURIComponent(c.campaignId)}`;
       return `<article class="nea-card aprobada fx-card reveal">
-        <a class="nea-visual" href="${url}" style="--fondo:linear-gradient(135deg,#1e3b2c,#486b5d)"><span class="nea-chip real">✓ APROBADA</span><span class="nea-icono" aria-hidden="true">🤝</span></a>
+        <a class="nea-visual" href="${url}" style="--fondo:linear-gradient(180deg,#0e3d3a10,#0e3d3a99),url(${FOTOS[i % FOTOS.length]}) center/cover"><span class="nea-chip real">✓ APROBADA</span></a>
         <div class="nea-body"><small>${esc(c.organizador?.nombre || "Organización verificada")}</small><h3><a href="${url}">${esc(c.titulo)}</a></h3><p>${esc(c.descripcion || "Colecta registrada en Hedera.")}</p>
           <div class="nea-tags"><span>✓ Organización verificada</span><span>${c.donaciones} ${c.donaciones === 1 ? "donación" : "donaciones"}</span><span class="mono">${esc(c.topicId)}</span></div>
           <div class="nea-progreso"><header><b>${pesos(c.recaudado)}</b><span>de ${pesos(c.meta)}</span></header><div class="nea-pista"><span data-pct="${pct.toFixed(1)}"></span></div></div>
@@ -88,7 +89,7 @@
       const [icono, fondo] = ICONOS[p.categoria] || ICONOS.Otra;
       const crear = `/crear.html?${new URLSearchParams({ titulo: p.titulo, desc: p.descripcion, meta: p.montoEstimado })}`;
       return `<article class="nea-card propuesta fx-card reveal">
-        <div class="nea-visual" style="--fondo:${fondo}"><span class="nea-chip pend">${p.ejemplo ? "EJEMPLO · SIN AVAL" : "SIN AVAL"}</span><span class="nea-icono" aria-hidden="true">${icono}</span></div>
+        <div class="nea-visual" style="--fondo:${fondo}"><span class="nea-chip pend">${p.ejemplo ? "EJEMPLO · SIN AVAL" : "SIN AVAL"}</span>${icono ? `<span class="nea-icono" aria-hidden="true">${icono}</span>` : ""}</div>
         <div class="nea-body"><small>${esc(p.categoria.toUpperCase())} · ${esc(p.provincia.toUpperCase())}${p.secuencia ? ` · PROPUESTA #${esc(p.secuencia)}` : ""}</small><h3>${esc(p.titulo)}</h3><p>${esc(p.descripcion)}</p>
           <div class="propuesta-estado"><span>Monto estimado</span><b>${pesos(p.montoEstimado)}</b><em>Esperando el aval de una ONG</em></div>
           <div class="nea-botones">${p.hashscan ? `<a class="nea-accion secundaria" href="${esc(p.hashscan)}" target="_blank" rel="noopener noreferrer">Ver en HashScan ↗</a>` : ""}<a class="nea-accion" href="${crear}">Soy ONG: avalar y crear ↗</a></div></div></article>`;
