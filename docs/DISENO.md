@@ -6,7 +6,7 @@ Este diseño salió de una entrevista de Martín con Claude el 17/10 (/grill-me)
 
 | Usuario | Qué hace | Cómo entra |
 | --- | --- | --- |
-| **Donante** | Dona y sigue su aporte; puede denunciar un comprobante de la colecta a la que donó | Cuenta con Google o mail verificado |
+| **Donante** | Dona y sigue su aporte; puede denunciar un comprobante de la colecta a la que donó | Dona **sin cuenta**; la cuenta (Google o mail verificado) es opcional y se ofrece después de donar (ver cambio del 19/10) |
 | **Organizador** (ej. Santi) | Arma la colecta y sus ítems, pide validación, recibe tramos y carga comprobantes | Verificación de identidad (DNI + prueba de vida) con un proveedor con convenio RENAPER |
 | **Entidad** (ONG, gobierno) | Valida colectas, aprueba tramos y comprobantes, puede pausar | Registro oficial de su país, revisado por la plataforma; billetera multifirma |
 
@@ -56,6 +56,10 @@ Este diseño salió de una entrevista de Martín con Claude el 17/10 (/grill-me)
 - Al principio solo dona quien tiene cripto.
 - Los créditos no vencen, así que se acumulan.
 - Se cobra comisión también sobre colectas que después se congelan.
+
+## Cambio del 19/10: donar sin cuenta (modifica D18)
+
+La devolución del jurado del track Hedera fue que usar la plataforma "requiere muchos pasos" y que el foco tiene que ser lo humano, no la tecnología. Martín aprobó que **la cuenta deje de ser obligatoria para donar**: se dona en 5 toques desde la portada y la cuenta se ofrece después de una donación exitosa. Quien dona sin cuenta queda como en D13 sin código: su donación entra igual, pero no genera créditos ni derecho a denunciar hasta que la atribuya a una cuenta. En la interfaz del donante no se nombra Hedera ni se muestran IDs: la verificación queda en "Registro público · Verificalo" y en la página `/hedera`.
 
 ## Pendientes para operar con plata real
 
