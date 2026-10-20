@@ -55,7 +55,6 @@
     ideas.hidden = !si;
     verIdeas.setAttribute("aria-expanded", String(si));
     verIdeas.textContent = si ? "Ocultar ideas de la comunidad ↑" : "Ver ideas de la comunidad ↓";
-    if (si) dispatchEvent(new Event("resize")); // el carrusel recalcula su ancho al hacerse visible
   };
   verIdeas.addEventListener("click", () => abrirIdeas(ideas.hidden));
   const filtros = seccion.querySelector(".nea-filtros");

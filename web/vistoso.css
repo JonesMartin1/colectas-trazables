@@ -126,7 +126,7 @@
 .nea-pista{height:8px;border-radius:999px;background:var(--f-33403a);overflow:hidden}
 .nea-pista span{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--f-9fd14b),var(--glow));box-shadow:0 0 12px var(--s-d8f16a99);transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
 .nea-accion{margin-top:6px;display:flex;justify-content:center;align-items:center;gap:8px;border-radius:8px;padding:11px;font-size:12px;font-weight:800;background:var(--f-2f3b35);color:var(--t-eef3e8);border:1px solid var(--b-4a5a51);transition:all .25s}
-.nea-card:hover .nea-accion{background:var(--glow);color:var(--ink-fijo);border-color:var(--acento-borde)}
+.nea-accion:hover{background:var(--glow);color:var(--ink-fijo);border-color:var(--acento-borde)}
 .nea-esqueleto{height:330px;border-radius:16px;background:linear-gradient(100deg,var(--f-222b27) 30%,var(--f-2c3732) 50%,var(--f-222b27) 70%);background-size:300% 100%;animation:shimmer 1.4s linear infinite}
 @keyframes shimmer{to{background-position:-150% 0}}
 .nea-vacio{color:var(--t-9fb0a1);font-size:13px;padding:20px 0}
@@ -184,15 +184,6 @@ body.simple .intro-heading{margin:20px 0 30px}
 body.simple .nea-section{padding:60px 0}
 body.simple .nea-filtros{margin:22px 0 4px}
 body.simple .create-section{padding:70px 0}
-/* carruseles */
-.carrusel-fila{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:26px 0 4px;position:relative}
-.carrusel-fila .nea-subtitulo{margin:0}
-.carrusel-flechas{display:flex;gap:8px}
-.carrusel-flechas button{width:40px;height:40px;border-radius:50%;border:1px solid var(--b-3d4a43);background:var(--f-202925);color:var(--t-fff);font-size:16px;transition:all .25s}
-.carrusel-flechas button:hover{background:var(--glow);color:var(--ink-fijo);border-color:var(--acento-borde);box-shadow:0 0 18px var(--s-d8f16a77)}
-.nea-grid.carrusel{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(260px,290px);overflow-x:auto;scroll-snap-type:x mandatory;padding:14px 6px 22px;scrollbar-width:thin;scrollbar-color:#4a5a51 transparent}
-.nea-grid.carrusel>*{scroll-snap-align:start}
-.nea-grid.carrusel .nea-vacio{grid-column:auto;white-space:nowrap}
 @media(max-width:900px){body.simple .page-hero-grid{grid-template-columns:1fr}.chart-card.mitad{grid-column:1/-1}.dona-fila{grid-template-columns:1fr;justify-items:center}}
 
 /* ---------- "cómo funciona" con el paso de la cuenta ---------- */
@@ -368,8 +359,8 @@ body[data-page="crear"] .create-section{padding:60px 0 80px}
 .nea-botones{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px;margin-top:6px}
 .nea-botones .nea-accion{margin-top:0}
 .nea-accion.secundaria{background:transparent;border-color:var(--b-4a5a51)}
-.nea-card:hover .nea-accion.secundaria{background:transparent;color:var(--t-eef3e8);border-color:var(--b-d8f16a88)}
-.nea-card.propuesta:hover .nea-accion:not(.secundaria){background:var(--f-f4b740);border-color:var(--b-f4b740);color:var(--tc-3d2a00)}
+.nea-accion.secundaria:hover{background:transparent;color:var(--t-eef3e8);border-color:var(--acento-borde)}
+.nea-card.propuesta .nea-accion:not(.secundaria):hover{background:var(--f-f4b740);border-color:var(--b-f4b740);color:var(--tc-3d2a00)}
 .nea-herramientas{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .nea-herramientas .button{white-space:nowrap}
 .postular{margin:26px 0 6px;color:var(--ink);animation:entra .35s ease}
@@ -379,16 +370,6 @@ body[data-page="crear"] .create-section{padding:60px 0 80px}
 .postular input,.postular select,.postular textarea{width:100%;background:var(--f-e8ebe1);border:1px solid var(--b-c9d1c5);border-radius:5px;padding:12px 13px;color:var(--t-243429);font:inherit}
 .postular .button{margin-top:18px}
 @media(max-width:760px){.postular-grid{grid-template-columns:1fr}}
-
-/* ---------- carrusel ---------- */
-.nea-grid.carrusel{scroll-behavior:smooth;cursor:grab;-webkit-mask-image:none;mask-image:none}
-.nea-grid.carrusel.arrastrando{cursor:grabbing;scroll-behavior:auto;scroll-snap-type:none;user-select:none}
-.nea-grid.carrusel.fade-der{-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}
-.nea-grid.carrusel.fade-izq{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%);mask-image:linear-gradient(90deg,transparent,#000 12%)}
-.nea-grid.carrusel.fade-izq.fade-der{-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 88%,transparent)}
-.carrusel-barra{position:relative;height:4px;border-radius:999px;background:var(--f-2c3631);margin:2px 6px 0;overflow:hidden}
-.carrusel-barra span{position:absolute;top:0;bottom:0;border-radius:inherit;background:linear-gradient(90deg,var(--f-9fd14b),var(--glow));box-shadow:0 0 10px var(--s-d8f16a88);transition:left .25s,width .25s}
-.carrusel-flechas button:disabled{opacity:.3;cursor:default;background:var(--f-202925);color:var(--t-fff);border-color:var(--b-3d4a43);box-shadow:none}
 
 /* ---------- Hedera en vivo (consola) ---------- */
 body[data-page="hedera"]{background:var(--f-0f1412);color:var(--t-e6eee2)}

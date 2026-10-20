@@ -101,3 +101,36 @@ html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after
   /* colecta: el botón fijo "Donar" ya cumple esa función */
   body[data-page="colecta"] .page-hero-actions .button-lime{display:none}
 }
+
+/* ---------- encabezado en una sola línea y parejo (pedido de Nicolás, 20/10) ---------- */
+/* marca a la izquierda, menú centrado, y a la derecha Ingresar, el interruptor y Crear colecta, los tres de 40 px de alto.
+   Ningún texto se parte en dos renglones: con la pantalla más angosta se achican los espacios y se acortan los rótulos. */
+.site-header{gap:20px}
+.site-header .desktop-nav{flex:1;justify-content:center;align-items:center;gap:clamp(18px,2.2vw,32px);white-space:nowrap}
+.site-header .cuenta-chip,.site-header .cuenta-chip a{white-space:nowrap}
+.cuenta-ingresar,.site-header .nav-action{display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:999px;font-size:13px;white-space:nowrap}
+.site-header .nav-action:not([id]){background:var(--glow);border-color:transparent;color:var(--ink-fijo);font-weight:800}
+.site-header .nav-action:not([id]) span{padding-left:8px;color:inherit}
+.site-header .nav-action:not([id]):hover{background:var(--glow);box-shadow:0 0 20px var(--s-d8f16a77)}
+.site-header .tema-switch{height:40px}
+@media(max-width:1240px){
+  .site-header .solo-escritorio,.site-header .tema-sol,.site-header .tema-luna{display:none}
+  .site-header .marca-texto small{display:none}
+}
+
+/* ---------- colectas de la portada: grilla de 3 por fila en vez de carrusel, cards cortas ---------- */
+.nea-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.nea-grid .nea-vacio{grid-column:1/-1}
+@media(max-width:900px){.nea-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.nea-grid{grid-template-columns:1fr}}
+.nea-visual{height:130px}
+.nea-body{gap:8px;padding:16px}
+.nea-card.aprobada .nea-body p{-webkit-line-clamp:2}
+.nea-fuente{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* "En qué se gastó" y "Doná", uno abajo del otro y del mismo ancho */
+.nea-botones{grid-auto-flow:row;grid-template-columns:1fr;gap:8px}
+.nea-botones .nea-accion{padding:9px}
+/* toda la card lleva a la colecta: el link del título se estira por encima; la fuente y los botones quedan arriba de él */
+.nea-card.aprobada{cursor:pointer}
+.nea-card.aprobada h3 a::after{content:"";position:absolute;inset:0;z-index:1}
+.nea-card.aprobada .nea-fuente,.nea-card.aprobada .nea-botones{position:relative;z-index:2}
