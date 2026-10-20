@@ -147,7 +147,13 @@
     // y los datos que llegan después empujan el formulario (a veces sin cambiar el alto total): durante 6 s, o hasta
     // que la persona toque o scrollee por su cuenta, si el formulario se corrió se lo vuelve a poner arriba.
     if (location.hash === "#donar") {
-      const ir = () => { if (Math.abs(donar.getBoundingClientRect().top) > 4) donar.scrollIntoView({ block: "start", behavior: "instant" }); };
+      // posición de layout (offsetTop), no getBoundingClientRect: la animación de entrada de la tarjeta la desplaza con
+      // transform y la página "temblaba" corrigiendo ese desplazamiento (lo marcó un usuario en un video, 20/10).
+      // Solo se vuelve a scrollear si el contenido de arriba realmente cambió de alto.
+      donar.classList.add("visible");
+      const arriba = () => { let y = 0; for (let n = donar; n; n = n.offsetParent) y += n.offsetTop; return y; };
+      let ultima = -1;
+      const ir = () => { const y = arriba(); if (Math.abs(y - ultima) > 4) { ultima = y; scrollTo({ top: y, behavior: "instant" }); } };
       const reloj = setInterval(ir, 150);
       const soltar = () => { clearInterval(reloj); ["touchstart", "wheel", "keydown", "pointerdown"].forEach((t) => removeEventListener(t, soltar)); };
       ["touchstart", "wheel", "keydown", "pointerdown"].forEach((t) => addEventListener(t, soltar, { passive: true }));
