@@ -445,6 +445,9 @@
     "son ideas de la comunidad que esperan el aval de una ONG.": "are community ideas awaiting an NGO's approval.",
     "Buscar: agua, Chaco, incendios…": "Search: water, Chaco, fires…",
     // donar simple (devolución del jurado, 18/10)
+    "Subí la factura para verificarla ↑": "Upload the invoice to verify it ↑",
+    "Subí la foto para comprobarla ↑": "Upload the photo to check it ↑",
+    "Descargar la factura (demo) ↓": "Download the invoice (demo) ↓",
     "✓ Registro público · Verificalo ↗": "✓ Public record · Verify it ↗",
     "Cada registro tiene fecha y un enlace para verificarlo.": "Every record has a date and a link to verify it.",
     "LIBRO DE LA COLECTA · REGISTRO PÚBLICO": "FUNDRAISER LEDGER · PUBLIC RECORD",
