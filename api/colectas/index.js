@@ -1,16 +1,18 @@
-// GET  /api/colectas  → todas las colectas del topic de registro
+// GET  /api/colectas  → las colectas destacadas (casos reales, ver _destacadas.js); ?todas=1 → todo el topic de registro
 // POST /api/colectas  → crea una colecta: topic propio en HCS y alta en el registro
 import crypto from "node:crypto";
 import { listarColectas, registrarColecta } from "../../hedera/colectas.js";
 import { json, error, leerCuerpo, crearId, esCuenta, esperarEnMirror, sha256 } from "../_comun.js";
+import { destacar } from "../_destacadas.js";
 
 export const TIPOS = ["Asociación civil", "Fundación", "Simple asociación", "Cooperadora", "Bomberos voluntarios", "Comisión vecinal", "Municipio u organismo público"];
 
 export default async function handler(req, res) {
   try {
     if (req.method === "GET") {
-      const colectas = await listarColectas();
-      return json(res, 200, colectas.map(({ campaignId, titulo, meta, topicId, beneficiarioCuenta }) => ({ campaignId, titulo, meta, topicId, beneficiarioCuenta })));
+      const todas = await listarColectas();
+      const colectas = new URL(req.url, "http://local").searchParams.get("todas") === "1" ? todas : destacar(todas);
+      return json(res, 200, colectas.map(({ campaignId, titulo, meta, topicId, beneficiarioCuenta, foto, lugar, fecha, categoria, fuente }) => ({ campaignId, titulo, meta, topicId, beneficiarioCuenta, foto, lugar, fecha, categoria, fuente })));
     }
     if (req.method !== "POST") return error(res, 405, "Método no permitido");
     const b = await leerCuerpo(req);

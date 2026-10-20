@@ -55,7 +55,7 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 
 | Método y ruta | Recibe | Devuelve |
 | --- | --- | --- |
-| `GET /api/colectas` | — | `[{ campaignId, titulo, meta, topicId, beneficiarioCuenta }]` |
+| `GET /api/colectas` | — | `[{ campaignId, titulo, meta, topicId, beneficiarioCuenta, foto, lugar, fecha, categoria, fuente }]`: solo las destacadas de `api/_destacadas.js` (casos reales, en ese orden). `?todas=1` devuelve todo el registro, sin foto ni fuente. |
 | `POST /api/colectas` | `{ titulo, descripcion, meta, beneficiarioCuenta }` | `{ id, topicId, url, hashscan, claveOrganizador, urlOrganizador }` |
 | `GET /api/colectas/:id` | — | `{ colecta, donaciones[], gastos[], totales: { recaudado, gastado, saldo } }` |
 | `POST /api/demo/donar` | `{ campaignId, monto }` | `{ txId, hashscan, usdc }` (solo demo: la billetera de prueba paga, no registra) |

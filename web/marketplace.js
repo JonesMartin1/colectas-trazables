@@ -2,7 +2,8 @@
 // - Colectas APROBADAS: están en el registro de Hedera y las creó una organización verificada (persona jurídica +
 //   identidad validada). Reciben donaciones y se puede ver la trazabilidad de cada peso.
 // - PROPUESTAS sin aval: ideas que postula cualquiera (también quedan en Hedera, en su propio topic). No reciben
-//   donaciones hasta que una ONG las avala y crea la colecta. Incluye causas de ejemplo de la región.
+//   donaciones hasta que una ONG las avala y crea la colecta.
+// Todo lo que se muestra está en Hedera testnet: las colectas son casos reales del NEA (api/_destacadas.js).
 // Aparte de app.js (Facundo).
 (function () {
   if (document.body.dataset.page !== "home") return;
@@ -14,15 +15,6 @@
   const FOTOS = ["/img/rio-aereo.jpg", "/img/garganta.jpg", "/img/esteros.jpg", "/img/cataratas.jpg"];
   const ICONOS = { Inundaciones: ["", "linear-gradient(180deg,#0e3d3a10,#0e3d3a99),url(/img/esteros.jpg) center/cover"], Incendios: ["🔥", "linear-gradient(135deg,#7b241c,#e67e22)"], Agua: ["", "linear-gradient(180deg,#0e3d3a10,#0e3d3a99),url(/img/garganta.jpg) center/cover"], Salud: ["🩺", "linear-gradient(135deg,#4a235a,#a569bd)"], Alimentación: ["🍲", "linear-gradient(135deg,#7d6608,#f4d03f)"], Educación: ["🎒", "linear-gradient(135deg,#186a3b,#58d68d)"], Otra: ["🤲", "linear-gradient(135deg,#34495e,#7f8c8d)"] };
 
-  // Causas de ejemplo: problemas reales de la región, como propuestas ilustrativas (no están en Hedera).
-  const EJEMPLOS = [
-    { categoria: "Incendios", provincia: "Corrientes", titulo: "Brigadistas en los Esteros del Iberá", descripcion: "Equipos, mochilas de agua y combustible para las cuadrillas que frenan el fuego.", montoEstimado: 2500000 },
-    { categoria: "Agua", provincia: "Chaco", titulo: "Agua segura en El Impenetrable", descripcion: "Cisternas y filtros para parajes rurales que dependen del agua de lluvia.", montoEstimado: 4200000 },
-    { categoria: "Salud", provincia: "Misiones", titulo: "Prevención del dengue en los barrios", descripcion: "Repelente, mosquiteros y jornadas de descacharrado antes del verano.", montoEstimado: 1200000 },
-    { categoria: "Inundaciones", provincia: "Chaco", titulo: "Barrios anegados del Gran Resistencia", descripcion: "Bombas de achique, lavandina y kits de limpieza para volver a casa.", montoEstimado: 1800000 },
-    { categoria: "Alimentación", provincia: "Formosa", titulo: "Comedores comunitarios del interior", descripcion: "Mercadería para comedores que sostienen a cientos de familias cada semana.", montoEstimado: 900000 },
-    { categoria: "Educación", provincia: "Corrientes", titulo: "Escuelas rurales después de la crecida", descripcion: "Útiles, pintura y arreglos para que las escuelas vuelvan a abrir.", montoEstimado: 1500000 },
-  ].map((e) => ({ ...e, ejemplo: true }));
 
   const seccion = document.createElement("section");
   seccion.className = "nea-section";
@@ -53,7 +45,7 @@
       <div class="nea-grid" id="nea-causas"></div></div></div></div>`;
   ancla.after(seccion);
 
-  let filtro = "Todas", texto = "", activas = [], propuestas = [...EJEMPLOS];
+  let filtro = "Todas", texto = "", activas = [], propuestas = [];
   const coincide = (...c) => !texto || c.join(" ").toLowerCase().includes(texto);
   const sesion = () => window.Cuenta?.actual();
 
@@ -77,13 +69,16 @@
 
   function pintarActivas() {
     const grid = seccion.querySelector("#nea-activas");
-    const lista = activas.filter((c) => coincide(c.titulo, c.descripcion, c.organizador?.nombre));
+    const lista = activas.filter((c) => coincide(c.titulo, c.descripcion, c.organizador?.nombre, c.lugar));
     grid.innerHTML = lista.length ? lista.map((c, i) => {
       const pct = c.meta > 0 ? Math.min(100, (c.recaudado / c.meta) * 100) : 0;
       const url = `/colecta.html?id=${encodeURIComponent(c.campaignId)}`;
+      // foto del lugar del caso real (api/_destacadas.js); si no tiene, una del NEA
+      const foto = /^\/img\/[\w-]+\.jpg$/.test(c.foto || "") ? c.foto : FOTOS[i % FOTOS.length];
+      const fuente = /^https:\/\//.test(c.fuente?.url || "") ? `<a class="nea-fuente" href="${esc(c.fuente.url)}" target="_blank" rel="noopener noreferrer">Caso real · fuente: ${esc(c.fuente.medio)} ↗</a>` : "";
       return `<article class="nea-card aprobada fx-card reveal">
-        <a class="nea-visual" href="${url}" style="--fondo:linear-gradient(180deg,#0e3d3a10,#0e3d3a99),url(${FOTOS[i % FOTOS.length]}) center/cover"><span class="nea-chip real">✓ APROBADA</span></a>
-        <div class="nea-body"><small>${esc(c.organizador?.nombre || "Organización verificada")}</small><h3><a href="${url}">${esc(c.titulo)}</a></h3><p>${esc(c.descripcion || "Colecta registrada en Hedera.")}</p>
+        <a class="nea-visual" href="${url}" style="--fondo:linear-gradient(180deg,#0e3d3a10,#0e3d3a99),url(${foto}) center/cover"><span class="nea-chip real">✓ APROBADA</span>${c.lugar ? `<span class="nea-lugar">${esc(c.lugar)}${c.fecha ? ` · ${esc(c.fecha)}` : ""}</span>` : ""}</a>
+        <div class="nea-body"><small>${esc(c.organizador?.nombre || "Organización verificada")}</small><h3><a href="${url}">${esc(c.titulo)}</a></h3><p>${esc(c.descripcion || "Colecta registrada en Hedera.")}</p>${fuente}
           <div class="nea-progreso"><header><b>${pesos(c.recaudado)}</b><span>de ${pesos(c.meta)}</span></header><div class="nea-pista"><span data-pct="${pct.toFixed(1)}"></span></div></div>
           <div class="nea-botones"><a class="nea-accion secundaria" href="${url}#libro">En qué se gastó ↗</a><a class="nea-accion" href="${url}#donar">Doná ↗</a></div></div></article>`;
     }).join("") : '<p class="nea-vacio">No hay colectas aprobadas con ese filtro.</p>';
@@ -97,7 +92,7 @@
       const [icono, fondo] = ICONOS[p.categoria] || ICONOS.Otra;
       const crear = `/crear.html?${new URLSearchParams({ titulo: p.titulo, desc: p.descripcion, meta: p.montoEstimado })}`;
       return `<article class="nea-card propuesta fx-card reveal">
-        <div class="nea-visual" style="--fondo:${fondo}"><span class="nea-chip pend">${p.ejemplo ? "EJEMPLO · SIN AVAL" : "SIN AVAL"}</span>${icono ? `<span class="nea-icono" aria-hidden="true">${icono}</span>` : ""}</div>
+        <div class="nea-visual" style="--fondo:${fondo}"><span class="nea-chip pend">SIN AVAL</span>${icono ? `<span class="nea-icono" aria-hidden="true">${icono}</span>` : ""}</div>
         <div class="nea-body"><small>${esc(p.categoria.toUpperCase())} · ${esc(p.provincia.toUpperCase())}${p.secuencia ? ` · PROPUESTA #${esc(p.secuencia)}` : ""}</small><h3>${esc(p.titulo)}</h3><p>${esc(p.descripcion)}</p>
           <div class="propuesta-estado"><span>Monto estimado</span><b>${pesos(p.montoEstimado)}</b><em>Esperando el aval de una ONG</em></div>
           <div class="nea-botones"><a class="nea-accion" href="${crear}">Soy ONG: avalar y crear ↗</a></div></div></article>`;
@@ -140,7 +135,7 @@
 
   function cargarPropuestas() {
     fetch("/api/propuestas").then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => {
-      propuestas = [...(d.propuestas || []), ...EJEMPLOS];
+      propuestas = d.propuestas || [];
       pintarPropuestas();
     }).catch(() => {});
   }
@@ -149,7 +144,7 @@
   cargarPropuestas();
   fetch("/api/colectas")
     .then((r) => (r.ok ? r.json() : Promise.reject()))
-    .then((lista) => Promise.all(lista.slice(-8).reverse().map((c) =>
+    .then((lista) => Promise.all(lista.slice(0, 8).map((c) =>
       fetch(`/api/colectas/${encodeURIComponent(c.campaignId)}`).then((r) => r.json()).then((d) => ({
         ...c, descripcion: d.colecta?.descripcion, organizador: d.colecta?.organizador,
         recaudado: d.totales?.recaudado || 0, donaciones: (d.donaciones || []).length,

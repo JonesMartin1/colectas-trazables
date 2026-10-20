@@ -9,6 +9,7 @@ import { json, error, leerCuerpo, esperarEnMirror } from "./_comun.js";
 export const PROVINCIAS = ["Corrientes", "Chaco", "Misiones", "Formosa"];
 export const CATEGORIAS = ["Inundaciones", "Incendios", "Agua", "Salud", "Alimentación", "Educación", "Otra"];
 const ROTO = /�/; // texto que no llegó en UTF-8
+const OCULTAS = new Set([3, 4]); // pruebas sin contenido (#3 "CASA EN ESQUINA", #4 "Baloes"): siguen en el topic, pero no se listan
 const limpio = (s, max) => String(s || "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, max);
 
 export default async function handler(req, res) {
@@ -17,7 +18,7 @@ export default async function handler(req, res) {
     if (!topicId) return error(res, 503, "El registro de propuestas no está configurado.");
     if (req.method === "GET") {
       const lista = (await leerEventos(topicId))
-        .filter((e) => e.evento.type === "PROPOSAL" && !ROTO.test(JSON.stringify(e.evento))) // se ignoran los de codificación rota
+        .filter((e) => e.evento.type === "PROPOSAL" && !ROTO.test(JSON.stringify(e.evento)) && !OCULTAS.has(e.secuencia)) // se ignoran los de codificación rota y las pruebas
         .map((e) => ({ ...e.evento, secuencia: e.secuencia, fecha: e.fecha, hashscan: e.hashscan }))
         .reverse();
       return json(res, 200, { topicId, hashscan: `https://hashscan.io/testnet/topic/${topicId}`, propuestas: lista });
