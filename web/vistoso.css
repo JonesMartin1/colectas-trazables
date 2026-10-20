@@ -464,3 +464,8 @@ body[data-page="hedera"]{background:var(--f-0f1412);color:var(--t-e6eee2)}
 .archivo-oculto{position:absolute!important;width:1px!important;height:1px!important;opacity:0;overflow:hidden;pointer-events:none}
 .boton-archivo{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;margin:4px 0;padding:10px 16px;border-radius:10px;border:1.5px dashed var(--acento-borde,#18B5A6);background:transparent;color:var(--acento-txt,#0b7f74);font:700 14px var(--display,inherit);cursor:pointer;transition:background .2s}
 .boton-archivo:hover,.boton-archivo:focus-visible{background:color-mix(in srgb,var(--acento-borde,#18B5A6) 12%,transparent)}
+
+/* topología: lo que todavía no existe (la rampa de pesos a USDC) va con trazo largo y apagado */
+#topologia .flujo.pendiente{stroke-dasharray:3 12;opacity:.55}
+#topologia .nodo.pendiente rect{stroke-dasharray:7 6}
+.topo-nota{margin-top:10px;font-size:12px;opacity:.75}
