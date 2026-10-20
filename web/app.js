@@ -84,39 +84,39 @@ function renderMovements(container, movements, kind) {
       row.append(link);
     }
     container.append(row);
+    // la factura la verifica la página: baja el PDF publicado, calcula su huella y la compara con la registrada
     if (kind === "expense" && movement.invoiceHash && /^[a-f0-9]{64}$/i.test(movement.invoiceHash)) {
-      const checker = document.createElement("label");
-      checker.className = "invoice-check";
-      checker.textContent = "Verificá la factura: ";
-      const file = document.createElement("input");
-      file.type = "file";
-      file.accept = "application/pdf,.pdf";
-      const result = document.createElement("span");
-      result.className = "invoice-result";
-      file.addEventListener("change", async () => {
-        if (!file.files[0]) return;
-        const hash = await sha256File(file.files[0]);
-        result.textContent = hash.toLowerCase() === movement.invoiceHash.toLowerCase() ? "Coincide con el registro ✓" : "Esta factura no coincide";
-      });
-      checker.append(file, result);
-      // facturas de demostración: si el PDF está publicado, se puede bajar y probar la verificación
-      facturasDemo.then((m) => {
-        const pdf = m[movement.invoiceHash.toLowerCase()];
-        if (!pdf) return;
-        const bajar = document.createElement("a");
-        bajar.href = pdf;
-        bajar.download = "";
-        bajar.className = "invoice-demo";
-        bajar.textContent = "Descargar la factura (demo) ↓";
-        checker.before(bajar);
-      });
-      container.append(checker);
+      const caja = document.createElement("div");
+      caja.className = "factura-auto";
+      container.append(caja);
+      facturaVerificada(movement.invoiceHash).then((r) => pintarFactura(caja, r));
     }
   }
 }
 
-// índice hash → PDF de las facturas de demostración (web/ejemplo/facturas), para probar la verificación
+// Facturas publicadas (en la demo, web/ejemplo/facturas; índice hash → PDF). El donante no sube nada: la página
+// baja el PDF, calcula su SHA-256 y lo compara con la huella registrada en Hedera el día del gasto.
 const facturasDemo = fetch("/ejemplo/facturas/index.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+async function facturaVerificada(hash) {
+  const url = (await facturasDemo)[String(hash).toLowerCase()];
+  if (!url) return null;
+  try {
+    const r = await fetch(url);
+    return r.ok ? { url, ok: (await sha256File(await r.blob())) === String(hash).toLowerCase() } : null;
+  } catch { return null; }
+}
+function pintarFactura(caja, r) {
+  if (!r) return caja.remove(); // sin factura publicada no hay nada que mostrar
+  const ver = document.createElement("a");
+  ver.href = r.url;
+  ver.target = "_blank";
+  ver.rel = "noopener";
+  ver.textContent = "Ver factura ↗";
+  const estado = document.createElement("span");
+  estado.className = r.ok ? "factura-ok" : "factura-mal";
+  estado.textContent = r.ok ? "✓ Verificada: es idéntica a la registrada" : "✗ No coincide con la registrada";
+  caja.append(ver, estado);
+}
 
 async function sha256File(file) {
   const buffer = await file.arrayBuffer();

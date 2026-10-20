@@ -62,26 +62,6 @@
     }).observe(n, { childList: true, characterData: true, subtree: true });
   });
 
-  // verificadores de factura y de foto: el selector de archivo del navegador sale en inglés ("Choose File") y sin
-  // estilo. Se oculta (sigue siendo accesible con teclado) y en su lugar va un botón propio dentro del mismo label.
-  function botonArchivo(inp) {
-    if (inp.dataset.boton) return;
-    const lab = inp.closest(".invoice-check");
-    if (!lab) return;
-    inp.dataset.boton = "1";
-    [...lab.childNodes].filter((n) => n.nodeType === 3 && n.textContent.trim()).forEach((n) => n.remove());
-    const boton = document.createElement("span");
-    boton.className = "boton-archivo";
-    boton.setAttribute("aria-hidden", "true");
-    boton.textContent = (inp.accept || "").startsWith("image") ? "Subí la foto para comprobarla ↑" : "Subí la factura para verificarla ↑";
-    inp.setAttribute("aria-label", boton.textContent);
-    inp.classList.add("archivo-oculto");
-    inp.after(boton);
-  }
-  const archivos = () => document.querySelectorAll(".invoice-check input[type=file]").forEach(botonArchivo);
-  new MutationObserver(archivos).observe(document.body, { childList: true, subtree: true });
-
   preparar();
-  archivos();
   document.addEventListener("fx:nuevo", preparar);
 })();

@@ -13,10 +13,6 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const hs = (u) => { try { const x = new URL(u); return x.hostname === "hashscan.io" ? x.href : null; } catch { return null; } };
   const hashCorto = (h) => (h ? `${h.slice(0, 10)}…${h.slice(-6)}` : "—");
-  async function sha256File(f) {
-    const d = await crypto.subtle.digest("SHA-256", await f.arrayBuffer());
-    return [...new Uint8Array(d)].map((b) => b.toString(16).padStart(2, "0")).join("");
-  }
   const TIPOS = {
     donacion: { nombre: "Donación", clase: "t-don", signo: 1 },
     gasto: { nombre: "Gasto", clase: "t-gas", signo: -1 },
@@ -57,17 +53,6 @@
     if (location.hash === "#libro") sec.scrollIntoView({ behavior: "smooth" }); // llegó desde "Ver trazabilidad"
   }).catch(() => { sec.querySelector("#libro-filas").innerHTML = '<p class="chart-vacio">No se pudo leer el libro.</p>'; });
 
-  function verificador(hash, acepta) {
-    const lab = document.createElement("label");
-    lab.className = "invoice-check";
-    lab.textContent = acepta.startsWith("image") ? "Comprobá la foto: " : "Verificá la factura: ";
-    const inp = document.createElement("input"); inp.type = "file"; inp.accept = acepta;
-    const res = document.createElement("span"); res.className = "invoice-result";
-    inp.addEventListener("change", async () => { if (inp.files[0]) res.textContent = (await sha256File(inp.files[0])) === hash ? "Coincide con el registro ✓" : "No coincide ✗"; });
-    lab.append(inp, res);
-    return lab;
-  }
-
   function ultimos() {
     const caja = sec.querySelector("#ultimos-gastos");
     const gastos = movs.filter((m) => m.tipo === "gasto").slice(-3).reverse();
@@ -81,12 +66,12 @@
         <strong>${esc(pesos(g.monto))}</strong>${g.que ? `<p class="gasto-que">${esc(g.que)}</p>` : ""}
         <dl><dt>Proveedor${g.proveedor ? "" : " (CUIT)"}</dt><dd>${g.proveedor ? `${esc(g.proveedor)}<br>CUIT ` : ""}${esc(g.proveedorCuit || "—")}</dd><dt>CAE de la factura</dt><dd>${esc(g.cae || "—")}</dd><dt>Huella del PDF</dt><dd title="${esc(g.invoiceHash)}">${esc(hashCorto(g.invoiceHash))}</dd></dl>
         ${link ? `<a class="sello-hedera" href="${link}" target="_blank" rel="noopener noreferrer">✓ Ver en HashScan ↗</a>` : ""}`;
-      if (/^[a-f0-9]{64}$/.test(g.invoiceHash || "")) c.append(verificador(g.invoiceHash, "application/pdf,.pdf"));
-      // factura de demostración publicada (web/ejemplo/facturas): se puede bajar y probar el verificador
-      (typeof facturasDemo !== "undefined" ? facturasDemo : Promise.resolve({})).then((m) => {
-        const pdf = m[String(g.invoiceHash || "").toLowerCase()];
-        if (pdf) c.querySelector("dl").insertAdjacentHTML("afterend", `<a class="invoice-demo" href="${esc(pdf)}" download>Descargar la factura (demo) ↓</a>`);
-      });
+      if (/^[a-f0-9]{64}$/.test(g.invoiceHash || "") && typeof facturaVerificada === "function") {
+        const fac = document.createElement("div");
+        fac.className = "factura-auto";
+        c.querySelector("dl").after(fac);
+        facturaVerificada(g.invoiceHash).then((r) => pintarFactura(fac, r));
+      }
       caja.append(c);
     }
   }
@@ -140,8 +125,12 @@
           ${m.hash ? `<dt>${m.tipo === "gasto" ? "Huella SHA-256 de la factura" : m.tipo === "entrega" ? "Huella SHA-256 de la foto" : "Huella del comprobante"}</dt><dd class="mono">${esc(m.hash)}</dd>` : ""}
           ${m.tipo === "gasto" ? `<dt>CAE (verificable en ARCA)</dt><dd class="mono">${esc(m.cae)}</dd>` : ""}
           <dt>Fecha de consenso</dt><dd>${esc(fecha(m.fecha))}</dd></dl></div>`;
-      if (m.tipo === "gasto" && /^[a-f0-9]{64}$/.test(m.hash || "")) fila.querySelector(".libro-detalle").append(verificador(m.hash, "application/pdf,.pdf"));
-      if (m.tipo === "entrega" && /^[a-f0-9]{64}$/.test(m.hash || "")) fila.querySelector(".libro-detalle").append(verificador(m.hash, "image/*"));
+      if (m.tipo === "gasto" && /^[a-f0-9]{64}$/.test(m.hash || "") && typeof facturaVerificada === "function") {
+        const fac = document.createElement("div");
+        fac.className = "factura-auto";
+        fila.querySelector(".libro-detalle").append(fac);
+        facturaVerificada(m.hash).then((r) => pintarFactura(fac, r));
+      }
       filas.append(fila);
     }
   }

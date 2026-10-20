@@ -83,18 +83,6 @@
         const u = safe(e.hashscan);
         if (u) { const a = el("a", "Ver registro ↗"); a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; row.append(a); }
         list.append(row);
-        // comprobar la foto: quien tenga la foto puede ver que es la misma que se registró
-        if (/^[a-f0-9]{64}$/.test(e.fotoHash || "")) {
-          const chk = el("label", "Comprobá la foto: ", "invoice-check");
-          const inp = el("input"); inp.type = "file"; inp.accept = "image/*";
-          const res = el("span", null, "invoice-result");
-          inp.addEventListener("change", async () => {
-            if (!inp.files[0]) return;
-            res.textContent = (await sha256File(inp.files[0])) === e.fotoHash ? "Coincide con el registro ✓" : "Esta foto no coincide";
-          });
-          chk.append(inp, res);
-          list.append(chk);
-        }
       }
     }).catch(() => { head.querySelector("small").textContent = "SIN DATOS"; });
   }

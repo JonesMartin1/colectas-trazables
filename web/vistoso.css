@@ -478,10 +478,9 @@ body[data-page="hedera"]{background:var(--f-0f1412);color:var(--t-e6eee2)}
 .invoice-demo{display:inline-block;margin:6px 0 8px;font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .activity-panel .invoice-demo{margin:0 23px 6px}
 
-/* verificador de factura o foto: botón propio en vez del "Choose File" del navegador */
-.invoice-check{position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:10px}
-.invoice-check .archivo-oculto{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;pointer-events:none}
-.boton-archivo{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:999px;border:1.5px dashed var(--acento-borde,#18B5A6);color:var(--acento-txt,#0b7f74);font:700 12.5px var(--display,inherit);cursor:pointer;transition:background .2s,border-style .2s}
-.boton-archivo:hover,.invoice-check .archivo-oculto:focus-visible+.boton-archivo{border-style:solid;background:var(--f-e8ede2,#e8f3f1)}
-.invoice-check .archivo-oculto:focus-visible+.boton-archivo{outline:2px solid var(--acento-borde,#18B5A6);outline-offset:2px}
-.invoice-result{font-weight:800;font-size:12.5px}
+/* factura publicada y verificada por la página (sin subir nada) */
+.factura-auto{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;margin:8px 0 10px;font-size:13px}
+.activity-panel .factura-auto{margin:0 23px 14px}
+.factura-auto a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.factura-ok{font-weight:800;color:var(--acento-txt,#0b7f74)}
+.factura-mal{font-weight:800;color:#b42318}
