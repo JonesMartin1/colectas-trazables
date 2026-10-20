@@ -134,3 +134,22 @@ html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after
 .nea-card.aprobada{cursor:pointer}
 .nea-card.aprobada h3 a::after{content:"";position:absolute;inset:0;z-index:1}
 .nea-card.aprobada .nea-fuente,.nea-card.aprobada .nea-botones{position:relative;z-index:2}
+
+/* ---------- fondos de naturaleza del NEA en la portada (pedido de Nicolás, 20/10) ---------- */
+/* Cada sección lleva una foto propia con un velo del color de fondo del tema encima, así el texto se lee igual en los
+   dos temas. Fotos de Wikimedia Commons ya acreditadas en terminos.html. */
+body[data-page="home"] .hero{background:
+  linear-gradient(90deg,color-mix(in srgb,var(--cream) 94%,transparent) 0%,color-mix(in srgb,var(--cream) 86%,transparent) 48%,color-mix(in srgb,var(--cream) 62%,transparent) 100%),
+  url(/img/esteros.jpg) center 55%/cover}
+body[data-page="home"] .nea-section{background:
+  linear-gradient(180deg,color-mix(in srgb,var(--f-171d1b) 82%,transparent),color-mix(in srgb,var(--f-171d1b) 93%,transparent) 55%),
+  url(/img/cataratas.jpg) center 30%/cover}
+/* "Cómo funciona" tiene el ancho del contenido: la foto se estira a todo el ancho por detrás */
+html{overflow-x:clip}
+body[data-page="home"] #como-funciona{position:relative;isolation:isolate}
+body[data-page="home"] #como-funciona::before{content:"";position:absolute;inset:0 calc(50% - 50vw);z-index:-1;background:
+  linear-gradient(180deg,color-mix(in srgb,var(--cream) 90%,transparent),color-mix(in srgb,var(--cream) 80%,transparent)),
+  url(/img/garganta.jpg) center 40%/cover}
+body[data-page="home"] .site-footer{background:
+  linear-gradient(180deg,color-mix(in srgb,var(--f-171d1b) 92%,transparent),color-mix(in srgb,var(--f-171d1b) 78%,transparent)),
+  url(/img/rio-aereo.jpg) center 70%/cover}

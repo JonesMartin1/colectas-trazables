@@ -1,14 +1,13 @@
-// Efectos de toda la web: aparición al hacer scroll, hover con inclinación,
+// Efectos de toda la web: aparición al hacer scroll (al pasar el mouse las cards solo crecen, con CSS),
 // destellos en los héroes y números que cuentan. Si el usuario pidió menos movimiento, solo marca las cards.
 (function () {
   const quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
   document.documentElement.classList.add("js-fx");
 
   const CARDS = ".stat-card,.activity-panel,.action-panel,.campaign-card,.chart-card,.nea-card,.raised-panel,.goal-bar,.step-card,.object-shell";
-  const INCLINAN = ".campaign-card,.nea-card,.chart-card,.stat-card,.step-card,.object-shell";
 
   const io = "IntersectionObserver" in window && !quieto
-    ? new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: "0px 0px -40px 0px" })
+    ? new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { const n = e.target; n.classList.add("visible"); io.unobserve(n); setTimeout(() => (n.style.transitionDelay = ""), 1000); } }), { threshold: 0.12, rootMargin: "0px 0px -40px 0px" })
     : null;
 
   function preparar() {
@@ -18,22 +17,6 @@
       if (!n.dataset.fx) { n.dataset.fx = "1"; n.style.transitionDelay = `${(i % 4) * 80}ms`; io.observe(n); }
     });
   }
-
-  // inclinación 3D (la mancha de color que seguía al mouse se sacó)
-  document.addEventListener("pointermove", (e) => {
-    const c = e.target.closest?.(".fx-card");
-    if (!c) return;
-    const r = c.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-    if (!quieto && c.matches(INCLINAN)) {
-      c.style.setProperty("--rx", `${(0.5 - py) * 8}deg`);
-      c.style.setProperty("--ry", `${(px - 0.5) * 10}deg`);
-    }
-  });
-  document.addEventListener("pointerout", (e) => {
-    const c = e.target.closest?.(".fx-card");
-    if (c && !c.contains(e.relatedTarget)) { c.style.removeProperty("--rx"); c.style.removeProperty("--ry"); }
-  });
 
   // (los destellos de los héroes se sacaron: el jurado pidió menos efecto tecnológico y más foco en lo humano)
 
