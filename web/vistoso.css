@@ -489,3 +489,11 @@ body[data-page="hedera"]{background:var(--f-0f1412);color:var(--t-e6eee2)}
 .salida-destino.alerta{color:#b42318;font-weight:700}
 .salida a{font-size:12px;font-weight:700;text-decoration:underline;white-space:nowrap}
 @media(max-width:700px){.salidas-numeros{grid-template-columns:1fr}.salida{align-items:flex-start;flex-direction:column}}
+/* topología reordenada (20/10): etiquetas de las flechas, tramo en pesos fuera de la red y franja de Hedera */
+#topologia .flujo.pesos{stroke:#9aa5a0;animation:none}
+#topologia .etiqueta{font:700 10px var(--body,inherit);text-anchor:middle;fill:var(--t-8fa091,#6f8070)}
+#topologia .etiqueta.ok{fill:var(--acento-txt,#0b7f74)}
+#topologia .banda-hedera{fill:none;stroke:var(--acento-borde,#18B5A6);stroke-width:1.5;stroke-dasharray:4 5}
+#topologia .banda-titulo{font:700 10px var(--mono,monospace);letter-spacing:1.5px;fill:var(--acento-txt,#0b7f74)}
+#topologia .nodo.tec text{font-size:12px}
+#topologia .nodo.tec text.sub{font-size:10px}
