@@ -92,8 +92,15 @@
         halo.style.setProperty("--hero-foto", `url(${c.foto})`);
         if (c.lugar) halo.style.setProperty("--hero-lugar", JSON.stringify(String(c.lugar)));
       }
-      const pie = card.querySelector(".object-bottom");
-      if (pie) { pie.style.cursor = "pointer"; pie.onclick = () => (location.href = `/colecta.html?id=${encodeURIComponent(c.campaignId)}`); }
+      // toda la colecta principal (tarjeta y foto) lleva a su página, con el mouse o con el teclado
+      const bloque = card.closest(".hero-object") || card;
+      const ir = () => (location.href = `/colecta.html?id=${encodeURIComponent(c.campaignId)}`);
+      bloque.style.cursor = "pointer";
+      bloque.setAttribute("role", "link");
+      bloque.tabIndex = 0;
+      bloque.setAttribute("aria-label", `Ver la colecta: ${c.titulo}`);
+      bloque.onclick = ir;
+      bloque.onkeydown = (ev) => { if (ev.key === "Enter") ir(); };
     });
   }
 
