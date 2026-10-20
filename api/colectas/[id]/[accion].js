@@ -7,9 +7,10 @@ import entregas from "../../_colecta/entregas.js";
 import verificar from "../../_colecta/verificar.js";
 import mercadopago from "../../_colecta/mercadopago.js";
 import conversiones from "../../_colecta/conversiones.js";
+import organizador from "../../_colecta/organizador.js";
 import { error } from "../../_comun.js";
 
-const ACCIONES = { donaciones, gastos, entregas, verificar, mercadopago, conversiones };
+const ACCIONES = { donaciones, gastos, entregas, verificar, mercadopago, conversiones, organizador };
 
 export default async function handler(req, res) {
   const accion = ACCIONES[req.query.accion];

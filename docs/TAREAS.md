@@ -60,6 +60,7 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 | `GET /api/colectas/:id` | — | `{ colecta, donaciones[], gastos[], totales: { recaudado, gastado, saldo } }` |
 | `POST /api/demo/donar` | `{ campaignId, monto }` | `{ txId, hashscan, usdc }` (solo demo: la billetera de prueba paga, no registra) |
 | `POST /api/colectas/:id/donaciones` | `{ txId }` | `{ hashscan, comprobante }` (`400` si la transferencia no se verifica, `409` si ya está) |
+| `POST /api/colectas/:id/organizador` | `{ clave }` | `{ ok: true, titulo }` si es la clave de organizador (`401` si no). No registra nada: es la puerta de `gasto.html` y `entrega.html` |
 | `POST /api/colectas/:id/gastos` | `{ monto, proveedorCuit, cae, invoiceHash, clave, detalle?, proveedor? }` | `{ secuencia, hashscan }` (`401` sin la clave del organizador) |
 | `GET /api/colectas/:id/verificar?comprobante=...` | — | `{ encontrada, secuencia, hashscan }` |
 | `POST /api/colectas/:id/entregas` | `{ item, cantidad, lugar, foto, fotoHash, clave }` | `{ secuencia, hashscan }` (`401` sin la clave del organizador) |

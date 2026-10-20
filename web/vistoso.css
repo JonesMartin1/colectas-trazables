@@ -467,9 +467,12 @@ body[data-page="hedera"]{background:var(--f-0f1412);color:var(--t-e6eee2)}
 
 /* Donar simple (devolución del jurado): pie para organizadores, link de la franja y botón fijo de donar en el celular */
 .por-que-grid a{color:var(--glow);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
-.organizador-pie{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;padding:26px 0 40px;border-top:1px solid #dfe5da;font-size:14px;color:#6f8070}
-.organizador-pie span{font-weight:700;color:#3e4b41}
-.organizador-pie a{text-decoration:underline;text-underline-offset:3px;color:#243429}
+.organizador-pie{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px;padding:28px 0 44px;border-top:1px solid color-mix(in srgb,currentColor 18%,transparent);font-size:14px;color:inherit}
+.organizador-pie span{font-weight:700;margin-right:6px}
+/* con los colores del tema, así se leen en modo soleado y nocturno */
+.organizador-pie a{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--acento-borde,#18B5A6);color:var(--acento-txt,#0b7f74);font-weight:700;text-decoration:none;transition:background .2s}
+.organizador-pie a:hover{background:color-mix(in srgb,var(--acento-borde,#18B5A6) 14%,transparent)}
+.puerta-organizador{margin-bottom:24px}
 .donar-fijo{display:none}
 
 /* gastos con detalle (qué se compró) y factura de demostración descargable */
@@ -484,3 +487,7 @@ body[data-page="hedera"]{background:var(--f-0f1412);color:var(--t-e6eee2)}
 .factura-auto a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .factura-ok{font-weight:800;color:var(--acento-txt,#0b7f74)}
 .factura-mal{font-weight:800;color:#b42318}
+/* elegir archivo (solo en los formularios del organizador): botón propio en vez del "Choose File" del navegador */
+.archivo-oculto{position:absolute!important;width:1px!important;height:1px!important;opacity:0;overflow:hidden;pointer-events:none}
+.boton-archivo{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;margin:4px 0;padding:10px 16px;border-radius:10px;border:1.5px dashed var(--acento-borde,#18B5A6);background:transparent;color:var(--acento-txt,#0b7f74);font:700 14px var(--display,inherit);cursor:pointer;transition:background .2s}
+.boton-archivo:hover,.boton-archivo:focus-visible{background:color-mix(in srgb,var(--acento-borde,#18B5A6) 12%,transparent)}
