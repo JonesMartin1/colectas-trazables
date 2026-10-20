@@ -58,7 +58,14 @@ function renderMovements(container, movements, kind) {
     amount.textContent = money(movement.monto);
     const when = document.createElement("small");
     when.textContent = `#${movement.secuencia ?? "—"} · ${date(movement.fecha)}`;
-    details.append(amount, when);
+    // gasto: qué se compró y a quién, si el organizador lo cargó (es público: nunca datos de personas)
+    const what = kind === "expense" ? [movement.detalle, movement.proveedor].filter(Boolean).join(" · ") : "";
+    if (what) {
+      const detail = document.createElement("small");
+      detail.className = "movement-detail";
+      detail.textContent = what;
+      details.append(amount, detail, when);
+    } else details.append(amount, when);
     // donación cuya transferencia la API comprobó en el Mirror Node antes de registrarla
     if (kind === "donation" && movement.verificada) {
       const badge = document.createElement("small");
@@ -92,10 +99,24 @@ function renderMovements(container, movements, kind) {
         result.textContent = hash.toLowerCase() === movement.invoiceHash.toLowerCase() ? "Coincide con el registro ✓" : "Esta factura no coincide";
       });
       checker.append(file, result);
+      // facturas de demostración: si el PDF está publicado, se puede bajar y probar la verificación
+      facturasDemo.then((m) => {
+        const pdf = m[movement.invoiceHash.toLowerCase()];
+        if (!pdf) return;
+        const bajar = document.createElement("a");
+        bajar.href = pdf;
+        bajar.download = "";
+        bajar.className = "invoice-demo";
+        bajar.textContent = "Descargar la factura (demo) ↓";
+        checker.before(bajar);
+      });
       container.append(checker);
     }
   }
 }
+
+// índice hash → PDF de las facturas de demostración (web/ejemplo/facturas), para probar la verificación
+const facturasDemo = fetch("/ejemplo/facturas/index.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
 
 async function sha256File(file) {
   const buffer = await file.arrayBuffer();
@@ -272,7 +293,7 @@ function setupExpense() {
     setBusy(button, true, "Calculando y publicando...");
     try {
       const invoiceHash = await sha256File(file);
-      const payload = { monto: Number(fields.get("monto")), proveedorCuit: String(fields.get("proveedorCuit")).trim(), cae: String(fields.get("cae")).trim(), invoiceHash, clave: String(fields.get("clave")).trim() };
+      const payload = { monto: Number(fields.get("monto")), proveedorCuit: String(fields.get("proveedorCuit")).trim(), cae: String(fields.get("cae")).trim(), invoiceHash, clave: String(fields.get("clave")).trim(), detalle: String(fields.get("detalle") || "").trim(), proveedor: String(fields.get("proveedor") || "").trim() };
       const result = await requestJSON(`/api/colectas/${encodeURIComponent(campaignId)}/gastos`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       feedback(status, `Gasto publicado en el registro #${result.secuencia}. Volviendo a la colecta... `, "success");
       setTimeout(() => { location.href = url; }, 1700);

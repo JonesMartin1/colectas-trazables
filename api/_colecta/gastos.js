@@ -1,4 +1,5 @@
-// POST /api/colectas/:id/gastos { monto, proveedorCuit, cae, invoiceHash, clave } → evento EXPENSE.
+// POST /api/colectas/:id/gastos { monto, proveedorCuit, cae, invoiceHash, clave, detalle?, proveedor? } → evento EXPENSE.
+// detalle (qué se compró) y proveedor (razón social) son opcionales y públicos: nunca datos de personas.
 // Solo el organizador: la clave que recibió al crear la colecta tiene que coincidir con el orgKeyHash del registro.
 // El PDF nunca llega acá: el navegador calcula su SHA-256 y manda solo el hash.
 import { publicarEvento } from "../../hedera/colectas.js";
@@ -20,6 +21,8 @@ export default async function handler(req, res) {
     if (cuit.length !== 11) return error(res, 400, "El CUIT tiene que tener 11 dígitos.");
     if (cae.length !== 14) return error(res, 400, "El CAE tiene que tener 14 dígitos.");
     if (!/^[a-f0-9]{64}$/.test(invoiceHash)) return error(res, 400, "Falta el hash SHA-256 de la factura.");
+    const corto = (v, max) => String(v || "").replace(/\s+/g, " ").trim().slice(0, max);
+    const detalle = corto(b.detalle, 90), proveedor = corto(b.proveedor, 60);
     const evento = {
       type: "EXPENSE",
       campaignId: colecta.campaignId,
@@ -28,6 +31,8 @@ export default async function handler(req, res) {
       supplierCuit: `${cuit.slice(0, 2)}-${cuit.slice(2, 10)}-${cuit.slice(10)}`,
       cae,
       invoiceHash,
+      ...(detalle && { detail: detalle }),
+      ...(proveedor && { supplierName: proveedor }),
       timestamp: new Date().toISOString(),
     };
     const reg = await publicarEvento(colecta.topicId, evento);

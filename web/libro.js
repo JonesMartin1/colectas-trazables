@@ -43,7 +43,7 @@
   datos.then((d) => {
     movs = [
       ...(d.donaciones || []).map((x) => ({ tipo: "donacion", ...x, detalle: `${x.metodo === "mercadopago" ? "Mercado Pago" : x.metodo === "usdc" ? "Dólares digitales" : x.metodo || "Donación"}${x.verificada ? " · pago verificado" : ""}`, hash: x.externalRefHash })),
-      ...(d.gastos || []).map((x) => ({ tipo: "gasto", ...x, detalle: `Proveedor CUIT ${x.proveedorCuit || "—"} · CAE ${x.cae || "—"}`, hash: x.invoiceHash })),
+      ...(d.gastos || []).map((x) => ({ tipo: "gasto", ...x, que: x.detalle, detalle: x.detalle ? `${x.detalle} · ${x.proveedor || `CUIT ${x.proveedorCuit}`}` : `Proveedor CUIT ${x.proveedorCuit || "—"} · CAE ${x.cae || "—"}`, hash: x.invoiceHash })),
       ...(d.entregas || []).map((x) => ({ tipo: "entrega", ...x, monto: 0, detalle: `${x.cantidad} × ${x.item} · ${x.lugar}`, hash: x.fotoHash })),
       ...(d.conversiones || []).map((x) => ({ tipo: "conversion", ...x, monto: x.ars, detalle: `${x.usdc} dólares digitales a $${x.tipoDeCambio} por dólar` })),
     ].sort((a, b) => (a.secuencia ?? 0) - (b.secuencia ?? 0) || new Date(a.fecha) - new Date(b.fecha));
@@ -78,10 +78,15 @@
       c.className = "gasto-card fx-card reveal";
       const link = hs(g.hashscan);
       c.innerHTML = `<header><span class="t-chip t-gas">GASTO #${esc(g.secuencia)}</span><small>${esc(fecha(g.fecha))}</small></header>
-        <strong>${esc(pesos(g.monto))}</strong>
-        <dl><dt>Proveedor (CUIT)</dt><dd>${esc(g.proveedorCuit || "—")}</dd><dt>CAE de la factura</dt><dd>${esc(g.cae || "—")}</dd><dt>Huella del PDF</dt><dd title="${esc(g.invoiceHash)}">${esc(hashCorto(g.invoiceHash))}</dd></dl>
+        <strong>${esc(pesos(g.monto))}</strong>${g.que ? `<p class="gasto-que">${esc(g.que)}</p>` : ""}
+        <dl><dt>Proveedor${g.proveedor ? "" : " (CUIT)"}</dt><dd>${g.proveedor ? `${esc(g.proveedor)}<br>CUIT ` : ""}${esc(g.proveedorCuit || "—")}</dd><dt>CAE de la factura</dt><dd>${esc(g.cae || "—")}</dd><dt>Huella del PDF</dt><dd title="${esc(g.invoiceHash)}">${esc(hashCorto(g.invoiceHash))}</dd></dl>
         ${link ? `<a class="sello-hedera" href="${link}" target="_blank" rel="noopener noreferrer">✓ Ver en HashScan ↗</a>` : ""}`;
       if (/^[a-f0-9]{64}$/.test(g.invoiceHash || "")) c.append(verificador(g.invoiceHash, "application/pdf,.pdf"));
+      // factura de demostración publicada (web/ejemplo/facturas): se puede bajar y probar el verificador
+      (typeof facturasDemo !== "undefined" ? facturasDemo : Promise.resolve({})).then((m) => {
+        const pdf = m[String(g.invoiceHash || "").toLowerCase()];
+        if (pdf) c.querySelector("dl").insertAdjacentHTML("afterend", `<a class="invoice-demo" href="${esc(pdf)}" download>Descargar la factura (demo) ↓</a>`);
+      });
       caja.append(c);
     }
   }

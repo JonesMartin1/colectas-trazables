@@ -31,3 +31,6 @@ exports/
 
 # claves de prueba del fideicomiso
 contratos/.claves.json
+
+# claves de organizador de las colectas de la portada (scripts/sembrar-colectas-completas.js)
+hedera/.casos-reales.json

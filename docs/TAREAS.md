@@ -60,7 +60,7 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 | `GET /api/colectas/:id` | — | `{ colecta, donaciones[], gastos[], totales: { recaudado, gastado, saldo } }` |
 | `POST /api/demo/donar` | `{ campaignId, monto }` | `{ txId, hashscan, usdc }` (solo demo: la billetera de prueba paga, no registra) |
 | `POST /api/colectas/:id/donaciones` | `{ txId }` | `{ hashscan, comprobante }` (`400` si la transferencia no se verifica, `409` si ya está) |
-| `POST /api/colectas/:id/gastos` | `{ monto, proveedorCuit, cae, invoiceHash, clave }` | `{ secuencia, hashscan }` (`401` sin la clave del organizador) |
+| `POST /api/colectas/:id/gastos` | `{ monto, proveedorCuit, cae, invoiceHash, clave, detalle?, proveedor? }` | `{ secuencia, hashscan }` (`401` sin la clave del organizador) |
 | `GET /api/colectas/:id/verificar?comprobante=...` | — | `{ encontrada, secuencia, hashscan }` |
 | `POST /api/colectas/:id/entregas` | `{ item, cantidad, lugar, foto, fotoHash, clave }` | `{ secuencia, hashscan }` (`401` sin la clave del organizador) |
 | `POST /api/colectas/:id/mercadopago` | `{ monto }` | `{ url, urlPrueba }` (link de Checkout Pro; no registra nada) |
@@ -70,7 +70,7 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 | `POST /api/colectas/:id/conversiones` | `{ txId, ars, clave }` | `{ secuencia, hashscan, usdc, tipoDeCambio }`. Solo el organizador. La organización compró USDC en un PSAV; la transferencia se verifica en el Mirror Node (sin exigir memo) y se publica `CONVERSION` con pesos, USDC y tipo de cambio. `GET /api/colectas/:id` suma `conversiones[]`. |
 
 **Detalles:**
-- **Donaciones y gastos:** cada elemento trae `{ secuencia, fecha, monto, hashscan }`. Los gastos, además, `proveedorCuit` y `cae`.
+- **Donaciones y gastos:** cada elemento trae `{ secuencia, fecha, monto, hashscan }`. Los gastos, además, `proveedorCuit` y `cae`, y si se cargaron, `detalle` (qué se compró, hasta 90 caracteres) y `proveedor` (razón social, hasta 60). Son públicos: nunca datos de personas.
 - **Comprobante del donante:** `comprobante = <referencia del pago>.<sal al azar>`. En el topic se publica solo `externalRefHash = sha256(comprobante)`. Para verificar, se recalcula el hash y se busca en los eventos.
 - **Guardado: no usamos base de datos propia.** Los hechos se registran en HCS (que no es una base de datos: es un registro de auditoría con orden y fecha de consenso) y se consultan desde el Mirror Node.
   - Las colectas están en el topic de registro: `listarColectas()`.
