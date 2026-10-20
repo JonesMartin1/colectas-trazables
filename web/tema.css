@@ -12,11 +12,12 @@ html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after
 
 /* ---------- logo ---------- */
 .brand:not(.marca){visibility:hidden} /* el logo viejo de los HTML base no llega a verse: tema.js lo cambia al cargar */
-.marca{gap:10px;letter-spacing:0}
+/* al lado del logo solo el nombre; el lema va en una línea propia debajo de los dos */
+.marca{display:inline-grid;grid-template-columns:auto auto;align-items:center;gap:5px 10px;letter-spacing:0}
 .marca-svg{width:42px;height:42px;flex:none;overflow:visible}
 .marca-texto{display:flex;flex-direction:column;font:800 17px/.98 var(--display);letter-spacing:-.6px;color:var(--marca-texto)}
 .marca-texto b{font-weight:800}
-.marca-texto small{margin-top:4px;font:700 10px/1 var(--body);letter-spacing:0;color:var(--marca-lema)}
+.marca-lema{grid-column:1/-1;font:700 11px/1 var(--body);letter-spacing:0;color:var(--marca-lema);white-space:nowrap}
 .site-footer .marca-svg{width:48px;height:48px}
 
 /* ---------- interruptor soleado / nocturno ---------- */
@@ -58,7 +59,7 @@ html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after
 @media(max-width:700px){
   .marca-svg{width:36px;height:36px}
   .marca-texto{font-size:15px}
-  .site-header .marca-texto small{display:none}
+  .site-header .marca-lema{display:none}
   .site-header .marca{margin-right:auto;min-width:0}
   .tema-sol,.tema-luna{display:none}
   .tema-switch{padding:4px}
@@ -115,7 +116,6 @@ html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after
 .site-header .tema-switch{height:40px}
 @media(max-width:1240px){
   .site-header .solo-escritorio,.site-header .tema-sol,.site-header .tema-luna{display:none}
-  .site-header .marca-texto small{display:none}
 }
 
 /* ---------- colectas de la portada: grilla de 3 por fila en vez de carrusel, cards cortas ---------- */
