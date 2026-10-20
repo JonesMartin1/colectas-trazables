@@ -6,18 +6,17 @@
 :root{--petroleo:#0E3D3A;--turquesa:#18B5A6;--gris-claro:#F4F6F5;--gris-oscuro:#1F2937;
   --display:"Manrope",sans-serif;--body:"Manrope",sans-serif;
   --lime:#C8FF64;--glow:#C8FF64;
-  --acento-txt:#0b7f74;--acento-borde:#18B5A6;--marca-trazo:#0E3D3A;--marca-texto:#0E3D3A;--marca-lema:#0f9488}
-:root[data-tema="oscuro"]{--acento-txt:#C8FF64;--acento-borde:#C8FF64;--marca-trazo:#F4F6F5;--marca-texto:#F4F6F5;--marca-lema:#3fd6c7}
+  --acento-txt:#0b7f74;--acento-borde:#18B5A6;--marca-trazo:#0E3D3A;--marca-texto:#0E3D3A}
+:root[data-tema="oscuro"]{--acento-txt:#C8FF64;--acento-borde:#C8FF64;--marca-trazo:#F4F6F5;--marca-texto:#F4F6F5}
 html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after{transition:background-color .4s,color .4s,border-color .4s,box-shadow .4s!important}
 
 /* ---------- logo ---------- */
 .brand:not(.marca){visibility:hidden} /* el logo viejo de los HTML base no llega a verse: tema.js lo cambia al cargar */
-/* al lado del logo solo el nombre; el lema va en una línea propia debajo de los dos */
-.marca{display:inline-grid;grid-template-columns:auto auto;align-items:center;gap:5px 10px;letter-spacing:0}
+/* solo el icono y el nombre, pegados (sin lema) */
+.marca{display:inline-flex;align-items:center;gap:10px;letter-spacing:0;justify-self:start}
 .marca-svg{width:42px;height:42px;flex:none;overflow:visible}
 .marca-texto{display:flex;flex-direction:column;font:800 17px/.98 var(--display);letter-spacing:-.6px;color:var(--marca-texto)}
 .marca-texto b{font-weight:800}
-.marca-lema{grid-column:1/-1;font:700 11px/1 var(--body);letter-spacing:0;color:var(--marca-lema);white-space:nowrap}
 .site-footer .marca-svg{width:48px;height:48px}
 
 /* ---------- interruptor soleado / nocturno ---------- */
@@ -59,7 +58,6 @@ html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after
 @media(max-width:700px){
   .marca-svg{width:36px;height:36px}
   .marca-texto{font-size:15px}
-  .site-header .marca-lema{display:none}
   .site-header .marca{margin-right:auto;min-width:0}
   .tema-sol,.tema-luna{display:none}
   .tema-switch{padding:4px}

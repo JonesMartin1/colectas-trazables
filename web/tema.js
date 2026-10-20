@@ -22,7 +22,7 @@
     <path d="M42 39h37M60 39v48" fill="none" stroke="#18B5A6" stroke-width="15" stroke-linecap="round"/>
     <circle cx="38" cy="13" r="9.5" fill="var(--marca-trazo)"/><circle cx="88" cy="21" r="11" fill="#C8FF64"/>
     <circle cx="79" cy="39" r="9" fill="var(--marca-trazo)"/><circle cx="34" cy="76" r="10" fill="#C8FF64"/></svg>`;
-  const LOGO = `${MARCA}<span class="marca-texto"><b>Colectas</b><b>Trazables</b></span><span class="marca-lema">La solidaridad se ve.</span>`;
+  const LOGO = `${MARCA}<span class="marca-texto"><b>Colectas</b><b>Trazables</b></span>`;
 
   document.addEventListener("DOMContentLoaded", () => {
     if (!document.querySelector('link[rel="icon"]')) document.head.insertAdjacentHTML("beforeend", '<link rel="icon" href="/img/icono.svg" type="image/svg+xml">');
