@@ -9,13 +9,10 @@
 
 /* ---------- cards con hover llamativo ---------- */
 .fx-card{position:relative;isolation:isolate;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
-.fx-card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;opacity:0;transition:opacity .3s;
-  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),var(--f-d8f16a38),transparent 45%)}
 .fx-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;
   background:linear-gradient(115deg,transparent 35%,var(--f-ffffff70) 48%,transparent 60%);background-size:250% 100%;background-position:130% 0;transition:background-position .9s}
 .fx-card:hover{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-8px) scale(1.015);
   box-shadow:0 0 0 1px var(--s-d8f16a99),0 18px 40px var(--s-1d3a2a2e),0 0 36px var(--s-d8f16a55)}
-.fx-card:hover::before{opacity:1}
 .fx-card:hover::after{background-position:-30% 0}
 
 /* botones: barrido de luz */

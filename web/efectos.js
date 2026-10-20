@@ -1,4 +1,4 @@
-// Efectos de toda la web: aparición al hacer scroll, hover con inclinación y luz que sigue al mouse,
+// Efectos de toda la web: aparición al hacer scroll, hover con inclinación,
 // destellos en los héroes y números que cuentan. Si el usuario pidió menos movimiento, solo marca las cards.
 (function () {
   const quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -19,14 +19,12 @@
     });
   }
 
-  // luz que sigue al mouse e inclinación 3D
+  // inclinación 3D (la mancha de color que seguía al mouse se sacó)
   document.addEventListener("pointermove", (e) => {
     const c = e.target.closest?.(".fx-card");
     if (!c) return;
     const r = c.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-    c.style.setProperty("--mx", `${px * 100}%`);
-    c.style.setProperty("--my", `${py * 100}%`);
     if (!quieto && c.matches(INCLINAN)) {
       c.style.setProperty("--rx", `${(0.5 - py) * 8}deg`);
       c.style.setProperty("--ry", `${(px - 0.5) * 10}deg`);

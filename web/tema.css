@@ -30,11 +30,12 @@ html.tema-cambiando *,html.tema-cambiando *::before,html.tema-cambiando *::after
 .tema-switch[aria-checked="true"] .tema-sol,.tema-switch[aria-checked="false"] .tema-luna{opacity:.4}
 
 /* ---------- fotos reales del NEA (Wikimedia Commons; créditos en terminos.html) ---------- */
-/* portada: las Cataratas del Iguazú detrás de la tarjeta de la colecta */
+/* portada: detrás de la tarjeta, la foto del lugar de esa misma colecta (simple.js cambia --hero-foto y --hero-lugar
+   por los de la primera destacada; Itatí es la que va primero en api/_destacadas.js) */
 .hero-object .object-halo{inset:-24px -8px -24px 24%;width:auto;height:auto;border:0;border-radius:32px;animation:none;
-  background:linear-gradient(200deg,#0e3d3a00 45%,#0e3d3ab3),url(/img/cataratas.jpg) center 40%/cover;
+  background:linear-gradient(200deg,#0e3d3a00 45%,#0e3d3ab3),var(--hero-foto,url(/img/itati.jpg)) center 40%/cover;
   box-shadow:0 30px 70px -24px #0e3d3a80,inset 0 0 0 1px #ffffff26}
-.hero-object .object-halo::after{content:"Cataratas del Iguazú, Misiones";inset:14px 14px auto auto;border:0;border-radius:999px;
+.hero-object .object-halo::after{content:var(--hero-lugar,"Itatí, Corrientes");inset:14px 14px auto auto;border:0;border-radius:999px;
   padding:6px 12px;background:#0e3d3ab3;color:#e8f5f3;font:600 11px/1 var(--body);backdrop-filter:blur(4px)}
 .hero-object .object-shell{width:min(340px,64%);margin-right:auto}
 :root[data-tema="oscuro"] .hero-object .object-halo{box-shadow:0 30px 70px -24px #000c,inset 0 0 0 1px #ffffff1f}

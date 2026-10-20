@@ -86,6 +86,12 @@
       poner(".object-meta span:last-child", `${pct.toLocaleString("es-AR", { maximumFractionDigits: 1 })}%`);
       const barra = card.querySelector(".meter span");
       if (barra) barra.style.width = `${Math.max(1, pct)}%`;
+      // la foto de atrás es la del lugar de esta colecta, no una postal suelta
+      const halo = document.querySelector(".hero-object .object-halo");
+      if (halo && /^\/img\/[\w-]+\.jpg$/.test(c.foto || "")) {
+        halo.style.setProperty("--hero-foto", `url(${c.foto})`);
+        if (c.lugar) halo.style.setProperty("--hero-lugar", JSON.stringify(String(c.lugar)));
+      }
       const pie = card.querySelector(".object-bottom");
       if (pie) { pie.style.cursor = "pointer"; pie.onclick = () => (location.href = `/colecta.html?id=${encodeURIComponent(c.campaignId)}`); }
     });
