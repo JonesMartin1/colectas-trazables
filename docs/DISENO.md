@@ -47,7 +47,7 @@ Este diseño salió de una entrevista de Martín con Claude el 17/10 (/grill-me)
 | D25 | La SAS recarga HBAR a entidades y organizadores con parte del 1 % | Pendiente |
 | D26 | Perfil público: nombre del DNI, localidad y sello; nunca DNI, domicilio ni teléfono | Diseño |
 | D27, D28 | Colecta abierta hasta el cierre (máx. 90 días + prórrogas aprobadas); el excedente va a créditos | Hecho en contrato |
-| D29 | Conversión de USDC a pesos registrada y conciliada antes de cargar facturas en pesos | Pendiente (existe `CONVERSION` en HCS) |
+| D29 | ~~Conversión de USDC a pesos registrada a mano~~ → **reemplazada el 20/10**: cada salida de la billetera de la colecta se lee sola de Hedera (ver abajo) | **Hecho** en las colectas HCS (`leerSalidas` en `api/_comun.js`, `web/salidas.js`) |
 
 ## Riesgos aceptados
 
@@ -60,6 +60,14 @@ Este diseño salió de una entrevista de Martín con Claude el 17/10 (/grill-me)
 ## Cambio del 19/10: donar sin cuenta (modifica D18)
 
 La devolución del jurado del track Hedera fue que usar la plataforma "requiere muchos pasos" y que el foco tiene que ser lo humano, no la tecnología. Martín aprobó que **la cuenta deje de ser obligatoria para donar**: se dona en 5 toques desde la portada y la cuenta se ofrece después de una donación exitosa. Quien dona sin cuenta queda como en D13 sin código: su donación entra igual, pero no genera créditos ni derecho a denunciar hasta que la atribuya a una cuenta. En la interfaz del donante no se nombra Hedera ni se muestran IDs: la verificación queda en "Registro público · Verificalo" y en la página `/hedera`.
+
+## Cambio del 20/10: la salida a pesos se registra sola (reemplaza D29)
+
+Martín no quiere que la transparencia dependa de que el organizador cargue la conversión, y quiere una solución global. Por eso **la plata de cada colecta vive en una billetera de Hedera exclusiva de esa colecta**. Cuando el organizador necesita pesos, manda USDC a su cuenta de un exchange (Binance u otro, en cualquier país), lo vende y lo pasa a su Mercado Pago o banco. **Ese envío queda en Hedera sin que nadie lo cargue**: la API lee las salidas de la billetera del Mirror Node y la colecta muestra "retirado a pesos", "justificado con facturas" y "retirado sin rendir". Las salidas a cuentas que no son exchanges conocidos (`api/_exchanges.js`) se marcan como no identificadas.
+
+- Lo que pasa después del exchange no se ve; lo que sí queda es cuánto salió y cuándo, y eso obliga a rendir con facturas.
+- Si la billetera la comparten varias colectas, sus salidas no se pueden atribuir y no se muestran (`billeteraCompartida`).
+- En el contrato del núcleo, la billetera del organizador recibe los tramos; el mismo control aplica a esa billetera, y el tope sin rendir frena el siguiente tramo.
 
 ## Pendientes para operar con plata real
 

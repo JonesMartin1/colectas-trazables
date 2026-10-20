@@ -21,7 +21,7 @@
   <section class="section-wrap topologia-caja fx-card">
     <header class="caja-head"><h2>Topología</h2><small>por dónde pasa la plata y quién la aprueba</small></header>
     <!-- Modelo del diseño D1–D29 (el núcleo, /nucleo): la plata la guarda un contrato sin dueño y sale por tramos. -->
-    <svg id="topologia" viewBox="0 0 1000 410" role="img" aria-label="El donante dona en USDC al contrato de la colecta, que no tiene dueño. Mercado Pago entra en pesos y pasa a USDC por una rampa, todavía pendiente. Una entidad aprueba cada tramo. El contrato paga los tramos al organizador, el 1 % a la plataforma y lo que sobra al fondo de créditos. La plata es un token HTS, la plataforma registra colectas, alias y avisos en HCS, y el Mirror Node muestra todo gratis en la página pública y en HashScan.">
+    <svg id="topologia" viewBox="0 0 1000 410" role="img" aria-label="El donante dona en USDC al contrato de la colecta, que no tiene dueño. Mercado Pago entra en pesos y pasa a USDC por una rampa, todavía pendiente. Una entidad aprueba cada tramo. El contrato paga los tramos al organizador, el 1 % a la plataforma y lo que sobra al fondo de créditos. Cuando el organizador pasa USDC a pesos en un exchange para comprar, ese retiro queda registrado en Hedera aunque no lo cargue, y después lo justifica con facturas. La plata es un token HTS, la plataforma registra colectas, alias y avisos en HCS, y el Mirror Node muestra todo gratis en la página pública y en HashScan.">
       <g class="lineas">
         <path class="flujo plata" d="M180 142 C 255 142, 255 185, 330 185"/>
         <path class="flujo plata pendiente" d="M180 289 C 255 289, 255 230, 330 230"/>
@@ -31,7 +31,8 @@
         <path class="flujo plata" d="M510 240 C 555 240, 555 322, 600 322"/>
         <path class="flujo registro" d="M420 260 L 420 320"/>
         <path class="flujo registro" d="M770 310 C 795 310, 795 75, 820 75"/>
-        <path class="flujo lectura" d="M902 110 L 902 320"/>
+        <path class="flujo plata" d="M770 142 C 795 142, 795 189, 820 189"/>
+        <path class="flujo lectura" d="M820 372 L 510 372"/>
       </g>
       <g class="nodo"><rect x="330" y="20" width="180" height="64" rx="12"/><text x="420" y="47">Entidad titular</text><text x="420" y="67" class="sub">aprueba cada tramo</text></g>
       <g class="nodo" data-href="#feed"><rect x="20" y="110" width="160" height="64" rx="12"/><text x="100" y="137">Donante</text><text x="100" y="157" class="sub">dona en USDC</text></g>
@@ -41,11 +42,12 @@
       <g class="nodo" data-href="https://hashscan.io/testnet/contract/0.0.11058602"><rect x="600" y="200" width="170" height="64" rx="12"/><text x="685" y="227">Fondo de créditos</text><text x="685" y="247" class="sub">lo que sobra, a otra colecta</text></g>
       <g class="nodo plataforma" data-href="https://hashscan.io/testnet/account/0.0.10989169"><rect x="600" y="290" width="170" height="64" rx="12"/><text x="685" y="317">Plataforma</text><text x="685" y="337" class="sub">cobra el 1 % al entrar</text></g>
       <g class="nodo hts" data-href="https://hashscan.io/testnet/token/0.0.11041203"><rect x="330" y="320" width="180" height="64" rx="12"/><text x="420" y="347">HTS · USDCd</text><text x="420" y="367" class="sub">la plata es un token</text></g>
+      <g class="nodo"><rect x="820" y="150" width="165" height="78" rx="12"/><text x="902" y="177">Exchange</text><text x="902" y="197" class="sub">pasa el USDC a pesos</text><text x="902" y="214" class="sub">cada retiro queda registrado</text></g>
       <g class="nodo hcs" data-href="https://hashscan.io/testnet/topic/0.0.11051457"><rect x="820" y="40" width="165" height="70" rx="12"/><text x="902" y="70">HCS · Consensus</text><text x="902" y="90" class="sub">colectas, alias, avisos</text></g>
       <g class="nodo mirror" data-href="https://hashscan.io/testnet"><rect x="820" y="320" width="165" height="64" rx="12"/><text x="902" y="347">Mirror Node</text><text x="902" y="367" class="sub">página pública y HashScan</text></g>
     </svg>
     <div class="leyenda tres topo-ley"><div><i style="background:var(--f-f4b740)"></i>Plata: la guarda el contrato, no nosotros</div><div><i style="background:var(--f-d8f16a)"></i>Aprobaciones y registro en Hedera</div><div><i style="background:var(--f-7cc4e8)"></i>Lectura pública y gratis</div></div>
-    <p class="topo-nota">Línea punteada larga: todavía no existe. Hoy se dona en USDC de prueba; la rampa legal de pesos a USDC es lo próximo.</p>
+    <p class="topo-nota">Línea punteada larga: todavía no existe. Hoy se dona en USDC de prueba; la rampa legal de pesos a USDC es lo próximo. La salida a pesos sí funciona en cualquier país: el organizador usa el exchange que quiera y cada retiro queda en Hedera.</p>
   </section>
 
   <section class="section-wrap componentes-caja">

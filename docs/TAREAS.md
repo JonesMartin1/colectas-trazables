@@ -57,7 +57,7 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 | --- | --- | --- |
 | `GET /api/colectas` | — | `[{ campaignId, titulo, meta, topicId, beneficiarioCuenta, foto, lugar, fecha, categoria, fuente }]`: solo las destacadas de `api/_destacadas.js` (casos reales, en ese orden). `?todas=1` devuelve todo el registro, sin foto ni fuente. |
 | `POST /api/colectas` | `{ titulo, descripcion, meta, beneficiarioCuenta }` | `{ id, topicId, url, hashscan, claveOrganizador, urlOrganizador }` |
-| `GET /api/colectas/:id` | — | `{ colecta, donaciones[], gastos[], totales: { recaudado, gastado, saldo } }` |
+| `GET /api/colectas/:id` | — | `{ colecta, donaciones[], gastos[], salidas[], billeteraCompartida, totales: { recaudado, gastado, saldo, retirado, sinRendir } }`. `salidas` son los envíos de USDC que salieron de la billetera de la colecta, leídos del Mirror Node (`null` si la billetera la comparten varias colectas) |
 | `POST /api/demo/donar` | `{ campaignId, monto }` | `{ txId, hashscan, usdc }` (solo demo: la billetera de prueba paga, no registra) |
 | `POST /api/colectas/:id/donaciones` | `{ txId }` | `{ hashscan, comprobante }` (`400` si la transferencia no se verifica, `409` si ya está) |
 | `POST /api/colectas/:id/organizador` | `{ clave }` | `{ ok: true, titulo }` si es la clave de organizador (`401` si no). No registra nada: es la puerta de `gasto.html` y `entrega.html` |

@@ -469,3 +469,23 @@ body[data-page="hedera"]{background:var(--f-0f1412);color:var(--t-e6eee2)}
 #topologia .flujo.pendiente{stroke-dasharray:3 12;opacity:.55}
 #topologia .nodo.pendiente rect{stroke-dasharray:7 6}
 .topo-nota{margin-top:10px;font-size:12px;opacity:.75}
+
+/* salidas de la billetera: retiros a pesos, leídos de Hedera (salidas.js) */
+.salidas{padding:70px 0 20px}
+.salidas-head h2{margin:10px 0 8px}
+.salidas-head p{max-width:720px;opacity:.8}
+.salidas-numeros{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0 18px}
+.salidas-numeros>div{border:1px solid color-mix(in srgb,currentColor 14%,transparent);border-radius:16px;padding:16px 18px}
+.salidas-numeros span{display:block;font:700 11px var(--mono,monospace);letter-spacing:1px;text-transform:uppercase;opacity:.7}
+.salidas-numeros strong{display:block;font:800 26px var(--display,inherit);margin-top:6px}
+.salidas-numeros small{display:block;margin-top:4px;font-size:12px}
+.salidas-numeros .pendiente{border-color:#d97a2b;background:color-mix(in srgb,#d97a2b 10%,transparent)}
+.salidas-numeros .pendiente strong,.salidas-numeros .pendiente small{color:#b8601b}
+.salidas-numeros .al-dia small{color:var(--acento-txt,#0b7f74)}
+.salida{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid color-mix(in srgb,currentColor 12%,transparent)}
+.salida strong{display:block;font:800 17px var(--display,inherit)}
+.salida small{display:block;font-size:12px;opacity:.7}
+.salida-destino{display:block;font-size:13px;margin-top:2px}
+.salida-destino.alerta{color:#b42318;font-weight:700}
+.salida a{font-size:12px;font-weight:700;text-decoration:underline;white-space:nowrap}
+@media(max-width:700px){.salidas-numeros{grid-template-columns:1fr}.salida{align-items:flex-start;flex-direction:column}}

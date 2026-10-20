@@ -1,5 +1,5 @@
 {
-  "_nota": "Colectas de la portada: hechos reales del NEA (fuentes en api/_destacadas.js), organizaciones, proveedores, CUIT, CAE y facturas de DEMOSTRACIÓN. Los CUIT empiezan con 30-00000 para que no coincidan con empresas reales. Las facturas dicen 'sin validez fiscal'. Lo usan scripts/facturas-demo.py y scripts/sembrar-colectas-completas.js.",
+  "_nota": "Colectas de la portada: hechos reales del NEA (fuentes en api/_destacadas.js), organizaciones, proveedores, CUIT, CAE y facturas de DEMOSTRACIÓN. Los CUIT empiezan con 30-00000 para que no coincidan con empresas reales. Las facturas dicen 'sin validez fiscal'. Lo usan scripts/facturas-demo.py y scripts/sembrar-colectas-completas.js. Cada colecta tiene billetera propia; 'retiros' son envíos de esa billetera a un exchange para pasar a pesos (quedan en Hedera solos).",
   "beneficiario": "0.0.11041201",
   "casos": [
     {
@@ -7,12 +7,68 @@
       "titulo": "Evacuados de Itatí por la crecida del Paraná",
       "descripcion": "Octubre de 2026: el Paraná superó la cota crítica y 55 personas de 15 familias dejaron sus casas en Itatí. Agua potable, colchones, alimentos y kits de limpieza para volver.",
       "meta": 4000000,
-      "organizador": { "nombre": "Asociación Civil Manos del Litoral (demo)", "tipo": "Asociación civil", "cuit": "30-00000000-0", "igpj": "Res. 000/2026 (demo)" },
-      "donaciones": [200000, 200000, 150000, 120000, 100000, 100000, 80000, 75000, 50000, 25000],
+      "organizador": {
+        "nombre": "Asociación Civil Manos del Litoral (demo)",
+        "tipo": "Asociación civil",
+        "cuit": "30-00000000-0",
+        "igpj": "Res. 000/2026 (demo)"
+      },
+      "donaciones": [
+        200000,
+        200000,
+        150000,
+        120000,
+        100000,
+        100000,
+        80000,
+        75000,
+        50000,
+        25000
+      ],
       "gastos": [
-        { "detalle": "40 bidones de agua potable de 20 litros", "proveedor": "Aguas del Paraná SRL (demo)", "cuit": "30-00000101-0", "cae": "76420000000101", "items": [["Bidón de agua potable 20 l", 40, 6000]] },
-        { "detalle": "8 colchones de una plaza", "proveedor": "Colchonería del Litoral SA (demo)", "cuit": "30-00000102-0", "cae": "76420000000102", "items": [["Colchón de espuma de una plaza", 8, 52000]] },
-        { "detalle": "15 kits de limpieza para volver a casa", "proveedor": "Mayorista Norte SRL (demo)", "cuit": "30-00000103-0", "cae": "76420000000103", "items": [["Kit de limpieza (lavandina, detergente, trapo de piso, guantes)", 15, 12000]] }
+        {
+          "detalle": "40 bidones de agua potable de 20 litros",
+          "proveedor": "Aguas del Paraná SRL (demo)",
+          "cuit": "30-00000101-0",
+          "cae": "76420000000101",
+          "items": [
+            [
+              "Bidón de agua potable 20 l",
+              40,
+              6000
+            ]
+          ]
+        },
+        {
+          "detalle": "8 colchones de una plaza",
+          "proveedor": "Colchonería del Litoral SA (demo)",
+          "cuit": "30-00000102-0",
+          "cae": "76420000000102",
+          "items": [
+            [
+              "Colchón de espuma de una plaza",
+              8,
+              52000
+            ]
+          ]
+        },
+        {
+          "detalle": "15 kits de limpieza para volver a casa",
+          "proveedor": "Mayorista Norte SRL (demo)",
+          "cuit": "30-00000103-0",
+          "cae": "76420000000103",
+          "items": [
+            [
+              "Kit de limpieza (lavandina, detergente, trapo de piso, guantes)",
+              15,
+              12000
+            ]
+          ]
+        }
+      ],
+      "retiros": [
+        500000,
+        400000
       ]
     },
     {
@@ -20,12 +76,69 @@
       "titulo": "Isla del Cerrito, aislada por la crecida",
       "descripcion": "Octubre de 2026: 101 familias (unas 180 personas) armaron refugios en el puente San Pedro y se desplazaron 4.000 animales. Lonas, agua, alimentos y forraje mientras la isla siga incomunicada.",
       "meta": 5000000,
-      "organizador": { "nombre": "Cooperadora Ribereña del Chaco (demo)", "tipo": "Cooperadora", "cuit": "30-00000000-0", "igpj": "Res. 000/2026 (demo)" },
-      "donaciones": [200000, 200000, 200000, 150000, 150000, 120000, 100000, 100000, 80000, 60000, 40000],
+      "organizador": {
+        "nombre": "Cooperadora Ribereña del Chaco (demo)",
+        "tipo": "Cooperadora",
+        "cuit": "30-00000000-0",
+        "igpj": "Res. 000/2026 (demo)"
+      },
+      "donaciones": [
+        200000,
+        200000,
+        200000,
+        150000,
+        150000,
+        120000,
+        100000,
+        100000,
+        80000,
+        60000,
+        40000
+      ],
       "gastos": [
-        { "detalle": "Lonas y plásticos para 20 refugios", "proveedor": "Corralón El Puente SRL (demo)", "cuit": "30-00000201-0", "cae": "76420000000201", "items": [["Lona plástica reforzada 4 x 6 m", 20, 19000]] },
-        { "detalle": "40 fardos de forraje para los animales", "proveedor": "Forrajería San Pedro (demo)", "cuit": "30-00000202-0", "cae": "76420000000202", "items": [["Fardo de alfalfa", 40, 9500]] },
-        { "detalle": "Bolsones de alimentos para 30 familias", "proveedor": "Distribuidora Chaco Sur SA (demo)", "cuit": "30-00000203-0", "cae": "76420000000203", "items": [["Bolsón de alimentos secos para una familia", 30, 14000]] }
+        {
+          "detalle": "Lonas y plásticos para 20 refugios",
+          "proveedor": "Corralón El Puente SRL (demo)",
+          "cuit": "30-00000201-0",
+          "cae": "76420000000201",
+          "items": [
+            [
+              "Lona plástica reforzada 4 x 6 m",
+              20,
+              19000
+            ]
+          ]
+        },
+        {
+          "detalle": "40 fardos de forraje para los animales",
+          "proveedor": "Forrajería San Pedro (demo)",
+          "cuit": "30-00000202-0",
+          "cae": "76420000000202",
+          "items": [
+            [
+              "Fardo de alfalfa",
+              40,
+              9500
+            ]
+          ]
+        },
+        {
+          "detalle": "Bolsones de alimentos para 30 familias",
+          "proveedor": "Distribuidora Chaco Sur SA (demo)",
+          "cuit": "30-00000203-0",
+          "cae": "76420000000203",
+          "items": [
+            [
+              "Bolsón de alimentos secos para una familia",
+              30,
+              14000
+            ]
+          ]
+        }
+      ],
+      "retiros": [
+        700000,
+        500000
       ]
     },
     {
@@ -33,11 +146,59 @@
       "titulo": "Familias evacuadas por el río Uruguay en Paso de los Libres",
       "descripcion": "Octubre de 2026: 31 personas de 6 familias dejaron sus casas por la crecida del río Uruguay y están alojadas en barracas del Ejército. Colchones, frazadas, alimentos e higiene.",
       "meta": 2000000,
-      "organizador": { "nombre": "Bomberos Voluntarios del Litoral (demo)", "tipo": "Bomberos voluntarios", "cuit": "30-00000000-0", "igpj": "Res. 000/2026 (demo)" },
-      "donaciones": [150000, 120000, 100000, 80000, 60000, 50000, 40000, 30000, 20000],
+      "organizador": {
+        "nombre": "Bomberos Voluntarios del Litoral (demo)",
+        "tipo": "Bomberos voluntarios",
+        "cuit": "30-00000000-0",
+        "igpj": "Res. 000/2026 (demo)"
+      },
+      "donaciones": [
+        150000,
+        120000,
+        100000,
+        80000,
+        60000,
+        50000,
+        40000,
+        30000,
+        20000
+      ],
       "gastos": [
-        { "detalle": "6 colchones y 12 frazadas", "proveedor": "Blanquería Uruguay SRL (demo)", "cuit": "30-00000301-0", "cae": "76420000000301", "items": [["Colchón de espuma de una plaza", 6, 52000], ["Frazada de dos plazas", 12, 9000]] },
-        { "detalle": "Kits de higiene para 6 familias", "proveedor": "Farmacia Frontera (demo)", "cuit": "30-00000302-0", "cae": "76420000000302", "items": [["Kit de higiene familiar", 6, 15000]] }
+        {
+          "detalle": "6 colchones y 12 frazadas",
+          "proveedor": "Blanquería Uruguay SRL (demo)",
+          "cuit": "30-00000301-0",
+          "cae": "76420000000301",
+          "items": [
+            [
+              "Colchón de espuma de una plaza",
+              6,
+              52000
+            ],
+            [
+              "Frazada de dos plazas",
+              12,
+              9000
+            ]
+          ]
+        },
+        {
+          "detalle": "Kits de higiene para 6 familias",
+          "proveedor": "Farmacia Frontera (demo)",
+          "cuit": "30-00000302-0",
+          "cae": "76420000000302",
+          "items": [
+            [
+              "Kit de higiene familiar",
+              6,
+              15000
+            ]
+          ]
+        }
+      ],
+      "retiros": [
+        300000,
+        250000
       ]
     },
     {
@@ -45,11 +206,60 @@
       "titulo": "Temporal en Oberá: familias evacuadas por los arroyos",
       "descripcion": "Junio de 2026: desbordaron los arroyos Tuicha y Yaboty y hubo familias evacuadas en Oberá; en Eldorado se asistió a más de 100. Chapas, colchones, frazadas y plásticos para los techos.",
       "meta": 3500000,
-      "organizador": { "nombre": "Fundación Tierra Colorada (demo)", "tipo": "Fundación", "cuit": "30-00000000-0", "igpj": "Res. 000/2026 (demo)" },
-      "donaciones": [200000, 150000, 150000, 120000, 100000, 80000, 70000, 60000, 40000, 30000],
+      "organizador": {
+        "nombre": "Fundación Tierra Colorada (demo)",
+        "tipo": "Fundación",
+        "cuit": "30-00000000-0",
+        "igpj": "Res. 000/2026 (demo)"
+      },
+      "donaciones": [
+        200000,
+        150000,
+        150000,
+        120000,
+        100000,
+        80000,
+        70000,
+        60000,
+        40000,
+        30000
+      ],
       "gastos": [
-        { "detalle": "30 chapas de zinc para los techos", "proveedor": "Corralón Tierra Colorada SRL (demo)", "cuit": "30-00000401-0", "cae": "76420000000401", "items": [["Chapa de zinc acanalada 3 m", 30, 18000]] },
-        { "detalle": "Rollo de plástico de 100 metros y 10 frazadas", "proveedor": "Todo Hogar Oberá (demo)", "cuit": "30-00000402-0", "cae": "76420000000402", "items": [["Rollo de polietileno negro 100 m", 1, 85000], ["Frazada de dos plazas", 10, 9000]] }
+        {
+          "detalle": "30 chapas de zinc para los techos",
+          "proveedor": "Corralón Tierra Colorada SRL (demo)",
+          "cuit": "30-00000401-0",
+          "cae": "76420000000401",
+          "items": [
+            [
+              "Chapa de zinc acanalada 3 m",
+              30,
+              18000
+            ]
+          ]
+        },
+        {
+          "detalle": "Rollo de plástico de 100 metros y 10 frazadas",
+          "proveedor": "Todo Hogar Oberá (demo)",
+          "cuit": "30-00000402-0",
+          "cae": "76420000000402",
+          "items": [
+            [
+              "Rollo de polietileno negro 100 m",
+              1,
+              85000
+            ],
+            [
+              "Frazada de dos plazas",
+              10,
+              9000
+            ]
+          ]
+        }
+      ],
+      "retiros": [
+        450000,
+        400000
       ]
     },
     {
@@ -57,11 +267,55 @@
       "titulo": "Lluvias en Castelli: 300 personas en centros de evacuados",
       "descripcion": "Abril de 2026: las lluvias intensas obligaron a trasladar a 300 personas a tres centros comunitarios de Juan José Castelli, Chaco. Bolsones de alimentos, agua y elementos de higiene.",
       "meta": 3000000,
-      "organizador": { "nombre": "Comisión Vecinal Impenetrable Solidario (demo)", "tipo": "Comisión vecinal", "cuit": "30-00000000-0", "igpj": "Res. 000/2026 (demo)" },
-      "donaciones": [200000, 150000, 120000, 100000, 90000, 80000, 60000, 50000, 30000, 20000],
+      "organizador": {
+        "nombre": "Comisión Vecinal Impenetrable Solidario (demo)",
+        "tipo": "Comisión vecinal",
+        "cuit": "30-00000000-0",
+        "igpj": "Res. 000/2026 (demo)"
+      },
+      "donaciones": [
+        200000,
+        150000,
+        120000,
+        100000,
+        90000,
+        80000,
+        60000,
+        50000,
+        30000,
+        20000
+      ],
       "gastos": [
-        { "detalle": "Bolsones de alimentos para 40 familias", "proveedor": "Almacén Mayorista El Impenetrable (demo)", "cuit": "30-00000501-0", "cae": "76420000000501", "items": [["Bolsón de alimentos secos para una familia", 40, 14000]] },
-        { "detalle": "50 kits de higiene para los tres centros", "proveedor": "Distribuidora Castelli (demo)", "cuit": "30-00000502-0", "cae": "76420000000502", "items": [["Kit de higiene personal", 50, 4500]] }
+        {
+          "detalle": "Bolsones de alimentos para 40 familias",
+          "proveedor": "Almacén Mayorista El Impenetrable (demo)",
+          "cuit": "30-00000501-0",
+          "cae": "76420000000501",
+          "items": [
+            [
+              "Bolsón de alimentos secos para una familia",
+              40,
+              14000
+            ]
+          ]
+        },
+        {
+          "detalle": "50 kits de higiene para los tres centros",
+          "proveedor": "Distribuidora Castelli (demo)",
+          "cuit": "30-00000502-0",
+          "cae": "76420000000502",
+          "items": [
+            [
+              "Kit de higiene personal",
+              50,
+              4500
+            ]
+          ]
+        }
+      ],
+      "retiros": [
+        600000,
+        250000
       ]
     }
   ]

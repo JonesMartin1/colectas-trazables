@@ -1,6 +1,8 @@
 // Piezas compartidas por las funciones de la API (el guion bajo evita que Vercel la publique como ruta).
 import crypto from "node:crypto";
 import { listarColectas, leerEventos, sha256 } from "../hedera/colectas.js";
+import { leerJson, ESTADO, DECIMALES } from "../hedera/lib.js";
+import { EXCHANGES } from "./_exchanges.js";
 
 export { sha256 };
 
@@ -38,9 +40,53 @@ export async function buscarColecta(id) {
   return colectas.filter((c) => c.campaignId === id).pop() ?? null;
 }
 
+const MIRROR = "https://testnet.mirrornode.hedera.com/api/v1";
+const TOKEN_USDC = () => process.env.USDC_TOKEN_ID ?? leerJson(ESTADO)?.tokenId;
+
+/**
+ * Salidas de USDC de la billetera de la colecta, leídas del Mirror Node: cada retiro (por ejemplo, a un exchange
+ * para pasarlo a pesos) queda en Hedera aunque el organizador no lo cargue. Solo tiene sentido si la billetera es
+ * exclusiva de la colecta: si la comparten varias, no se puede atribuir y se devuelve null.
+ */
+export async function leerSalidas(cuenta) {
+  const token = TOKEN_USDC();
+  if (!/^0\.0\.\d+$/.test(String(cuenta || "")) || !token) return [];
+  const salidas = [];
+  // del más nuevo al más viejo: con order=asc el Mirror Node arranca desde el inicio de la red y da páginas vacías
+  let url = `${MIRROR}/transactions?account.id=${cuenta}&order=desc&limit=100`;
+  for (let pagina = 0; url && pagina < 5; pagina++) {
+    const d = await fetch(url).then((r) => (r.ok ? r.json() : { transactions: [] }));
+    for (const tx of d.transactions || []) {
+      if (tx.result !== "SUCCESS") continue;
+      const movs = (tx.token_transfers || []).filter((t) => t.token_id === token);
+      const sale = movs.find((t) => t.account === cuenta && t.amount < 0);
+      if (!sale) continue;
+      const destino = movs.find((t) => t.amount > 0)?.account || null;
+      const usdc = -sale.amount / 10 ** DECIMALES;
+      const memo = tx.memo_base64 ? Buffer.from(tx.memo_base64, "base64").toString("utf8") : "";
+      salidas.push({
+        fecha: new Date(Number(tx.consensus_timestamp.split(".")[0]) * 1000).toISOString(),
+        usdc, monto: Math.round(usdc * COTIZACION),
+        destino, destinoNombre: EXCHANGES[destino] || null,
+        memo, hashscan: `https://hashscan.io/testnet/transaction/${tx.transaction_id}`, // el Mirror Node ya lo da como 0.0.x-seg-nanos
+      });
+    }
+    // una página incompleta es la última: no seguir pidiendo páginas vacías
+    url = d.links?.next && (d.transactions || []).length === 100 ? `https://testnet.mirrornode.hedera.com${d.links.next}` : null;
+  }
+  return salidas.reverse();
+}
+
 /** La colecta con sus donaciones, gastos y totales, todo leído del Mirror Node. */
-export async function armarColecta(colecta) {
-  const eventos = await leerEventos(colecta.topicId);
+export async function armarColecta(colecta, todas = null) {
+  // salidas de la billetera: solo si es exclusiva de esta colecta (las de demo viejas comparten una)
+  const lista = todas ?? (await listarColectas());
+  const compartida = lista.filter((c) => c.beneficiarioCuenta === colecta.beneficiarioCuenta).length > 1;
+  // eventos y salidas en paralelo: son dos lecturas independientes del Mirror Node
+  const [eventos, salidas] = await Promise.all([
+    leerEventos(colecta.topicId),
+    compartida ? null : leerSalidas(colecta.beneficiarioCuenta).catch(() => []),
+  ]);
   const donaciones = [];
   const gastos = [];
   const entregas = [];
@@ -55,6 +101,7 @@ export async function armarColecta(colecta) {
   }
   const recaudado = donaciones.reduce((s, d) => s + d.monto, 0);
   const gastado = gastos.reduce((s, g) => s + g.monto, 0);
+  const retirado = (salidas || []).reduce((s, x) => s + x.monto, 0);
   return {
     colecta: {
       id: colecta.campaignId,
@@ -70,7 +117,9 @@ export async function armarColecta(colecta) {
     gastos,
     entregas,
     conversiones,
-    totales: { recaudado, gastado, saldo: recaudado - gastado },
+    salidas,
+    billeteraCompartida: compartida,
+    totales: { recaudado, gastado, saldo: recaudado - gastado, retirado, sinRendir: Math.max(0, retirado - gastado) },
   };
 }
 
