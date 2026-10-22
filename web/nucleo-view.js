@@ -5,7 +5,7 @@
   const $ = (id) => document.getElementById(id);
   const esc = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const u = (n) => `${Number(n).toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDC`;
-  const hs = (tipo, id) => `https://hashscan.io/testnet/${tipo}/${id}`;
+  const hs = (tipo, id) => `https://hashscan.io/${window.HEDERA_RED || "testnet"}/${tipo}/${id}`; // la red la pone /red.js
   const corto = (h) => `${String(h).slice(0, 10)}…`;
   const contrato = new URLSearchParams(location.search).get("c") || "";
 

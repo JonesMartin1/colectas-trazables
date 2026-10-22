@@ -111,7 +111,7 @@
       const id = n.textContent.match(/0\.0\.\d+/)?.[0];
       if (!id) return false;
       obs.disconnect();
-      n.innerHTML = `<a class="sello-hedera" href="https://hashscan.io/testnet/topic/${id}" target="_blank" rel="noopener noreferrer" title="Registro ${id} en Hedera">✓ Registro público · Verificalo ↗</a>`;
+      n.innerHTML = `<a class="sello-hedera" href="https://hashscan.io/${window.HEDERA_RED || "testnet"}/topic/${id}" target="_blank" rel="noopener noreferrer" title="Registro ${id} en Hedera">✓ Registro público · Verificalo ↗</a>`;
       return true;
     };
     const obs = new MutationObserver(sello);

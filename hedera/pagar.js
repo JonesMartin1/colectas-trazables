@@ -2,7 +2,7 @@
 // El comprador paga: el neto va al comercio y el 0,5 % a la plataforma, en UNA transacción.
 // Después se sella la venta en el topic y se verifica el pago en el Mirror Node.
 import { PrivateKey, TransferTransaction, TopicMessageSubmitTransaction } from "@hashgraph/sdk";
-import { clienteOperador, leerJson, ESTADO, CUENTAS, DECIMALES, COMISION_BPS, hashscan, idTx } from "./lib.js";
+import { clienteOperador, leerJson, ESTADO, CUENTAS, DECIMALES, COMISION_BPS, hashscan, idTx, MIRROR } from "./lib.js";
 
 const [pedido, montoTexto] = process.argv.slice(2);
 const monto = Math.round(Number(montoTexto) * 10 ** DECIMALES);
@@ -43,7 +43,7 @@ console.log(`Venta sellada en el topic ${estado.topicId}, mensaje #${reciboSello
 console.log(`  ${hashscan("topic", estado.topicId)}`);
 
 // 3. Lo que hace el agente: verificar en el Mirror Node que el pago llegó al comercio.
-const url = `https://testnet.mirrornode.hedera.com/api/v1/transactions/${txPago}`;
+const url = `${MIRROR}/transactions/${txPago}`;
 let verificado = false;
 for (let intento = 0; intento < 10 && !verificado; intento++) {
   await new Promise((r) => setTimeout(r, 2000));

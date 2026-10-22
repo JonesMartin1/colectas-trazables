@@ -4,12 +4,14 @@
 // En la vida real este paso lo hace la billetera del donante (o Mercado Pago), nunca la plataforma.
 import { donarUSDC, leerTransaccion, memoColecta } from "../../hedera/colectas.js";
 import { json, error, leerCuerpo, buscarColecta, COTIZACION } from "../_comun.js";
+import { ES_MAINNET } from "../../hedera/lib.js";
 
 const TOPE = 200_000; // pesos por donación, para que nadie vacíe la billetera de prueba
 
 export default async function handler(req, res) {
   try {
     if (req.method !== "POST") return error(res, 405, "Método no permitido");
+    if (ES_MAINNET) return error(res, 403, "La donación de demo no existe en mainnet: cada persona dona desde su propia billetera.");
     const { campaignId, monto: m } = await leerCuerpo(req);
     const colecta = await buscarColecta(campaignId);
     if (!colecta) return error(res, 404, "No existe una colecta con ese identificador.");

@@ -2,8 +2,8 @@
 // Mirror Node (POST /contracts/call) y los eventos se leen de /contracts/{id}/results/logs.
 import { Interface } from "ethers";
 import { COLECTA_ABI, PLATAFORMA_ABI } from "./nucleo-abi.js";
+import { MIRROR, hashscan } from "./lib.js";
 
-const MIRROR = "https://testnet.mirrornode.hedera.com/api/v1";
 const iColecta = new Interface(COLECTA_ABI);
 const iPlataforma = new Interface(PLATAFORMA_ABI);
 const usdc = (x) => Number(x) / 1e6;
@@ -82,7 +82,7 @@ export async function leerColectaNucleo(contratoId) {
     .map((l) => {
       try {
         const p = iColecta.parseLog({ topics: l.topics, data: l.data });
-        return { ...formatoEvento(p.name, p.args), timestamp: l.timestamp, hashscan: `https://hashscan.io/testnet/transaction/${l.timestamp}` };
+        return { ...formatoEvento(p.name, p.args), timestamp: l.timestamp, hashscan: hashscan("transaction", l.timestamp) };
       } catch {
         return null;
       }
@@ -92,7 +92,7 @@ export async function leerColectaNucleo(contratoId) {
   const tope = (Number(metaTotal) * 3000) / 10000;
   return {
     contrato: contratoId,
-    hashscan: `https://hashscan.io/testnet/contract/${contratoId}`,
+    hashscan: hashscan("contract", contratoId),
     plataforma: idDeEvm(plataforma),
     colectaId,
     estado: { publicada, pausada, liquidada, fraude },

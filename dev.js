@@ -12,6 +12,7 @@ const TIPOS = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", "
 // Rutas de la API, en el mismo orden en que Vercel las resolvería.
 const RUTAS = [
   [/^\/api\/salud$/, "api/salud.js", []],
+  [/^\/red\.js$/, "api/salud.js", [], { formato: "js" }], // como el rewrite de vercel.json
   [/^\/api\/alias$/, "api/alias.js", []],
   [/^\/api\/demo\/donar$/, "api/demo/donar.js", []],
   [/^\/api\/avisos$/, "api/avisos.js", []],
@@ -32,11 +33,12 @@ function adaptarRes(res) {
 http
   .createServer(async (req, res) => {
     const url = new URL(req.url, "http://localhost");
-    for (const [re, archivo, claves] of RUTAS) {
+    for (const [re, archivo, claves, extra] of RUTAS) {
       const m = url.pathname.match(re);
       if (!m) continue;
       req.query = Object.fromEntries(url.searchParams);
       claves.forEach((k, i) => (req.query[k] = decodeURIComponent(m[i + 1])));
+      Object.assign(req.query, extra);
       const { default: handler } = await import(pathToFileURL(path.join(RAIZ, archivo)).href);
       try {
         await handler(req, adaptarRes(res));

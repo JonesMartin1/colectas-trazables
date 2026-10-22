@@ -3,7 +3,7 @@
 // propuestas. Cualquiera puede postular una idea; pasa a ser colecta cuando una organización validada la avala y la crea.
 // No va ningún dato personal: ni el nombre ni el email de quien postula.
 import { leerEventos, publicarEvento } from "../hedera/colectas.js";
-import { leerJson, ESTADO } from "../hedera/lib.js";
+import { leerJson, ESTADO, hashscan } from "../hedera/lib.js";
 import { json, error, leerCuerpo, esperarEnMirror } from "./_comun.js";
 
 export const PROVINCIAS = ["Corrientes", "Chaco", "Misiones", "Formosa"];
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         .filter((e) => e.evento.type === "PROPOSAL" && !ROTO.test(JSON.stringify(e.evento)) && !OCULTAS.has(e.secuencia)) // se ignoran los de codificación rota y las pruebas
         .map((e) => ({ ...e.evento, secuencia: e.secuencia, fecha: e.fecha, hashscan: e.hashscan }))
         .reverse();
-      return json(res, 200, { topicId, hashscan: `https://hashscan.io/testnet/topic/${topicId}`, propuestas: lista });
+      return json(res, 200, { topicId, hashscan: hashscan("topic", topicId), propuestas: lista });
     }
     if (req.method !== "POST") return error(res, 405, "Método no permitido");
     const b = await leerCuerpo(req);

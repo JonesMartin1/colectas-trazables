@@ -1,6 +1,6 @@
 // Una sola vez: crea el canal de avisos y publica partes de demostración con cifras tomadas de la prensa
 // (no son partes oficiales: cada aviso dice su fuente). Uso: node hedera/avisos-demo.js
-import { leerJson, guardarJson, ESTADO } from "./lib.js";
+import { leerJson, guardarJson, ESTADO, hashscan } from "./lib.js";
 import { crearCanalAvisos, publicarAviso, cerrar } from "./avisos.js";
 
 const estado = leerJson(ESTADO) ?? {};
@@ -8,7 +8,7 @@ let topicId = estado.avisosTopicId;
 if (!topicId) {
   ({ topicId } = await crearCanalAvisos());
   guardarJson(ESTADO, { ...estado, avisosTopicId: topicId });
-  console.log(`Canal de avisos: ${topicId}  https://hashscan.io/testnet/topic/${topicId}`);
+  console.log(`Canal de avisos: ${topicId}  ${hashscan("topic", topicId)}`);
 }
 const DEMO = [
   { tipo: "parte", titulo: "Evacuados por la crecida", localidad: "Provincia de Corrientes", fechaParte: "2026-10-14", cifras: { evacuados: 108, localidades: 5 }, fuente: "El Litoral, 14/10/2026 (dato de prensa, demo)" },

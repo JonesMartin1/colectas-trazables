@@ -1,7 +1,7 @@
 // Piezas compartidas por las funciones de la API (el guion bajo evita que Vercel la publique como ruta).
 import crypto from "node:crypto";
 import { listarColectas, leerEventos, sha256 } from "../hedera/colectas.js";
-import { leerJson, ESTADO, DECIMALES } from "../hedera/lib.js";
+import { leerJson, ESTADO, DECIMALES, MIRROR, mirrorSiguiente, hashscan } from "../hedera/lib.js";
 import { EXCHANGES } from "./_exchanges.js";
 
 export { sha256 };
@@ -40,7 +40,7 @@ export async function buscarColecta(id) {
   return colectas.filter((c) => c.campaignId === id).pop() ?? null;
 }
 
-const MIRROR = "https://testnet.mirrornode.hedera.com/api/v1";
+// en mainnet no hay token de prueba: el USDC tiene que venir de USDC_TOKEN_ID o de estado-mainnet.json
 const TOKEN_USDC = () => process.env.USDC_TOKEN_ID ?? leerJson(ESTADO)?.tokenId;
 
 /**
@@ -68,11 +68,11 @@ export async function leerSalidas(cuenta) {
         fecha: new Date(Number(tx.consensus_timestamp.split(".")[0]) * 1000).toISOString(),
         usdc, monto: Math.round(usdc * COTIZACION),
         destino, destinoNombre: EXCHANGES[destino] || null,
-        memo, hashscan: `https://hashscan.io/testnet/transaction/${tx.transaction_id}`, // el Mirror Node ya lo da como 0.0.x-seg-nanos
+        memo, hashscan: hashscan("transaction", tx.transaction_id), // el Mirror Node ya lo da como 0.0.x-seg-nanos
       });
     }
     // una página incompleta es la última: no seguir pidiendo páginas vacías
-    url = d.links?.next && (d.transactions || []).length === 100 ? `https://testnet.mirrornode.hedera.com${d.links.next}` : null;
+    url = d.links?.next && (d.transactions || []).length === 100 ? mirrorSiguiente(d.links.next) : null;
   }
   return salidas.reverse();
 }
@@ -111,7 +111,7 @@ export async function armarColecta(colecta, todas = null) {
       beneficiarioCuenta: colecta.beneficiarioCuenta,
       organizador: colecta.organizador || null,
       topicId: colecta.topicId,
-      hashscan: `https://hashscan.io/testnet/topic/${colecta.topicId}`,
+      hashscan: hashscan("topic", colecta.topicId),
     },
     donaciones,
     gastos,

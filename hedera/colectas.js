@@ -3,9 +3,8 @@
 // sino un registro de auditoría con orden y fecha de consenso; se consultan desde el Mirror Node.
 import crypto from "node:crypto";
 import { PrivateKey, TopicCreateTransaction, TopicMessageSubmitTransaction, TransferTransaction } from "@hashgraph/sdk";
-import { clienteOperador, leerJson, ESTADO, CUENTAS, DECIMALES, hashscan, idTx } from "./lib.js";
+import { clienteOperador, leerJson, ESTADO, CUENTAS, DECIMALES, hashscan, idTx, MIRROR, mirrorSiguiente } from "./lib.js";
 
-const MIRROR = "https://testnet.mirrornode.hedera.com/api/v1";
 const MAX_MENSAJE = 1024; // límite de HCS por mensaje
 
 let red;
@@ -133,10 +132,10 @@ export async function leerEventos(topicId) {
         secuencia: m.sequence_number,
         fecha: new Date(Number(m.consensus_timestamp.split(".")[0]) * 1000).toISOString(),
         evento,
-        hashscan: `https://hashscan.io/testnet/transaction/${m.consensus_timestamp}`,
+        hashscan: hashscan("transaction", m.consensus_timestamp),
       });
     }
-    url = datos.links?.next ? `https://testnet.mirrornode.hedera.com${datos.links.next}` : null;
+    url = mirrorSiguiente(datos.links?.next);
   }
   return eventos;
 }
