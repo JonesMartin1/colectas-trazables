@@ -317,6 +317,201 @@
         600000,
         250000
       ]
+    },
+    {
+      "clave": "puerto-vilelas",
+      "titulo": "Crecida en el Gran Resistencia: familias en el predio de Vilelas",
+      "descripcion": "Octubre de 2026: el Paraná llegó a 7,29 m en Barranqueras y Chaco ya suma 913 evacuados. En Puerto Vilelas, 77 personas de 27 familias viven en módulos del predio ex Cajiba. Alimentos, agua y artículos de higiene.",
+      "meta": 4500000,
+      "organizador": {
+        "nombre": "Asociación Civil Costa Chaqueña (demo)",
+        "tipo": "Asociación civil",
+        "cuit": "30-00000000-0",
+        "igpj": "Res. 000/2026 (demo)"
+      },
+      "donaciones": [
+        200000,
+        200000,
+        200000,
+        200000,
+        180000,
+        150000,
+        150000,
+        150000,
+        120000,
+        100000,
+        100000,
+        80000,
+        50000,
+        20000
+      ],
+      "gastos": [
+        {
+          "detalle": "27 módulos alimentarios",
+          "proveedor": "Distribuidora Chaco Norte SRL (demo)",
+          "cuit": "30-00000601-0",
+          "cae": "76420000000601",
+          "items": [
+            [
+              "Módulo alimentario familiar",
+              27,
+              35000
+            ]
+          ]
+        },
+        {
+          "detalle": "60 bidones de agua potable de 20 litros",
+          "proveedor": "Aguas del Chaco SRL (demo)",
+          "cuit": "30-00000602-0",
+          "cae": "76420000000602",
+          "items": [
+            [
+              "Bidón de agua potable 20 l",
+              60,
+              6000
+            ]
+          ]
+        },
+        {
+          "detalle": "Kits de higiene para 27 familias",
+          "proveedor": "Farmacia Barranqueras (demo)",
+          "cuit": "30-00000603-0",
+          "cae": "76420000000603",
+          "items": [
+            [
+              "Kit de higiene familiar",
+              27,
+              15000
+            ]
+          ]
+        }
+      ],
+      "retiros": [
+        1000000,
+        710000
+      ]
+    },
+    {
+      "clave": "corrientes-capital",
+      "titulo": "Corrientes capital: 90 familias autoevacuadas por el Paraná",
+      "descripcion": "Octubre de 2026: con el Paraná por encima de los 7 metros, 344 personas de 90 familias dejaron sus casas de la costa y se alojan con familiares y amigos. Alimentos, colchones y frazadas mientras no puedan volver.",
+      "meta": 6000000,
+      "organizador": {
+        "nombre": "Red Solidaria Costera (demo)",
+        "tipo": "Asociación civil",
+        "cuit": "30-00000000-0",
+        "igpj": "Res. 000/2026 (demo)"
+      },
+      "donaciones": [
+        200000,
+        200000,
+        200000,
+        200000,
+        200000,
+        200000,
+        200000,
+        200000,
+        200000,
+        200000,
+        150000,
+        150000,
+        120000,
+        100000,
+        80000,
+        50000
+      ],
+      "gastos": [
+        {
+          "detalle": "40 módulos alimentarios",
+          "proveedor": "Mayorista Taragüí SRL (demo)",
+          "cuit": "30-00000701-0",
+          "cae": "76420000000701",
+          "items": [
+            [
+              "Módulo alimentario familiar",
+              40,
+              35000
+            ]
+          ]
+        },
+        {
+          "detalle": "15 colchones y 30 frazadas",
+          "proveedor": "Blanquería Corrientes SA (demo)",
+          "cuit": "30-00000702-0",
+          "cae": "76420000000702",
+          "items": [
+            [
+              "Colchón de espuma de una plaza",
+              15,
+              52000
+            ],
+            [
+              "Frazada de dos plazas",
+              30,
+              9000
+            ]
+          ]
+        }
+      ],
+      "retiros": [
+        1500000,
+        1000000
+      ]
+    },
+    {
+      "clave": "isla-apipe",
+      "titulo": "Isla Apipé: 18 familias evacuadas por la crecida",
+      "descripcion": "Octubre de 2026: la crecida del Paraná obligó a evacuar a 41 personas de 18 familias en la isla Apipé, frente a Ituzaingó; están en viviendas municipales y casas de familiares. Alimentos y kits de limpieza para volver.",
+      "meta": 2500000,
+      "organizador": {
+        "nombre": "Comisión Vecinal Isla Apipé (demo)",
+        "tipo": "Comisión vecinal",
+        "cuit": "30-00000000-0",
+        "igpj": "Res. 000/2026 (demo)"
+      },
+      "donaciones": [
+        200000,
+        150000,
+        150000,
+        120000,
+        100000,
+        100000,
+        80000,
+        50000,
+        50000
+      ],
+      "gastos": [
+        {
+          "detalle": "18 módulos alimentarios",
+          "proveedor": "Almacén Ituzaingó (demo)",
+          "cuit": "30-00000801-0",
+          "cae": "76420000000801",
+          "items": [
+            [
+              "Módulo alimentario familiar",
+              18,
+              35000
+            ]
+          ]
+        },
+        {
+          "detalle": "18 kits de limpieza para volver a casa",
+          "proveedor": "Mayorista Alto Paraná SRL (demo)",
+          "cuit": "30-00000802-0",
+          "cae": "76420000000802",
+          "items": [
+            [
+              "Kit de limpieza (lavandina, detergente, trapo de piso, guantes)",
+              18,
+              12000
+            ]
+          ]
+        }
+      ],
+      "retiros": [
+        500000,
+        400000
+      ]
     }
   ]
 }

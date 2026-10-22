@@ -5,6 +5,21 @@
 // Los hechos y las cifras salen de la fuente; la organización es de demo. Fotos de Wikimedia Commons (créditos en terminos.html).
 export const DESTACADAS = [
   {
+    campaignId: "crecida-en-el-gran-resistencia-familias--8fe7f1",
+    foto: "/img/puerto-vilelas.jpg", lugar: "Puerto Vilelas, Chaco", fecha: "Octubre 2026", categoria: "Inundaciones",
+    fuente: { medio: "El Litoral", url: "https://www.ellitoral.com.ar/sociedad/2026-10-21-17-34-0-crecida-de-los-rios-en-chaco-hay-913-evacuados-y-281-autoevacuados" },
+  },
+  {
+    campaignId: "corrientes-capital-90-familias-autoevacu-b6df76",
+    foto: "/img/corrientes-capital.jpg", lugar: "Corrientes capital", fecha: "Octubre 2026", categoria: "Inundaciones",
+    fuente: { medio: "Primera Edición", url: "https://www.primeraedicion.com.ar/nota/101152475/corrientes-bajo-agua-localidades-en-alerta-y-mas-de-750-evacuados/" },
+  },
+  {
+    campaignId: "isla-apipe-18-familias-evacuadas-por-la--0864c9",
+    foto: "/img/isla-apipe.jpg", lugar: "Isla Apipé, Corrientes", fecha: "Octubre 2026", categoria: "Inundaciones",
+    fuente: { medio: "Primera Edición", url: "https://www.primeraedicion.com.ar/nota/101152475/corrientes-bajo-agua-localidades-en-alerta-y-mas-de-750-evacuados/" },
+  },
+  {
     campaignId: "evacuados-de-itati-por-la-crecida-del-pa-a0f323",
     foto: "/img/itati.jpg", lugar: "Itatí, Corrientes", fecha: "Octubre 2026", categoria: "Inundaciones",
     fuente: { medio: "Infobae", url: "https://www.infobae.com/sociedad/2026/10/16/el-nino-las-aguas-del-parana-ingresaron-a-la-ciudad-de-corrientes-y-la-provincia-suma-mas-de-200-evacuados/" },
