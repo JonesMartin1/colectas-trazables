@@ -112,6 +112,7 @@ export async function armarColecta(colecta, todas = null) {
       organizador: colecta.organizador || null,
       topicId: colecta.topicId,
       hashscan: hashscan("topic", colecta.topicId),
+      usdcToken: TOKEN_USDC() || null, // para donar desde una billetera propia (web/billetera.js)
     },
     donaciones,
     gastos,

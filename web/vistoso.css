@@ -497,3 +497,14 @@ body[data-page="hedera"]{background:var(--f-0f1412);color:var(--t-e6eee2)}
 #topologia .banda-titulo{font:700 10px var(--mono,monospace);letter-spacing:1.5px;fill:var(--acento-txt,#0b7f74)}
 #topologia .nodo.tec text{font-size:12px}
 #topologia .nodo.tec text.sub{font-size:10px}
+/* Doná desde tu billetera (web/billetera.js) */
+.billetera-propia{margin-top:22px;border-top:1px solid var(--b-d4dfcf);padding-top:16px;font-size:13px;color:var(--t-748274)}
+.billetera-propia summary{cursor:pointer;font-weight:800;color:var(--t-4b5e4c)}
+.billetera-propia ol{padding-left:18px;margin:14px 0 0;line-height:1.55}
+.billetera-propia li{margin-bottom:10px}
+.bt-fila{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
+.bt-fila span{font-size:11px;font-weight:800;min-width:70px}
+.bt-fila code{flex:1;min-width:0;overflow-wrap:anywhere;background:var(--f-e9eee5);border:1px solid var(--b-cbd9c9);border-radius:5px;padding:6px 9px;font-size:12px}
+.action-panel .bt-fila button{width:auto;margin-top:0;padding:6px 10px;font-size:11px;border-radius:5px;border:1px solid var(--b-cbd9c9);background:var(--f-f9faf4);color:var(--t-4b5e4c);cursor:pointer}
+.billetera-propia .bt-form{margin-top:8px}
+.billetera-propia small{display:block;margin-top:8px;font-size:11px;line-height:1.5}
