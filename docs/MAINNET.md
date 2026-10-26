@@ -12,6 +12,17 @@ En mainnet **no se migra nada**: lo que está en testnet se queda ahí. Hay que 
 - **No firma nada en nombre de terceros:** `POST /api/demo/donar` y las acciones de demo del núcleo (`/api/nucleo` POST) responden 403.
 - Usa el Mirror Node público de mainnet (`mainnet-public.mirrornode.hedera.com`), salvo que `MIRROR_NODE_URL` indique uno pago.
 
+## El sitio real del piloto
+
+El piloto (colecta real con una organización) corre en **un deploy aparte** del mismo repo con `HEDERA_NETWORK=mainnet`; la demo en testnet sigue en colectas-trazables.vercel.app. En ese sitio, con `window.HEDERA_RED === "mainnet"`:
+
+- no se muestra el botón de "dólares digitales de prueba" ni el separador de la demo (`web/mercadopago.js`), y Enter en el monto abre Mercado Pago;
+- se usa el checkout real de Mercado Pago (`url`, no `urlPrueba`);
+- la portada lista todo el registro, no las destacadas de testnet (`api/colectas/index.js`);
+- `web/piloto.js` saca los sellos de "datos de ejemplo" y cambia el aviso de los términos.
+
+`scripts/mainnet-prueba.js` arma el registro en mainnet con la cuenta de la plataforma (clave en `hedera/.cuentas-mainnet.json`, fuera de git).
+
 ## Pasos (según docs.hedera.com)
 
 1. **Cuenta de mainnet:** no sale del portal de desarrolladores; se crea con una billetera (HashPack) y se carga con HBAR.
