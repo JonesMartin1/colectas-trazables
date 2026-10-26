@@ -40,3 +40,21 @@ export function crearPreferencia({ colecta, monto, origen }) {
 
 /** El pago leído de la API de MP: lo único en lo que confiamos (nunca en el cuerpo del aviso). */
 export const leerPago = (paymentId) => llamar(`/v1/payments/${encodeURIComponent(paymentId)}`);
+
+/**
+ * Pagos aprobados de los últimos `dias` días, para la conciliación: los que el aviso (webhook) no llegó a registrar.
+ * Una sola búsqueda paginada, sin filtrar por colecta: después se agrupan por external_reference.
+ */
+export async function pagosAprobadosRecientes(dias = 7) {
+  const desde = new Date(Date.now() - dias * 864e5).toISOString().replace("Z", "-00:00");
+  const hasta = new Date().toISOString().replace("Z", "-00:00");
+  const todos = [];
+  for (let offset = 0; offset < 1000; offset += 100) {
+    const q = new URLSearchParams({ status: "approved", range: "date_created", begin_date: desde, end_date: hasta, sort: "date_created", criteria: "asc", limit: "100", offset: String(offset) });
+    const d = await llamar(`/v1/payments/search?${q}`);
+    todos.push(...(d.results || []));
+    if ((d.results || []).length < 100) break;
+  }
+  return todos;
+}
+

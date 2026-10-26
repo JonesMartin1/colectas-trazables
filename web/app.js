@@ -293,7 +293,7 @@ function setupExpense() {
     setBusy(button, true, "Calculando y publicando...");
     try {
       const invoiceHash = await sha256File(file);
-      const payload = { monto: Number(fields.get("monto")), proveedorCuit: String(fields.get("proveedorCuit")).trim(), cae: String(fields.get("cae")).trim(), invoiceHash, clave: String(fields.get("clave")).trim(), detalle: String(fields.get("detalle") || "").trim(), proveedor: String(fields.get("proveedor") || "").trim() };
+      const payload = { monto: Number(fields.get("monto")), proveedorCuit: String(fields.get("proveedorCuit")).trim(), cae: String(fields.get("cae")).trim(), invoiceHash, clave: String(fields.get("clave")).trim(), detalle: String(fields.get("detalle") || "").trim(), proveedor: String(fields.get("proveedor") || "").trim(), pagoRef: String(fields.get("pagoRef") || "").trim(), direccion: String(fields.get("direccion") || "").trim(), localidad: String(fields.get("localidad") || "").trim() };
       const result = await requestJSON(`/api/colectas/${encodeURIComponent(campaignId)}/gastos`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       feedback(status, `Gasto publicado en el registro #${result.secuencia}. Volviendo a la colecta... `, "success");
       setTimeout(() => { location.href = url; }, 1700);

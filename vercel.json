@@ -3,6 +3,7 @@
   "outputDirectory": "web",
   "cleanUrls": true,
   "rewrites": [{ "source": "/red.js", "destination": "/api/salud?formato=js" }],
+  "crons": [{ "path": "/api/webhooks/mercadopago?tarea=conciliar", "schedule": "0 10 * * *" }],
   "functions": {
     "api/**/*.js": {
       "maxDuration": 30

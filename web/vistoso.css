@@ -508,3 +508,7 @@ body[data-page="hedera"]{background:var(--f-0f1412);color:var(--t-e6eee2)}
 .action-panel .bt-fila button{width:auto;margin-top:0;padding:6px 10px;font-size:11px;border-radius:5px;border:1px solid var(--b-cbd9c9);background:var(--f-f9faf4);color:var(--t-4b5e4c);cursor:pointer}
 .billetera-propia .bt-form{margin-top:8px}
 .billetera-propia small{display:block;margin-top:8px;font-size:11px;line-height:1.5}
+/* Dónde se compró (web/mapa.js) */
+.mapa-gastos{padding:60px 0 20px}
+.mapa-caja{height:380px;border-radius:12px;border:1px solid var(--b-d4dfcf);overflow:hidden;margin-top:22px}
+@media (max-width:700px){.mapa-caja{height:300px}}
