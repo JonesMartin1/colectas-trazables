@@ -151,3 +151,10 @@ body[data-page="home"] #como-funciona::before{content:"";position:absolute;inset
 body[data-page="home"] .site-footer{background:
   linear-gradient(180deg,color-mix(in srgb,var(--f-171d1b) 92%,transparent),color-mix(in srgb,var(--f-171d1b) 78%,transparent)),
   url(/img/rio-aereo.jpg) center 70%/cover}
+
+/* Contacto para ONG y entidades, en "Para quienes organizan" */
+.create-contact{display:grid;gap:6px;margin-top:40px;padding-top:24px;border-top:1px solid color-mix(in srgb,var(--t-d9edc4) 25%,transparent);font-size:13px;color:var(--t-b8c9bb)}
+.create-contact strong{color:var(--t-f1f5e9);font-size:14px}
+.create-contact a{color:var(--acento-txt);font-weight:700;text-decoration:none;width:fit-content}
+.create-contact a:hover{text-decoration:underline}
+.sin-corte{white-space:nowrap}

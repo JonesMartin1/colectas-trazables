@@ -134,6 +134,8 @@
     "↗ CORRIENTES, ARGENTINA": "↗ CORRIENTES, ARGENTINA",
     "✳ El 99 % llega a la causa": "✳ 99% goes to the cause",
     "✳ Sin intermediación del dinero": "✳ Funds go directly to the organization",
+    "¿Sos una ONG o una entidad?": "Are you an NGO or an institution?",
+    "Escribinos y armamos la colecta juntos.": "Write to us and we'll set up the fundraiser together.",
     "✳ Un enlace para compartir": "✳ One link to share",
     "Crear una colecta — Colectas Trazables": "Create a fundraiser — Colectas Trazables",
     "Tu causa merece": "Your cause deserves",
