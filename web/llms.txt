@@ -1,0 +1,22 @@
+# Colectas Trazables
+
+> Plataforma argentina de colectas para emergencias (inundaciones del NEA, Corrientes). Cada donación, gasto con su factura y entrega queda en un registro público en Hedera, y cualquiera lo puede verificar gratis. Lema: "Mirá llegar tu ayuda".
+
+- La plata va directo a la organización: la plataforma no custodia ni transfiere fondos.
+- Quien recibe es siempre una persona jurídica (asociación, fundación, bomberos voluntarios, municipio) con CUIT.
+- No se publican datos personales: solo comprobantes y datos públicos de las organizaciones.
+- Hecha en Corrientes Capital por Martín Jones, Nicolás Méndez y Facundo. 2.º puesto del Premio Hedera en NEA Tech 2026.
+- Contacto para ONG y entidades: WhatsApp +54 9 379 420-6527 · martin.jones.r@gmail.com
+
+## Páginas
+
+- [Inicio y colectas](https://colectas-trazables.vercel.app/): colectas abiertas, cómo donar y cómo se verifica.
+- [¿Este alias es real?](https://colectas-trazables.vercel.app/alias): comprobar si un alias de pago pertenece a una organización.
+- [Avisos oficiales](https://colectas-trazables.vercel.app/avisos): avisos firmados por Defensa Civil.
+- [Cómo funciona por dentro](https://colectas-trazables.vercel.app/hedera): el registro en Hedera, en vivo.
+- [Términos](https://colectas-trazables.vercel.app/terminos)
+
+## Más
+
+- [Código abierto](https://github.com/JonesMartin1/colectas-trazables)
+- [Video de 1 minuto](https://youtu.be/E6iJ921Zw7U)
