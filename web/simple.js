@@ -115,11 +115,17 @@
       const verificada = document.body.dataset.verificada !== "false";
       n.innerHTML = `<a class="sello-hedera" href="https://hashscan.io/${window.HEDERA_RED || "testnet"}/topic/${id}" target="_blank" rel="noopener noreferrer" title="Registro ${id} en Hedera">${verificada ? "✓ Registro público · Verificalo ↗" : "Registro público ↗"}</a>`;
       if (!verificada && !document.querySelector(".sin-verificar")) {
-        const aviso = document.createElement("p");
-        aviso.className = "sin-verificar form-feedback error";
+        // mismo recuadro que el aviso de "ejemplo", arriba de todo: es lo primero que tiene que leer quien llega
+        const aviso = document.createElement("div");
+        aviso.className = "sample-banner sin-verificar";
         aviso.setAttribute("role", "note");
-        aviso.textContent = "Colecta de prueba sin verificar: la organización todavía no fue validada. No dones plata real.";
-        n.before(aviso);
+        const fuerte = document.createElement("strong");
+        fuerte.textContent = "Colecta de prueba, sin verificar";
+        const detalle = document.createElement("span");
+        detalle.textContent = "La organización todavía no fue validada. No dones plata real.";
+        aviso.append(fuerte, detalle);
+        const izq = document.querySelector(".page-hero-grid > div");
+        izq ? izq.insertBefore(aviso, izq.firstChild) : n.before(aviso);
       }
       return true;
     };
