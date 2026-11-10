@@ -45,10 +45,26 @@
       const r = await fetch(`/api/colectas/${encodeURIComponent(c.id)}/donaciones`, {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ txId }),
       });
-      const res = await r.json();
-      if (!r.ok) throw new Error(res.error || `Error ${r.status}`);
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok) throw Object.assign(new Error(res.error || `Error ${r.status}`), { status: r.status });
       return res;
     };
+    // Después de firmar, la plata ya salió: si anotar falla por algo pasajero (el Mirror Node todavía no ve la
+    // transferencia, límite de pedidos, corte de red, error del servidor) se reintenta solo. Repetir no duplica:
+    // la API rechaza una transferencia ya registrada (409), y eso acá cuenta como hecho.
+    const ESPERAS = [3000, 6000, 10000];
+    const pasajero = (e) => !e.status || e.status === 429 || e.status >= 500 || (e.status === 400 && /no existe esa transacci/i.test(e.message));
+    const registrarConReintentos = async (txId) => {
+      for (let intento = 0; ; intento++) {
+        try { return await registrar(txId); } catch (e) {
+          if (e.status === 409) return { yaEstaba: true };
+          if (!pasajero(e) || intento >= ESPERAS.length) throw e;
+          await new Promise((ok) => setTimeout(ok, ESPERAS[intento]));
+        }
+      }
+    };
+
+    const form = caja.querySelector(".bt-form");
 
     // "Conectar HashPack y donar": la librería de la billetera (web/hashpack.js, pesada) se carga recién acá
     let libreria;
@@ -68,20 +84,29 @@
       if (!(usdc > 0)) return decir("Indicá cuántos USDC querés donar.", "error");
       conectar.disabled = true;
       try {
-        decir("Abriendo la conexión con tu billetera…");
-        const hp = await cargarHashPack();
-        decir("Revisá tu billetera: te va a pedir que conectes y que firmes la transferencia.");
-        const pago = await hp.donar({ red: red(), token: c.usdcToken, beneficiario: c.beneficiarioCuenta, memo, usdc });
-        decir("Transferencia enviada. Verificando en Hedera…");
-        const res = await registrar(pago.txId);
-        decir(`Donación registrada. Guardá este comprobante: ${res.comprobante}`, "success");
-      } catch (e) {
-        const m = String(e?.message || e);
-        decir(/reject|rechaz|cancel|denied|closed|expired/i.test(m) ? "Cancelaste la operación en tu billetera. No se movió nada." : `No se pudo completar: ${m}`, "error");
+        // 1) la firma: si falla acá, no se movió nada (o la billetera no llegó a avisarnos)
+        let pago;
+        try {
+          decir("Abriendo la conexión con tu billetera…");
+          const hp = await cargarHashPack();
+          decir("Revisá tu billetera: te va a pedir que conectes y que firmes la transferencia.");
+          pago = await hp.donar({ red: red(), token: c.usdcToken, beneficiario: c.beneficiarioCuenta, memo, usdc });
+        } catch (e) {
+          const m = String(e?.message || e);
+          return decir(/reject|rechaz|cancel|denied|closed|expired/i.test(m) ? "Cancelaste la operación en tu billetera. No se movió nada." : `No se pudo completar: ${m} Si en tu billetera figura como enviada, pegá el ID abajo.`, "error");
+        }
+        // 2) el registro: la plata ya salió, así que un error acá nunca se muestra como "no se pudo donar"
+        try {
+          decir("Transferencia enviada. Verificando en Hedera…");
+          const res = await registrarConReintentos(pago.txId);
+          decir(res.yaEstaba ? "Tu donación ya figura registrada en la colecta." : `Donación registrada. Guardá este comprobante: ${res.comprobante}`, "success");
+        } catch {
+          form.tx.value = pago.txId;
+          decir(`Tu transferencia salió bien, pero todavía no pudimos anotarla. No vuelvas a donar. ID: ${pago.txId} — ya quedó cargado abajo: tocá "Registrar mi donación" en unos segundos.`, "error");
+        }
       } finally { conectar.disabled = false; }
     });
 
-    const form = caja.querySelector(".bt-form");
     form.addEventListener("submit", async (ev) => {
       ev.preventDefault();
       const estado = form.querySelector(".form-feedback");
