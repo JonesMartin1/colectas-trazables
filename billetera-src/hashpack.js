@@ -47,11 +47,13 @@ async function donar({ red, token, beneficiario, memo, usdc }) {
   const firmante = await cuenta(red);
   const de = firmante.getAccountId();
   if (de.toString() === String(beneficiario)) throw new Error("La billetera conectada es la de la colecta: doná desde otra.");
-  const tx = await new TransferTransaction()
+  const tx = new TransferTransaction()
     .addTokenTransfer(token, de, -unidades)
     .addTokenTransfer(token, beneficiario, unidades)
-    .setTransactionMemo(memo)
-    .freezeWithSigner(firmante);
+    .setTransactionMemo(memo);
+  // Sin congelar: freezeWithSigner falla ("nodeAccountId must be set") porque el firmante de WalletConnect no conoce
+  // los nodos. Se fija solo el ID (quién paga y cuándo) y la billetera elige el nodo al firmar y enviar.
+  await firmante.populateTransaction(tx);
   const respuesta = await tx.executeWithSigner(firmante);
   return { txId: respuesta.transactionId.toString(), cuenta: de.toString() };
 }
