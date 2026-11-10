@@ -18,6 +18,14 @@
     const caja = document.createElement("details");
     caja.className = "billetera-propia";
     caja.innerHTML = `<summary>¿Tenés HashPack? Doná desde tu billetera</summary>
+      <div class="bt-conectar">
+        <label for="bt-usdc">¿Cuántos USDC querés donar?</label>
+        <input id="bt-usdc" name="usdc" type="number" min="0.01" step="0.01" value="1" inputmode="decimal">
+        <button type="button" class="button button-lime bt-hashpack">Conectar HashPack y donar</button>
+        <p class="form-feedback bt-estado" role="status" aria-live="polite"></p>
+        <small>Tu billetera te muestra la transferencia y vos la firmás. Nosotros no vemos tu clave.</small>
+      </div>
+      <p class="bt-o">O hacelo a mano:</p>
       <ol>
         <li>En tu billetera${red() === "testnet" ? " (en <b>testnet</b>)" : ""}, mandá USDC a la cuenta de la colecta y escribí el memo tal cual:
           ${fila("Cuenta", c.beneficiarioCuenta)}${fila("Memo", memo)}${fila(red() === "testnet" ? "Token" : "Token USDC", c.usdcToken)}</li>
@@ -32,6 +40,47 @@
       if (!b) return;
       navigator.clipboard?.writeText(b.dataset.copiar).then(() => { b.textContent = "Copiado"; setTimeout(() => (b.textContent = "Copiar"), 1500); });
     });
+    // registra una transferencia ya hecha: la API la busca en el Mirror Node antes de anotarla
+    const registrar = async (txId) => {
+      const r = await fetch(`/api/colectas/${encodeURIComponent(c.id)}/donaciones`, {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ txId }),
+      });
+      const res = await r.json();
+      if (!r.ok) throw new Error(res.error || `Error ${r.status}`);
+      return res;
+    };
+
+    // "Conectar HashPack y donar": la librería de la billetera (web/hashpack.js, pesada) se carga recién acá
+    let libreria;
+    const cargarHashPack = () => (libreria ??= new Promise((ok, mal) => {
+      if (window.ColectasHashPack) return ok(window.ColectasHashPack);
+      const s = document.createElement("script");
+      s.src = "/hashpack.js";
+      s.onload = () => (window.ColectasHashPack ? ok(window.ColectasHashPack) : mal(new Error("No se pudo cargar la conexión con la billetera.")));
+      s.onerror = () => { libreria = null; mal(new Error("No se pudo cargar la conexión con la billetera.")); };
+      document.head.append(s);
+    }));
+    const conectar = caja.querySelector(".bt-hashpack");
+    const estadoHP = caja.querySelector(".bt-estado");
+    conectar.addEventListener("click", async () => {
+      const decir = (texto, tipo = "") => { estadoHP.className = `form-feedback bt-estado ${tipo}`; estadoHP.textContent = texto; };
+      const usdc = Number(caja.querySelector("#bt-usdc").value);
+      if (!(usdc > 0)) return decir("Indicá cuántos USDC querés donar.", "error");
+      conectar.disabled = true;
+      try {
+        decir("Abriendo la conexión con tu billetera…");
+        const hp = await cargarHashPack();
+        decir("Revisá tu billetera: te va a pedir que conectes y que firmes la transferencia.");
+        const pago = await hp.donar({ red: red(), token: c.usdcToken, beneficiario: c.beneficiarioCuenta, memo, usdc });
+        decir("Transferencia enviada. Verificando en Hedera…");
+        const res = await registrar(pago.txId);
+        decir(`Donación registrada. Guardá este comprobante: ${res.comprobante}`, "success");
+      } catch (e) {
+        const m = String(e?.message || e);
+        decir(/reject|rechaz|cancel|denied|closed|expired/i.test(m) ? "Cancelaste la operación en tu billetera. No se movió nada." : `No se pudo completar: ${m}`, "error");
+      } finally { conectar.disabled = false; }
+    });
+
     const form = caja.querySelector(".bt-form");
     form.addEventListener("submit", async (ev) => {
       ev.preventDefault();
@@ -40,11 +89,7 @@
       boton.disabled = true; boton.textContent = "Verificando en Hedera...";
       estado.className = "form-feedback"; estado.textContent = "";
       try {
-        const r = await fetch(`/api/colectas/${encodeURIComponent(c.id)}/donaciones`, {
-          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ txId: form.tx.value.trim() }),
-        });
-        const res = await r.json();
-        if (!r.ok) throw new Error(res.error || `Error ${r.status}`);
+        const res = await registrar(form.tx.value.trim());
         estado.className = "form-feedback success";
         estado.textContent = `Donación registrada. Guardá este comprobante: ${res.comprobante}`;
         form.tx.value = "";
