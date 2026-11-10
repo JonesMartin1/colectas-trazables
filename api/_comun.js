@@ -1,10 +1,14 @@
 // Piezas compartidas por las funciones de la API (el guion bajo evita que Vercel la publique como ruta).
 import crypto from "node:crypto";
-import { listarColectas, leerEventos, sha256 } from "../hedera/colectas.js";
+import { listarColectas as listarRegistro, leerEventos, sha256 } from "../hedera/colectas.js";
 import { leerJson, ESTADO, DECIMALES, MIRROR, mirrorSiguiente, hashscan } from "../hedera/lib.js";
 import { EXCHANGES } from "./_exchanges.js";
+import { OCULTAS, esVerificada, mensajeDeError } from "./_seguridad.js";
 
 export { sha256 };
+
+/** Las colectas del registro que la API sirve: todas menos las ocultas (ver _seguridad.js). */
+export const listarColectas = async () => (await listarRegistro()).filter((c) => !OCULTAS.has(c.campaignId));
 
 /** Pesos por dólar para la donación de demo en USDC. Es un valor de demo, no una cotización real. */
 export const COTIZACION = Number(process.env.COTIZACION_ARS_USD) || 1400;
@@ -18,13 +22,34 @@ export function error(res, status, mensaje) {
   json(res, status, { error: mensaje });
 }
 
+/** Error de la API: los que no traen `status` de cliente salen con un texto genérico y el detalle va al log. */
+export function errorDe(res, e, donde) {
+  error(res, ...mensajeDeError(e, donde));
+}
+
+const MAX_CUERPO = 16 * 1024; // ningún pedido de esta API necesita más: los archivos nunca viajan, solo su hash
+
 export async function leerCuerpo(req) {
-  if (req.body && typeof req.body === "object") return req.body;
-  if (typeof req.body === "string") return JSON.parse(req.body || "{}");
-  const partes = [];
-  for await (const p of req) partes.push(p);
-  const texto = Buffer.concat(partes).toString("utf8");
-  return texto ? JSON.parse(texto) : {};
+  const grande = () => Object.assign(new Error("El pedido es demasiado grande."), { status: 413 });
+  const objeto = (v) => (v && typeof v === "object" && !Array.isArray(v) ? v : {});
+  if (req.body && typeof req.body === "object" && !Buffer.isBuffer(req.body)) {
+    if (JSON.stringify(req.body).length > MAX_CUERPO) throw grande();
+    return objeto(req.body);
+  }
+  let texto;
+  if (typeof req.body === "string" || Buffer.isBuffer(req.body)) texto = req.body.toString("utf8");
+  else {
+    const partes = [];
+    let largo = 0;
+    for await (const p of req) {
+      largo += p.length;
+      if (largo > MAX_CUERPO) throw grande();
+      partes.push(p);
+    }
+    texto = Buffer.concat(partes).toString("utf8");
+  }
+  if (texto.length > MAX_CUERPO) throw grande();
+  return texto ? objeto(JSON.parse(texto)) : {};
 }
 
 /** Identificador legible y único: "ayuda-para-itati-mg2k9x". */
@@ -110,6 +135,7 @@ export async function armarColecta(colecta, todas = null) {
       meta: colecta.meta,
       beneficiarioCuenta: colecta.beneficiarioCuenta,
       organizador: colecta.organizador || null,
+      verificada: esVerificada(colecta), // sin verificar: sin sello y sin Mercado Pago
       topicId: colecta.topicId,
       hashscan: hashscan("topic", colecta.topicId),
       usdcToken: TOKEN_USDC() || null, // para donar desde una billetera propia (web/billetera.js)

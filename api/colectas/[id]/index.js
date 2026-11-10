@@ -1,6 +1,5 @@
 // GET /api/colectas/:id → colecta, donaciones, gastos y totales, leídos del Mirror Node
-import { json, error, armarColecta } from "../../_comun.js";
-import { listarColectas } from "../../../hedera/colectas.js";
+import { json, error, errorDe, armarColecta, listarColectas } from "../../_comun.js";
 
 export default async function handler(req, res) {
   try {
@@ -11,6 +10,6 @@ export default async function handler(req, res) {
     if (!colecta) return error(res, 404, "No existe una colecta con ese identificador.");
     return json(res, 200, await armarColecta(colecta, todas));
   } catch (e) {
-    return error(res, 500, e.message);
+    return errorDe(res, e, "colecta");
   }
 }

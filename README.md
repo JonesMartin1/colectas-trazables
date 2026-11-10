@@ -91,6 +91,8 @@ Esta tabla se actualiza con las transacciones de la demo final.
 4. **Nunca commitear `.env` ni `.cuentas.json`.** El `.gitignore` ya los excluye, pero revisá `git status` antes de cada commit.
 5. **Cierre: sábado 17/10 a las 9:30.** Después de esa hora no se commitea nada. Los PR tienen que estar mergeados antes de las 8:30.
 
+Los controles de seguridad, ordenados según ISO/IEC 27002:2022, y cómo avisar de una falla están en [`docs/SEGURIDAD.md`](docs/SEGURIDAD.md).
+
 ### Protección de secretos
 
 `npm install` activa hooks locales de Git. Antes de cada commit se revisan los archivos preparados; antes de cada push se revisan los commits salientes. GitHub Actions vuelve a revisar los commits del push y de cada PR. Los errores muestran el archivo y el tipo de hallazgo, sin imprimir el valor secreto.

@@ -55,8 +55,8 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 
 | Método y ruta | Recibe | Devuelve |
 | --- | --- | --- |
-| `GET /api/colectas` | — | `[{ campaignId, titulo, meta, topicId, beneficiarioCuenta, foto, lugar, fecha, categoria, fuente }]`: solo las destacadas de `api/_destacadas.js` (casos reales, en ese orden). `?todas=1` devuelve todo el registro, sin foto ni fuente. |
-| `POST /api/colectas` | `{ titulo, descripcion, meta, beneficiarioCuenta }` | `{ id, topicId, url, hashscan, claveOrganizador, urlOrganizador }` |
+| `GET /api/colectas` | — | `[{ campaignId, titulo, meta, topicId, beneficiarioCuenta, foto, lugar, fecha, categoria, fuente, verificada }]`: solo las destacadas de `api/_destacadas.js` (casos reales, en ese orden). `?todas=1` devuelve todo el registro, sin foto ni fuente. |
+| `POST /api/colectas` | `{ titulo, descripcion, meta, beneficiarioCuenta, organizador: { nombre, tipo, cuit, igpj }, codigoAlta? }` | `{ id, topicId, url, hashscan, verificada, claveOrganizador, urlOrganizador }`. Con un `codigoAlta` válido (un solo uso) la colecta nace verificada; sin código, en testnet nace sin verificar y en mainnet responde `403`. `429` si se pasa el límite de pedidos. Ver `docs/SEGURIDAD.md` |
 | `GET /api/colectas/:id` | — | `{ colecta, donaciones[], gastos[], salidas[], billeteraCompartida, totales: { recaudado, gastado, saldo, retirado, sinRendir } }`. `salidas` son los envíos de USDC que salieron de la billetera de la colecta, leídos del Mirror Node (`null` si la billetera la comparten varias colectas) |
 | `POST /api/demo/donar` | `{ campaignId, monto }` | `{ txId, hashscan, usdc }` (solo demo: la billetera de prueba paga, no registra) |
 | `POST /api/colectas/:id/donaciones` | `{ txId }` | `{ hashscan, comprobante }` (`400` si la transferencia no se verifica, `409` si ya está) |
@@ -65,7 +65,7 @@ Todas las respuestas son JSON. Los montos van en pesos, como número.
 | `GET /api/webhooks/mercadopago?tarea=conciliar` | `Authorization: Bearer <CRON_SECRET>` | `{ revisados, registrados[] }`: registra los pagos aprobados de los últimos 7 días que el aviso no registró. La corre el cron diario de `vercel.json` |
 | `GET /api/colectas/:id/verificar?comprobante=...` | — | `{ encontrada, secuencia, hashscan }` |
 | `POST /api/colectas/:id/entregas` | `{ item, cantidad, lugar, foto, fotoHash, clave }` | `{ secuencia, hashscan }` (`401` sin la clave del organizador) |
-| `POST /api/colectas/:id/mercadopago` | `{ monto }` | `{ url, urlPrueba }` (link de Checkout Pro; no registra nada) |
+| `POST /api/colectas/:id/mercadopago` | `{ monto }` | En testnet `{ urlPrueba }`, en mainnet `{ url }` (link de Checkout Pro; no registra nada). `403` si la colecta no está verificada |
 | `GET /api/propuestas` | — | `{ topicId, hashscan, propuestas[] }`: ideas postuladas, sin aval todavía |
 | `POST /api/propuestas` | `{ titulo, descripcion, provincia, categoria, montoEstimado }` | `{ secuencia, hashscan }`. Publica `PROPOSAL` en el topic de propuestas, sin datos de quien postula. No recibe donaciones: una ONG verificada la avala creando la colecta. |
 | `POST /api/webhooks/mercadopago` | aviso de Mercado Pago (`type=payment`, `data.id`) | `200` siempre. Busca el pago en la API de MP y, si está aprobado y no se registró, publica `DONATION` con `method: "mercadopago"` y `externalRefHash = sha256("mp-<paymentId>")`. El comprobante del donante es `mp-<paymentId>`. |

@@ -4,7 +4,9 @@
 // No va ningún dato personal: ni el nombre ni el email de quien postula.
 import { leerEventos, publicarEvento } from "../hedera/colectas.js";
 import { leerJson, ESTADO, hashscan } from "../hedera/lib.js";
-import { json, error, leerCuerpo, esperarEnMirror } from "./_comun.js";
+import { json, error, errorDe, leerCuerpo, esperarEnMirror } from "./_comun.js";
+
+import { limitar } from "./_seguridad.js";
 
 export const PROVINCIAS = ["Corrientes", "Chaco", "Misiones", "Formosa"];
 export const CATEGORIAS = ["Inundaciones", "Incendios", "Agua", "Salud", "Alimentación", "Educación", "Otra"];
@@ -24,6 +26,7 @@ export default async function handler(req, res) {
       return json(res, 200, { topicId, hashscan: hashscan("topic", topicId), propuestas: lista });
     }
     if (req.method !== "POST") return error(res, 405, "Método no permitido");
+    if (limitar(req, res, "propuestas", { max: 3, ventanaSeg: 600, global: 30 })) return; // cada propuesta es un mensaje pago en HCS
     const b = await leerCuerpo(req);
     const titulo = limpio(b.titulo, 90);
     const descripcion = limpio(b.descripcion, 260);
@@ -40,6 +43,6 @@ export default async function handler(req, res) {
     await esperarEnMirror(topicId, reg.secuencia);
     return json(res, 201, { secuencia: reg.secuencia, hashscan: reg.hashscan });
   } catch (e) {
-    return error(res, 500, e.message);
+    return errorDe(res, e, "propuestas");
   }
 }

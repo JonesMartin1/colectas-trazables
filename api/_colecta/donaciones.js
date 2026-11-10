@@ -5,13 +5,16 @@
 import crypto from "node:crypto";
 import { leerEventos, publicarEvento, verificarTransferencia } from "../../hedera/colectas.js";
 import { idTx } from "../../hedera/lib.js";
-import { json, error, leerCuerpo, buscarColecta, sha256, COTIZACION, esperarEnMirror } from "../_comun.js";
+import { json, error, errorDe, leerCuerpo, buscarColecta, sha256, COTIZACION, esperarEnMirror } from "../_comun.js";
 
 const TX_ID = /^0\.0\.\d+-\d+-\d+$/;
+
+import { limitar } from "../_seguridad.js";
 
 export default async function handler(req, res) {
   try {
     if (req.method !== "POST") return error(res, 405, "Método no permitido");
+    if (limitar(req, res, "donaciones", { max: 20 })) return;
     const colecta = await buscarColecta(req.query.id);
     if (!colecta) return error(res, 404, "No existe una colecta con ese identificador.");
     const { txId: crudo } = await leerCuerpo(req);
@@ -40,6 +43,6 @@ export default async function handler(req, res) {
     await esperarEnMirror(colecta.topicId, reg.secuencia);
     return json(res, 201, { comprobante, secuencia: reg.secuencia, hashscan: pago.hashscan, registro: reg.hashscan, usdc: pago.usdc });
   } catch (e) {
-    return error(res, 500, e.message);
+    return errorDe(res, e, "donaciones");
   }
 }

@@ -18,7 +18,8 @@ El piloto (colecta real con una organización) corre en **un deploy aparte** del
 
 - no se muestra el botón de "dólares digitales de prueba" ni el separador de la demo (`web/mercadopago.js`), y Enter en el monto abre Mercado Pago;
 - se usa el checkout real de Mercado Pago (`url`, no `urlPrueba`);
-- la portada lista todo el registro, no las destacadas de testnet (`api/colectas/index.js`);
+- la portada lista las colectas **verificadas** del registro, no las destacadas de testnet (`api/colectas/index.js`);
+- crear una colecta exige un código de alta (`CODIGOS_ALTA_HASH`); las colectas creadas antes de ese control se habilitan con `COLECTAS_VERIFICADAS` (ver `docs/SEGURIDAD.md`);
 - `web/piloto.js` saca los sellos de "datos de ejemplo" y cambia el aviso de los términos.
 
 `scripts/mainnet-prueba.js` arma el registro en mainnet con la cuenta de la plataforma (clave en `hedera/.cuentas-mainnet.json`, fuera de git).
@@ -31,7 +32,7 @@ El piloto (colecta real con una organización) corre en **un deploy aparte** del
 4. **Contratos:** volver a publicarlos (USD 1 cada uno más el gas), después de la auditoría.
 5. **Mirror Node pago para producción** (Validation Cloud, Arkhia, Hgraph): el público limita a ~50 consultas por segundo por IP y tarda 5–15 s.
 6. **Reintentos ante `BUSY`:** la red rechaza lo que pasa sus límites (crear cuentas: 2 por segundo).
-7. En Vercel: `HEDERA_NETWORK=mainnet`, `HEDERA_ACCOUNT_ID`, `HEDERA_PRIVATE_KEY` y los IDs de arriba. Sin `DEMO_DONANTE_*`.
+7. En Vercel: `HEDERA_NETWORK=mainnet`, `HEDERA_ACCOUNT_ID`, `HEDERA_PRIVATE_KEY`, los IDs de arriba y `CODIGOS_ALTA_HASH` (sin él, el alta de colectas responde 503). Sin `DEMO_DONANTE_*`.
 
 ## Costos de mainnet (USD, se pagan en HBAR)
 

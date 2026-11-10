@@ -3,13 +3,16 @@
 // de una foto que queda en poder de la organización. Idea sugerida por Henry Tong (16/10).
 // Solo el organizador: misma clave que para los gastos.
 import { publicarEvento } from "../../hedera/colectas.js";
-import { json, error, leerCuerpo, buscarColecta, esperarEnMirror, rechazoOrganizador } from "../_comun.js";
+import { json, error, errorDe, leerCuerpo, buscarColecta, esperarEnMirror, rechazoOrganizador } from "../_comun.js";
 
 const limpio = (s, max) => String(s || "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, max);
+
+import { limitar } from "../_seguridad.js";
 
 export default async function handler(req, res) {
   try {
     if (req.method !== "POST") return error(res, 405, "Método no permitido");
+    if (limitar(req, res, "entregas", { max: 10 })) return;
     const colecta = await buscarColecta(req.query.id);
     if (!colecta) return error(res, 404, "No existe una colecta con ese identificador.");
     const b = await leerCuerpo(req);
@@ -40,6 +43,6 @@ export default async function handler(req, res) {
     await esperarEnMirror(colecta.topicId, reg.secuencia);
     return json(res, 201, { secuencia: reg.secuencia, hashscan: reg.hashscan });
   } catch (e) {
-    return error(res, 500, e.message);
+    return errorDe(res, e, "entregas");
   }
 }

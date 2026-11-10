@@ -10,6 +10,6 @@ export default async function handler(req, res) {
     if (!topicId) return error(res, 503, "El canal de avisos no está configurado.");
     return json(res, 200, { canal: topicId, hashscan: hashscan("topic", topicId), avisos: await listarAvisos(topicId) });
   } catch (e) {
-    return error(res, 500, e.message);
+    return errorDe(res, e, "avisos");
   }
 }

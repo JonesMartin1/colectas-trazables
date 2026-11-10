@@ -14,6 +14,6 @@ export default async function handler(req, res) {
     const r = await consultarAlias(topicId, alias);
     return json(res, 200, { ...r, registro: hashscan("topic", topicId) });
   } catch (e) {
-    return error(res, 500, e.message);
+    return errorDe(res, e, "alias");
   }
 }

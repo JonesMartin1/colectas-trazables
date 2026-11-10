@@ -7,6 +7,8 @@
     "secrets:check": "node scripts/check-secrets.js --staged",
     "secrets:check-all": "node scripts/check-secrets.js --tracked",
     "test:secrets": "node --test scripts/check-secrets.test.js",
+    "test:seguridad": "node --test scripts/seguridad.test.js",
+    "codigo-alta": "node scripts/codigo-alta.js",
     "setup": "node hedera/setup.js",
     "registro": "node hedera/crear-registro.js",
     "probar": "node hedera/probar.js",

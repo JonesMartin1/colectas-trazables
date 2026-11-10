@@ -53,6 +53,14 @@ const MP_LOGO = "M11.115 16.479a.93.927 0 0 1-.939-.886c-.002-.042-.006-.155-.10
     form.addEventListener("submit", (ev) => { ev.preventDefault(); ev.stopImmediatePropagation(); boton.click(); }, true);
   }
 
+  // colecta sin verificar: sin Mercado Pago (la API igual rechaza el pedido: esto es solo para no mostrar un botón que no anda)
+  const sinVerificar = () => {
+    if (document.body.dataset.verificada !== "false") return;
+    boton.style.display = "none"; seguro.style.display = "none"; separador.style.display = "none";
+  };
+  document.addEventListener("colecta:lista", sinVerificar);
+  sinVerificar();
+
   const aviso = form.querySelector("#donate-feedback");
   boton.addEventListener("click", async () => {
     const monto = Number(input.value);

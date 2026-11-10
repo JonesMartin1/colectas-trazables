@@ -146,6 +146,9 @@ function renderCampaign(data, isExample) {
   byId("expense-count").textContent = `${expenses.length} ${expenses.length === 1 ? "MOVIMIENTO" : "MOVIMIENTOS"}`;
   renderMovements(byId("donations-list"), donations, "donation");
   renderMovements(byId("expenses-list"), expenses, "expense");
+  // para los scripts que se suman aparte (sello, Mercado Pago): si la organización de la colecta está verificada
+  document.body.dataset.verificada = String(isExample || campaign.verificada !== false);
+  document.dispatchEvent(new CustomEvent("colecta:lista", { detail: data }));
 }
 
 async function loadCampaign() {
@@ -213,7 +216,8 @@ function setupCreate() {
         tipo: String(fields.get("orgTipo") || ""),
         cuit: String(fields.get("orgCuit") || "").trim(),
         igpj: String(fields.get("orgIgpj") || "").trim()
-      }
+      },
+      codigoAlta: String(fields.get("codigoAlta") || "").trim() || undefined
     };
     setBusy(button, true, "Creando colecta...");
     try {

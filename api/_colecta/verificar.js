@@ -1,11 +1,14 @@
 // GET /api/colectas/:id/verificar?comprobante=... → ¿está esta donación en el registro?
 // Se recalcula el hash del comprobante y se busca entre los eventos leídos del Mirror Node.
 import { leerEventos } from "../../hedera/colectas.js";
-import { json, error, buscarColecta, sha256 } from "../_comun.js";
+import { json, error, errorDe, buscarColecta, sha256 } from "../_comun.js";
+
+import { limitar } from "../_seguridad.js";
 
 export default async function handler(req, res) {
   try {
     if (req.method !== "GET") return error(res, 405, "Método no permitido");
+    if (limitar(req, res, "verificar", { max: 30 })) return;
     const colecta = await buscarColecta(req.query.id);
     if (!colecta) return error(res, 404, "No existe una colecta con ese identificador.");
     const comprobante = String(req.query.comprobante || "").trim();
@@ -15,6 +18,6 @@ export default async function handler(req, res) {
     if (!e) return json(res, 200, { encontrada: false });
     return json(res, 200, { encontrada: true, secuencia: e.secuencia, fecha: e.fecha, monto: e.evento.amount, hashscan: e.hashscan });
   } catch (err) {
-    return error(res, 500, err.message);
+    return errorDe(res, err, "verificar");
   }
 }

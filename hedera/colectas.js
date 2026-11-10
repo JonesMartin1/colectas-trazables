@@ -51,10 +51,11 @@ export async function publicarEvento(topicId, evento) {
 }
 
 /** Alta de una colecta: crea su topic y la anota en el topic de registro. */
-export async function registrarColecta({ campaignId, titulo, descripcion, meta, beneficiarioCuenta, organizador, orgKeyHash }) {
+export async function registrarColecta({ campaignId, titulo, descripcion, meta, beneficiarioCuenta, organizador, orgKeyHash, verificada, altaHuella }) {
   const { registro } = config();
   if (!registro) throw new Error("Falta REGISTRO_TOPIC_ID (correr node hedera/crear-registro.js)");
-  const datos = { type: "CAMPAIGN", campaignId, titulo, descripcion, meta, beneficiarioCuenta, organizador, orgKeyHash };
+  // verificada/altaHuella: solo cuando el alta vino con un código válido (api/_seguridad.js)
+  const datos = { type: "CAMPAIGN", campaignId, titulo, descripcion, meta, beneficiarioCuenta, organizador, orgKeyHash, ...(verificada === true && { verificada: true, altaHuella }) };
   // medir antes de crear el topic: si el alta no entra en un mensaje, no dejar un topic huérfano
   const prueba = JSON.stringify({ ...datos, topicId: "0.0.9999999999", timestamp: new Date().toISOString() });
   if (Buffer.byteLength(prueba) > MAX_MENSAJE) {

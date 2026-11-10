@@ -6,8 +6,9 @@
 // GET /api/webhooks/mercadopago?tarea=conciliar → conciliación (la corre el cron diario de vercel.json): busca en MP
 // los pagos aprobados de los últimos 7 días y registra los que el aviso no registró (sitio caído, aviso perdido).
 // Solo con `Authorization: Bearer <CRON_SECRET>`, que Vercel manda solo en los cron; sin CRON_SECRET no corre.
-import { publicarEvento, leerEventos, listarColectas } from "../../hedera/colectas.js";
-import { json, leerCuerpo, buscarColecta, esperarEnMirror } from "../_comun.js";
+import { publicarEvento, leerEventos } from "../../hedera/colectas.js";
+import { json, leerCuerpo, buscarColecta, esperarEnMirror, listarColectas } from "../_comun.js";
+import { limitar, esVerificada } from "../_seguridad.js";
 import { leerPago, hashPagoMP, pagosAprobadosRecientes } from "../_mercadopago.js";
 
 /** Registra un pago aprobado de MP como DONATION, si no estaba. `eventos` se puede pasar para no releer el topic. */
@@ -35,7 +36,7 @@ async function conciliar(req, res) {
   const colectas = new Map((await listarColectas()).map((c) => [c.campaignId, c]));
   const porColecta = new Map();
   for (const p of pagos) {
-    if (!colectas.has(p.external_reference)) continue;
+    if (!colectas.has(p.external_reference) || !esVerificada(colectas.get(p.external_reference))) continue;
     porColecta.set(p.external_reference, [...(porColecta.get(p.external_reference) || []), p]);
   }
   const registrados = [];
@@ -52,9 +53,10 @@ async function conciliar(req, res) {
 
 export default async function handler(req, res) {
   if (req.query?.tarea === "conciliar") {
-    try { return await conciliar(req, res); } catch (e) { return json(res, 500, { error: e.message }); }
+    try { return await conciliar(req, res); } catch (e) { console.error("[error] conciliación de Mercado Pago:", e.message); return json(res, 500, { error: "La conciliación falló: ver el log." }); }
   }
   if (req.method !== "POST") return json(res, 405, { error: "Método no permitido" });
+  if (limitar(req, res, "webhook-mp", { max: 120 })) return; // cada aviso dispara una consulta a la API de MP
   try {
     const b = await leerCuerpo(req).catch(() => ({}));
     const tipo = b.type || b.topic || req.query.type || req.query.topic;
@@ -64,13 +66,13 @@ export default async function handler(req, res) {
     const pago = await leerPago(paymentId);
     if (pago.status !== "approved") return json(res, 200, { ignorado: `pago ${pago.status}` });
     const colecta = await buscarColecta(pago.external_reference);
-    if (!colecta) return json(res, 200, { ignorado: "colecta desconocida" });
+    if (!colecta || !esVerificada(colecta)) return json(res, 200, { ignorado: "colecta desconocida o sin verificar" });
 
     const r = await registrarPago(pago, colecta);
     if (r.registrado) await esperarEnMirror(r.topicId, r.secuencia);
     return json(res, 200, r.registrado ? { registrado: r.registrado, hashscan: r.hashscan } : r);
   } catch (e) {
     console.error("webhook de Mercado Pago:", e.message);
-    return json(res, 200, { error: e.message });
+    return json(res, 200, { ignorado: "error interno" });
   }
 }

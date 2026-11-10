@@ -111,7 +111,16 @@
       const id = n.textContent.match(/0\.0\.\d+/)?.[0];
       if (!id) return false;
       obs.disconnect();
-      n.innerHTML = `<a class="sello-hedera" href="https://hashscan.io/${window.HEDERA_RED || "testnet"}/topic/${id}" target="_blank" rel="noopener noreferrer" title="Registro ${id} en Hedera">✓ Registro público · Verificalo ↗</a>`;
+      // el sello con tilde es solo para colectas de una organización validada (lo decide la API, no esta página)
+      const verificada = document.body.dataset.verificada !== "false";
+      n.innerHTML = `<a class="sello-hedera" href="https://hashscan.io/${window.HEDERA_RED || "testnet"}/topic/${id}" target="_blank" rel="noopener noreferrer" title="Registro ${id} en Hedera">${verificada ? "✓ Registro público · Verificalo ↗" : "Registro público ↗"}</a>`;
+      if (!verificada && !document.querySelector(".sin-verificar")) {
+        const aviso = document.createElement("p");
+        aviso.className = "sin-verificar form-feedback error";
+        aviso.setAttribute("role", "note");
+        aviso.textContent = "Colecta de prueba sin verificar: la organización todavía no fue validada. No dones plata real.";
+        n.before(aviso);
+      }
       return true;
     };
     const obs = new MutationObserver(sello);

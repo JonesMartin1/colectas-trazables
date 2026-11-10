@@ -32,6 +32,8 @@ Colectas para emergencias donde cada donación, gasto, entrega y alias oficial q
 
 **Pagar y registrar van separados.** `POST /api/demo/donar` es solo de la demo: una cuenta de prueba hace de billetera del donante y transfiere USDC con el memo `colecta:<id>` (en producción firma el donante con HashPack, o paga con Mercado Pago). `POST /api/colectas/:id/donaciones { txId }` registra la donación solo si el Mirror Node confirma la transferencia: tiene que haber salido bien, ir al beneficiario, llevar el memo de la colecta y no estar ya registrada. **Sin pago real, no hay donación en el registro.**
 
+**Alta con código y controles de seguridad (ver `docs/SEGURIDAD.md`):** `api/_seguridad.js` tiene el límite de pedidos (`limitar`), los errores sin detalle interno (`errorDe` en `_comun.js`), el código de alta y qué colecta está verificada u oculta. Una función nueva que escriba o gaste HBAR lleva `limitar` y termina su `catch` con `errorDe`. Sin organización validada no hay sello ni cobro: `verificada` lo pone el servidor, nunca el cliente.
+
 **Gastos y entregas, solo el organizador:** al crear la colecta se entrega una `claveOrganizador` (una sola vez) y en `CAMPAIGN` queda solo `orgKeyHash`. Las colectas sin `orgKeyHash` no admiten registros nuevos.
 
 ## Comandos

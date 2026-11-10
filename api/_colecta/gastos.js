@@ -5,12 +5,15 @@
 // Solo el organizador: la clave que recibió al crear la colecta tiene que coincidir con el orgKeyHash del registro.
 // El PDF nunca llega acá: el navegador calcula su SHA-256 y manda solo el hash.
 import { publicarEvento } from "../../hedera/colectas.js";
-import { json, error, leerCuerpo, buscarColecta, esperarEnMirror, rechazoOrganizador } from "../_comun.js";
+import { json, error, errorDe, leerCuerpo, buscarColecta, esperarEnMirror, rechazoOrganizador } from "../_comun.js";
 import { ubicarComercio } from "../_geo.js";
+
+import { limitar } from "../_seguridad.js";
 
 export default async function handler(req, res) {
   try {
     if (req.method !== "POST") return error(res, 405, "Método no permitido");
+    if (limitar(req, res, "gastos", { max: 10 })) return;
     const colecta = await buscarColecta(req.query.id);
     if (!colecta) return error(res, 404, "No existe una colecta con ese identificador.");
     const b = await leerCuerpo(req);
@@ -48,6 +51,6 @@ export default async function handler(req, res) {
     await esperarEnMirror(colecta.topicId, reg.secuencia);
     return json(res, 201, { secuencia: reg.secuencia, hashscan: reg.hashscan });
   } catch (e) {
-    return error(res, 500, e.message);
+    return errorDe(res, e, "gastos");
   }
 }

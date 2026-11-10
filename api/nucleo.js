@@ -3,7 +3,8 @@
 //   GET  ?lista=1   → colectas registradas en la Plataforma.
 //   POST { c, rol, accion, ... }      → acción de demo firmada con la cuenta de prueba de ese rol (solo testnet).
 //   POST { crear: { titulo, items, titular, dias } } → crea una colecta en contrato.
-import { json, error, leerCuerpo } from "./_comun.js";
+import { json, error, errorDe, leerCuerpo } from "./_comun.js";
+import { limitar } from "./_seguridad.js";
 import { leerColectaNucleo } from "../hedera/nucleo.js";
 import { accionDemo, crearColectaDemo, listarColectasNucleo, ROLES, NOMBRES_ACCIONES } from "../hedera/nucleo-escribir.js";
 
@@ -19,6 +20,7 @@ export default async function handler(req, res) {
       return json(res, 200, await leerColectaNucleo(id));
     }
     if (req.method === "POST") {
+      if (limitar(req, res, "nucleo", { max: 10, global: 120 })) return; // cada acción firma y paga gas con cuentas de prueba
       const b = await leerCuerpo(req);
       if (b.crear) return json(res, 201, await crearColectaDemo(b.crear));
       const r = await accionDemo(b);
@@ -26,6 +28,6 @@ export default async function handler(req, res) {
     }
     return error(res, 405, "Método no permitido");
   } catch (e) {
-    return error(res, e.status ?? 502, e.message);
+    return errorDe(res, e, "nucleo");
   }
 }
